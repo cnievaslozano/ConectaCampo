@@ -23,8 +23,8 @@ public class UserController {
 
     // Get one user
     @GetMapping("/{userId}")
-    public Optional<User> getById(@PathVariable("userId") Long userId){
-        return userService.getUser(userId);
+    public Optional<User> getUserById(@PathVariable("userId") Long userId){
+        return userService.getUserById(userId);
     }
 
     // Create User

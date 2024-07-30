@@ -24,7 +24,7 @@ public class PublicationController {
 
     // get one publication
     @GetMapping("/{id}")
-    public ResponseEntity<Publication> getPublicationId(@PathVariable Long id) {
+    public ResponseEntity<Publication> getPublicationById(@PathVariable Long id) {
         Optional<Publication> publication = publicationService.getPublicationById(id);
         return publication.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
