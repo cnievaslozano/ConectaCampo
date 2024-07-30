@@ -16,7 +16,7 @@ public class ProvinceController {
     @Autowired
     private ProvinceService provinceService;
 
-    @GetMapping
+    @GetMapping(path = ("/all"))
     public List<Province> getAllProvinces() {
         return provinceService.getAllProvinces();
     }
