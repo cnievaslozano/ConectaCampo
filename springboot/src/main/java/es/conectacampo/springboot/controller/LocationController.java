@@ -27,10 +27,8 @@ public class LocationController {
 
     // get one location
     @GetMapping("/{id}")
-    public ResponseEntity<Location> getLocationById(@PathVariable Long id) {
-        Optional<Location> location = locationService.getLocationById(id);
-        return location.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public Optional<Location> getLocationById(@PathVariable Long id) {
+        return locationService.getLocationById(id);
     }
 
     // get Locations by Province

@@ -1,6 +1,8 @@
 package es.conectacampo.springboot.service;
 
+import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.Location;
+import es.conectacampo.springboot.model.Product;
 import es.conectacampo.springboot.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,9 @@ public class LocationService {
 
     // get one location
     public Optional<Location> getLocationById(Long id) {
-        return locationRepository.findById(id);
+        Location location = locationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Location not found for this id -> " + id));
+        return Optional.ofNullable(location);
     }
 
     // get Locations by Province

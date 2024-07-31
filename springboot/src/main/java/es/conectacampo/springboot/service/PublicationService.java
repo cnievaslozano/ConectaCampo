@@ -2,6 +2,7 @@ package es.conectacampo.springboot.service;
 
 import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.Publication;
+import es.conectacampo.springboot.model.User;
 import es.conectacampo.springboot.repository.PublicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,9 @@ public class PublicationService {
 
     // get one publication
     public Optional<Publication> getPublicationById(Long id) {
-        return publicationRepository.findById(id);
+        Publication publication = publicationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Publication not found for this id -> " + id));
+        return Optional.ofNullable(publication);
     }
 
     // create publication

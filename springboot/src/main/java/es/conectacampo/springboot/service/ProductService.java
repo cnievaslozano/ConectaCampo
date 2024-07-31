@@ -2,6 +2,7 @@ package es.conectacampo.springboot.service;
 
 import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.Product;
+import es.conectacampo.springboot.model.User;
 import es.conectacampo.springboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,9 @@ public class ProductService {
 
     // get one product
     public Optional<Product> getProductById(Long id){
-        return productRepository.findById(id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found for this id -> " + id));
+        return Optional.ofNullable(product);
     }
 
     // create product

@@ -1,8 +1,10 @@
 package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.model.Product;
+import es.conectacampo.springboot.response.ApiResponse;
 import es.conectacampo.springboot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,37 +18,52 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    // get all products
+    // Get all Products
     @GetMapping("/all")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    // get one product
+    // Get one Product
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Optional<Product> product = productService.getProductById(id);
-        return product.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public Optional<Product> getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
-    // create product
+    // Create Product
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public ResponseEntity<ApiResponse> createPublication(@RequestBody Product product) {
+        try {
+            productService.createProduct(product);
+            return ResponseEntity.ok(new ApiResponse("success", "Product created successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error creating product: " + e.getMessage()));
+        }
     }
 
-    // update product
+    // Update Product
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
-        return ResponseEntity.ok(productService.updateProduct(id, productDetails));
+    public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+        try {
+            productService.updateProduct(id, productDetails);
+            return ResponseEntity.ok(new ApiResponse("success", "Product updated successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error updating product: " + e.getMessage()));
+        }
     }
 
-    // delete product
+    // Delete Product
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok(new ApiResponse("success", "Product deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error deleting product: " + e.getMessage()));
+        }
     }
 
 }
