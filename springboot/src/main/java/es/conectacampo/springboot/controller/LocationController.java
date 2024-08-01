@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/locations")
+@RequestMapping("/api/v1/location")
 public class LocationController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class LocationController {
     }
 
     // get Locations by Province
-    @GetMapping("/province/{provinceId}")
+    @GetMapping("/location/{provinceId}")
     public List<Location> getLocationsByProvince(@PathVariable Long provinceId) {
         return locationService.getLocationsByProvince(provinceId);
     }

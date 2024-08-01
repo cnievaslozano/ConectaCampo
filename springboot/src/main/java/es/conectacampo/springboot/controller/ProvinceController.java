@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/provinces")
+@RequestMapping(path = "api/v1/province")
 public class ProvinceController {
 
     @Autowired
     private ProvinceService provinceService;
 
     // Get all Provinces
-    @GetMapping(path = ("/all"))
+    @GetMapping("/all")
     public List<Province> getAllProvinces() {
         return provinceService.getAllProvinces();
     }
