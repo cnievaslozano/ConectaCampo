@@ -45,7 +45,9 @@ public class UserService {
         user.setPassword(userDetails.getPassword());
         user.setEmail(userDetails.getEmail());
         user.setTelephone(userDetails.getTelephone());
-        user.setProducts(userDetails.getProducts());
+        // replace collection
+        user.getProducts().clear();
+        user.getProducts().addAll(user.getProducts());
 
         return userRepository.save(user);
 
