@@ -19,12 +19,12 @@ public class Publication {
     private Long id;
 
     // RELATION - USER
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     // RELATION - PRODUCTS
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "publication_products",
             joinColumns = @JoinColumn(name = "publication_id"),
