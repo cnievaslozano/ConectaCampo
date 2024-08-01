@@ -42,7 +42,6 @@ public class ProductService {
         product.setDescription(productDetails.getDescription());
         product.setPrice(productDetails.getPrice());
         product.setQuantity(productDetails.getQuantity());
-        product.setUser(productDetails.getUser()); // Asegúrate de que el usuario esté presente
 
         return productRepository.save(product);
     }
