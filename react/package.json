@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailgrids": "^2.2.6"
+    "react-router-dom": "^6.26.0",
+    "tailgrids": "^2.2.6",
+    "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
