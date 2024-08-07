@@ -15,25 +15,58 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    // following system
+    public User followUser(Long userId, Long followUserId) {
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + userId)));
+        Optional<User> followUserOptional = Optional.ofNullable(userRepository.findById(followUserId)
+                .orElseThrow(() -> new ResourceNotFoundException("Follower user not found for this id -> " + followUserId)));
+
+        User user = userOptional.get();
+        User followUser = followUserOptional.get();
+        user.getFollowing().add(followUser);
+        followUser.getFollowers().add(user);
+        userRepository.save(user);
+        userRepository.save(followUser);
+        return user;
+
+    }
+
+    public User unfollowUser(Long userId, Long unfollowUserId) {
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + userId)));
+        Optional<User> unfollowUserOptional = Optional.ofNullable(userRepository.findById(unfollowUserId)
+                .orElseThrow(() -> new ResourceNotFoundException("Unfollower user not found for this id -> " + unfollowUserId)));
+
+        User user = userOptional.get();
+        User unfollowUser = unfollowUserOptional.get();
+        user.getFollowing().remove(unfollowUser);
+        unfollowUser.getFollowers().remove(user);
+        userRepository.save(user);
+        userRepository.save(unfollowUser);
+        return user;
+
+    }
+
     // get all users
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
     // get one user
-    public Optional<User> getUserById (Long id){
+    public Optional<User> getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + id));
         return Optional.ofNullable(user);
     }
 
     // create user
-    public User createUser (User user) {
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
     // update user
-    public User updateUser (Long id, User userDetails) {
+    public User updateUser(Long id, User userDetails) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResolutionException("User not found for this id ->" + id));
 
