@@ -4,7 +4,14 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'custom' : ["ClashGrotesk", "sans-serif"],
+        'custom': ["ClashGrotesk", "sans-serif"],
+      },
+      colors: {
+        darkGreen1: 'rgb(58, 82, 55)',
+        darkGreen2: 'rgb(19, 40, 23)',
+        lightGreen1: 'rgb(161, 169, 163)',
+        lightGreen2: 'rgb(116, 127, 115)',
+        lightGreen3: 'rgb(218, 218, 207)',
       },
     },
   },
