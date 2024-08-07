@@ -18,17 +18,33 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Follow a user
+    @PostMapping("/{userId}/follow/{followUserId}")
+    public ResponseEntity<User> followUser(@PathVariable Long userId, @PathVariable Long followUserId) {
+        User user = userService.followUser(userId, followUserId);
+        return ResponseEntity.ok(user);
+    }
+
+    // Unfollow a user
+    @PostMapping("/{userId}/unfollow/{unfollowUserId}")
+    public ResponseEntity<User> unfollowUser(@PathVariable Long userId, @PathVariable Long unfollowUserId) {
+        User user = userService.unfollowUser(userId, unfollowUserId);
+        return ResponseEntity.ok(user);
+    }
+
     // Get all users
     @GetMapping("/all")
     public List<User> getAllUsers() {
           return userService.getUsers();
     }
 
-    // Get one user
+    // Get one user by id
     @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable Long id){
         return userService.getUserById(id);
     }
+
+    // Get one user by username
 
     // Create User
     @PostMapping
