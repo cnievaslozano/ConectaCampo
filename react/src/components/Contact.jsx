@@ -15,7 +15,11 @@ const Contact = () => {
                 <p className="mb-9 text-base leading-relaxed text-body-color dark:text-dark-6">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eius tempor incididunt ut labore e dolore magna aliqua. Ut
+<<<<<<< HEAD
                   enim adiqua minim veniam quwwis nostrud exercitation ullamco
+=======
+                  enim adiqua minim veniasm quis nostrud exercitation ullamco
+>>>>>>> 368d358d60c18f309380795e8686cdc5e20d9cdd
                 </p>
                 <div className="mb-8 flex w-full max-w-[370px]">
                   <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary/5 text-primary sm:h-[70px] sm:max-w-[70px]">
