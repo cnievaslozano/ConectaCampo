@@ -46,7 +46,7 @@ public class UserController {
 
     // Get one user by username
 
-    // Create User
+    /* Create User
     @PostMapping
     public ResponseEntity<ApiResponse> createUser(@RequestBody User user) {
         try {
@@ -57,7 +57,7 @@ public class UserController {
                     .body(new ApiResponse("error", "Error creating user: "+ user.getUsername() + e.getMessage()));
         }
     }
-
+    */
     // Update User
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
