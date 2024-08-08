@@ -15,23 +15,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // following system
-    public User followUser(Long userId, Long followUserId) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + userId)));
-        Optional<User> followUserOptional = Optional.ofNullable(userRepository.findById(followUserId)
-                .orElseThrow(() -> new ResourceNotFoundException("Follower user not found for this id -> " + followUserId)));
-
-        User user = userOptional.get();
-        User followUser = followUserOptional.get();
-        user.getFollowing().add(followUser);
-        followUser.getFollowers().add(user);
-        userRepository.save(user);
-        userRepository.save(followUser);
-        return user;
-
-    }
-
     public User unfollowUser(Long userId, Long unfollowUserId) {
         Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + userId)));

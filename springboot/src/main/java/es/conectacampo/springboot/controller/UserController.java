@@ -2,6 +2,7 @@ package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.model.User;
 import es.conectacampo.springboot.response.ApiResponse;
+import es.conectacampo.springboot.service.FollowService;
 import es.conectacampo.springboot.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +19,31 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FollowService followService;
+
     // Follow a user
     @PostMapping("/{userId}/follow/{followUserId}")
-    public ResponseEntity<User> followUser(@PathVariable Long userId, @PathVariable Long followUserId) {
-        User user = userService.followUser(userId, followUserId);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<?> followUser(@PathVariable Long userId, @PathVariable Long followUserId) {
+        try {
+            followService.follow(userId, followUserId);
+            return ResponseEntity.ok(new ApiResponse("success", "User followed successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error following: " + e.getMessage()));
+        }
     }
 
     // Unfollow a user
-    @PostMapping("/{userId}/unfollow/{unfollowUserId}")
-    public ResponseEntity<User> unfollowUser(@PathVariable Long userId, @PathVariable Long unfollowUserId) {
-        User user = userService.unfollowUser(userId, unfollowUserId);
-        return ResponseEntity.ok(user);
+    @DeleteMapping("/{userId}/unfollow/{followUserId}")
+    public ResponseEntity<?> unfollowUser(@PathVariable Long userId, @PathVariable Long followUserId) {
+        try {
+            followService.unfollow(userId, followUserId);
+            return ResponseEntity.ok(new ApiResponse("success", "User unfollowed successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error unfollowing: " + e.getMessage()));
+        }
     }
 
     // Get all users

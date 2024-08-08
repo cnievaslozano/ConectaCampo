@@ -27,16 +27,12 @@ public class User {
     private long id;
 
     // Relation - Following/Follower
-    @ManyToMany
-    @JoinTable(
-            name = "user_followers",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "follower_id")
-    )
-    private Set<User> followers = new HashSet<>();
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Follow> following = new HashSet<>();
 
-    @ManyToMany(mappedBy = "followers")
-    private Set<User> following = new HashSet<>();
+    @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Follow> followers = new HashSet<>();
+
 
     // Relation - Product
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
