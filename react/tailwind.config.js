@@ -1,37 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-  prefix: "",
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
+      fontFamily: {
+        'custom': ["ClashGrotesk", "sans-serif"],
       },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+      colors: {
+        darkGreen1: 'rgb(58, 82, 55)',
+        darkGreen2: 'rgb(19, 40, 23)',
+        lightGreen1: 'rgb(161, 169, 163)',
+        lightGreen2: 'rgb(116, 127, 115)',
+        lightGreen3: 'rgb(218, 218, 207)',
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  plugins: [require("tailgrids/plugin")],
+};
