@@ -115,7 +115,7 @@ const ProductCarousel = () => {
         </div>
       </div>
       <button
-        className="absolute right-0 p-2 bg-lightGreen2 rounded-full"
+        className="absolute right-0 p-2 bg-[#8AA86E] text-lightGreen3 rounded-full"
         onClick={nextSlide}
       >
         &gt;

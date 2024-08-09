@@ -1,0 +1,9 @@
+.fond{
+    background-image: url('../assets/pexel1.jpg');
+    background-size: cover;
+    height: 400px;
+    margin: 40px 0;
+    padding: 20px;
+    
+    
+}

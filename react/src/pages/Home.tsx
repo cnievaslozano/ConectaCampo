@@ -30,6 +30,11 @@ const Home = () => {
                 <CarouselHome />
             </section>
 
+            <section className='fond'>
+                <div className='border h-3/4 rounded-lg bg-darkGreen1 shadow-xl opacity-80 border-gray'>
+
+                </div>
+            </section>
 
             <div className='flex justify-center'>
                 <div className='w-40 h-40 rounded-full bg-darkGreen1 flex justify-center self-center items-center text-white'>darkGreen1</div>
