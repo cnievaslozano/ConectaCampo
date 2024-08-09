@@ -1,9 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import iconConectaCampo from '../assets/conectaCampo.png';
 import Button from './Button';
 import { useState } from 'react';
+import Footer from './Footer';
 
 const Header = () => {
+
+    //Bloque para usar el input de Explorar alimentos
+    const [inputValue, setInputValue] = useState('');
+    const navigate = useNavigate();
+
+    const handleKeyDown = (event:any) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          // Redirigir a la ruta deseada
+          navigate(`/search/${inputValue}`);
+        }
+      };
+      const handleChange = (event:any) => {
+        setInputValue(event.target.value);
+      };
+
 
     return (
 
@@ -29,14 +46,16 @@ const Header = () => {
                     <Link to="/contact" className="block py-2 px-2 pe-3 flex-shrink text-white rounded md:bg-transparent" aria-current="page">Contact</Link>
                 </li>
                 <li>
-                    <input type="text" id="product_name" className="bg-gray-50 border border-darkGreen2 text-gray-900 rounded-lg ps-4 py-1" placeholder="Explora alimentos" required />
+                    <input type="text" id="product_name" className="bg-gray-50 border border-darkGreen2 text-gray-900 rounded-lg ps-4 py-1 mx-2" placeholder="Explora alimentos" value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} required />
                 </li>
+                <li>
+                    <Button className="py-2 px-4" text="Inicia" />
+                </li>
+
             </ul>
         </div>
 
-        <div className="flex">
-            <Button className="py-2 px-4" text="Inicia" />
-        </div>
+
     </section>
 </nav>
 
