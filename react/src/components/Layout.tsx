@@ -1,10 +1,10 @@
 import Header from './Header';
 import Footer from './Footer';
-
-const Layout = ({ children }) => {
+import Header2 from './Header2'
+const Layout = ({ children }:any) => {
   return (
     <div className="">
-      <Header />
+      <Header2 />
       <main className="mx-auto py-4 px-36 flex-grow bg-lightGreen3">
         {children}
       </main>
