@@ -50,17 +50,18 @@ const ProductCarousel = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center my-10">
-      <button className="absolute left-0 p-2 bg-lightGreen2 rounded-full" onClick={prevSlide}>
+    <div className="relative flex items-center justify-center my-10" style={{height: '660px'}}>
+      <button className="absolute left-0 p-2 bg-[#8AA86E] text-lightGreen3 rounded-full" onClick={prevSlide}>
         &lt;
       </button>
-      <div className="overflow-hidden w-full max-w-4xl">
+      <div className="overflow-hidden w-full max-w-4xl mx-8">
         <div
           className="flex transition-transform duration-300 gap-3"
           style={{transform: `translateX(-${currentIndex * (100 / productsToShow)}%)`,}}
         >
           {products.map((product) => (
-            <div key={product.id} className="w-1/3 flex-shrink-0 flex flex-col items-center "
+                //Para ajustar las que se ven es el w-1/3
+            <div key={product.id} className="xs:w-1/1 md:w-1/2 lg:w-1/3 h-full min-h-full max-h-full flex-shrink-0 flex flex-col items-center overflow-hidden"
             >
               <div className="w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
