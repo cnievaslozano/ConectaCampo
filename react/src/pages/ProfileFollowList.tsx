@@ -26,7 +26,8 @@ const ProfileFollowList = () => {
     <Layout>
         <Container className=''>
             <div>
-                <h1 className='text-3xl text-center mb-10'>Rafel Seguidores</h1>
+              <Link to="/profile" ><h1 className='text-3xl text-center mb-10'>Rafel Seguidores</h1></Link>
+                
             {followers.map((person) => (
             <div key={person.id} style={ProfileStyle} className='my-3'>
               <Link to="/profile" className='flex content-center'>

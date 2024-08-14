@@ -9,7 +9,8 @@ import User from "./pages/Profile";
 import ProductoVenta from './components/ProfileProducts';
 import ProfileFollowList from './pages/ProfileFollowList';
 import Configuration from './pages/UserSettings';
-import Signin from './components/Signin';
+import Signin from './pages/Signin';
+import Register from './pages/Register';
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
 
@@ -29,6 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="signIn" element={<Signin />} />
+          <Route path="register" element={<Register />} />
           <Route path="profile" element={<ProductoVenta />} />
           <Route path="profile/followList" element={<ProfileFollowList />} />
           <Route path="profile/followerList" element={<ProfileFollowList />} />

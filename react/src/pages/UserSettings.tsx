@@ -19,15 +19,15 @@ const UserSettings: React.FC = () => {
     <Layout>
         <Container className=''>
           <div className="settings-container">
-          <h2>User Settings</h2>
+          <h2>Configuración de cuenta</h2>
           <form className="settings-form" onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="name">Nombre:</label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Enter your name"
+                placeholder="Introduce tu nuevo nombre"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -39,26 +39,26 @@ const UserSettings: React.FC = () => {
                 type="email"
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="Introduce tu nuevo email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password">New Password:</label>
+              <label htmlFor="password">Contraseña:</label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Enter new password"
+                placeholder="Introduce tu nueva contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="role">Role:</label>
+              <label htmlFor="role">Rol:</label>
               <select
                 id="role"
                 name="role"
@@ -66,11 +66,11 @@ const UserSettings: React.FC = () => {
                 onChange={(e) => setRole(e.target.value)}
                 required
               >
-                <option value="buyer">Buyer</option>
-                <option value="seller">Seller</option>
+                <option value="buyer">Comprador</option>
+                <option value="seller">Vendedor</option>
               </select>
             </div>
-            <button type="submit" className="submit-btn">Save Changes</button>
+            <button type="submit" className="submit-btn">Guardar Cambios</button>
           </form>
       </div>
       </Container>

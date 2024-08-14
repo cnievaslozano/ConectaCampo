@@ -1,4 +1,4 @@
-import Signin from "../components/Signin"
+import Signin from "./Signin"
 
 const Contact = () => {
     return (
