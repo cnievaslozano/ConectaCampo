@@ -49,7 +49,9 @@ const Header = () => {
                     <input type="text" id="product_name" className="bg-gray-50 border border-darkGreen2 text-gray-900 rounded-lg ps-4 py-1 mx-2" placeholder="Explora alimentos" value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} required />
                 </li>
                 <li>
+                   <Link to="/signIn">
                     <Button className="py-2 px-4" text="Inicia" />
+                   </Link> 
                 </li>
 
             </ul>

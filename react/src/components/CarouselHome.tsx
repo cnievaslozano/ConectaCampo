@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Button";
+import { Link } from "react-router-dom";
 
 const products = [
   {
@@ -98,9 +99,11 @@ const ProductCarousel = () => {
                           </svg>
                         ))}
                     </div>
-                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
+                    <Link to="/profile">
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
                       {product.owner}
-                    </span>
+                      </span>
+                    </Link>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xl font-bold text-gray-900 dark:text-white">
