@@ -31,7 +31,6 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResolutionException("User not found for this id ->" + id));
 
-        user.setLocation(userDetails.getLocation());
         user.setRole(userDetails.getRole());
         user.setName(userDetails.getName());
         user.setSurname(userDetails.getSurname());

@@ -39,10 +39,8 @@ public class User {
     @JsonManagedReference
     private List<Product> products;
 
-    // Relation - Location
-    @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @Column(name = "city", nullable = false, length = 200)
+    private String city;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
