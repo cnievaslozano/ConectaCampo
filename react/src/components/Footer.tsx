@@ -3,7 +3,7 @@ import iconConectaCampo from '../assets/conectaCampo.png';
 
 export function FooterWithLogo() {
   return (
-    <footer className="w-full bg-green-800 p-2 text-white">
+    <footer className="w-full bg-darkGreen1 p-2 text-white">
       <div className="flex flex-col items-center text-center">
         <div className="mb-2">
           <a href="/#" className="inline-block max-w-[100px]">
@@ -22,7 +22,7 @@ export function FooterWithLogo() {
               href="#"
               className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
             >
-              {/* SVG icon 1 */}
+             
               <svg
                 width="6"
                 height="12"
@@ -36,7 +36,7 @@ export function FooterWithLogo() {
               href="#"
               className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
             >
-              {/* SVG icon 2 */}
+              
               <svg
                 width="12"
                 height="9"
@@ -54,7 +54,7 @@ export function FooterWithLogo() {
               href="#"
               className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
             >
-              {/* SVG icon 3 */}
+              
               <svg
                 width="12"
                 height="9"
@@ -72,7 +72,7 @@ export function FooterWithLogo() {
               href="#"
               className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
             >
-              {/* SVG icon 4 */}
+              
               <svg
                 width="10"
                 height="10"
@@ -91,7 +91,7 @@ export function FooterWithLogo() {
       </div>
       <hr className="my-2 border-blue-gray-50" />
       <p className="text-center text-xs font-normal">
-        &copy; 2023 Conecta Campo
+        &copy; 2024 Conecta Campo
       </p>
     </footer>
   );
