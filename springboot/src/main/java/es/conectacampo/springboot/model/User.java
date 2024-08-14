@@ -32,26 +32,20 @@ public class User implements UserDetails {
     private long id;
 
     // Relation - Following/Follower
-    @ManyToMany
-    @JoinTable(
-            name = "user_followers",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "follower_id")
-    )
-    private Set<User> followers = new HashSet<>();
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Follow> following = new HashSet<>();
 
-    @ManyToMany(mappedBy = "followers")
-    private Set<User> following = new HashSet<>();
+    @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Follow> followers = new HashSet<>();
+
 
     // Relation - Product
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Product> products;
 
-    // Relation - Location
-    @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @Column(name = "city", nullable = false, length = 200)
+    private String city;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
@@ -74,6 +68,9 @@ public class User implements UserDetails {
 
     @Column(name = "telephone", nullable = true, length = 9)
     private String telephone;
+
+    @Column(name = "about_me", nullable = true, columnDefinition = "TEXT")
+    private String aboutMe;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
