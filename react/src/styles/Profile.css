@@ -1,10 +1,10 @@
 .profile-container {
-    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
   
   .profile-header {
@@ -19,12 +19,20 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 20px;
-  }
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
   
   .profile-info {
     flex: 1;
   }
-  
+
+  .profile-name{
+    font-size: 1.3rem;
+  }
+
   .profile-description {
     font-size: 16px;
     color: #333;
@@ -35,7 +43,22 @@
     font-size: 14px;
     color: #777;
   }
-  
+  .profile-info-stats{
+    display: flex;
+    justify-content: space-evenly;
+    align-self: flex-start;
+
+  }
+  .stat-container{
+    margin: 0 6px;
+    font-size: 0.9rem;
+  }
+  .stat-name{
+    font-weight: 700;
+  }
+  .stat-indicator{
+    text-align: center;
+  }
   .items-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -48,12 +71,23 @@
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  
+  .item-image {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
   .item-title {
-    font-size: 18px;
+    margin-top: 2px;
+    font-size: 19px;
     color: #333;
     margin-bottom: 10px;
+    
   }
   
   .item-description {

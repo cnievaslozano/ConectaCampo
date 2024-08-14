@@ -5,8 +5,8 @@ import  Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 
-import User from "./pages/User";
-import ProductoVenta from './components/ProductoVenta';
+import User from "./pages/Profile";
+import ProductoVenta from './components/ProfileProducts';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="user" element={<ProductoVenta />} />
+          <Route path="profile" element={<ProductoVenta />} />
 
       </Routes>
     </Router>
