@@ -7,6 +7,7 @@ import Contact from './pages/Contact';
 
 import User from "./pages/Profile";
 import ProductoVenta from './components/ProfileProducts';
+import ProfileFollowList from './pages/ProfileFollowList';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -16,6 +17,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<ProductoVenta />} />
+          <Route path="profile/followList" element={<ProfileFollowList />} />
+          <Route path="profile/followerList" element={<ProfileFollowList />} />
 
       </Routes>
     </Router>

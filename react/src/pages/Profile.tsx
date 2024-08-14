@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
+import Container from "../components/Container";
 
 interface ProfileCardProps {
   imageUrl: string;
@@ -13,8 +14,8 @@ const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, 
   return (
     <Layout>
 
-        <div className="profile-container">
-        <div className="profile-header">
+      <Container className="">
+      <div className="profile-header">
             <img src={imageUrl} alt="Profile" className="profile-image" />
             <div className="profile-info">
               <h1 className="profile-name">Juana de Arcos</h1>
@@ -54,7 +55,8 @@ const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, 
             </div>
             ))}
         </div>
-        </div>
+      </Container>
+
     </Layout>
 
   );
