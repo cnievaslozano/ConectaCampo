@@ -66,6 +66,9 @@ public class User {
     @Column(name = "telephone", nullable = true, length = 9)
     private String telephone;
 
+    @Column(name = "about_me", nullable = true, columnDefinition = "TEXT")
+    private String aboutMe;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 

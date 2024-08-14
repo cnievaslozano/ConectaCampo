@@ -15,40 +15,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User unfollowUser(Long userId, Long unfollowUserId) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + userId)));
-        Optional<User> unfollowUserOptional = Optional.ofNullable(userRepository.findById(unfollowUserId)
-                .orElseThrow(() -> new ResourceNotFoundException("Unfollower user not found for this id -> " + unfollowUserId)));
-
-        User user = userOptional.get();
-        User unfollowUser = unfollowUserOptional.get();
-        user.getFollowing().remove(unfollowUser);
-        unfollowUser.getFollowers().remove(user);
-        userRepository.save(user);
-        userRepository.save(unfollowUser);
-        return user;
-
-    }
-
-    // get all users
+    // CRUD USERS
     public List<User> getUsers() {
         return userRepository.findAll();
     }
-
-    // get one user
     public Optional<User> getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + id));
         return Optional.ofNullable(user);
     }
-
-    // create user
     public User createUser(User user) {
         return userRepository.save(user);
     }
-
-    // update user
     public User updateUser(Long id, User userDetails) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResolutionException("User not found for this id ->" + id));
@@ -61,6 +39,7 @@ public class UserService {
         user.setPassword(userDetails.getPassword());
         user.setEmail(userDetails.getEmail());
         user.setTelephone(userDetails.getTelephone());
+        user.setAboutMe(userDetails.getAboutMe());
         // replace collection
         user.getProducts().clear();
         user.getProducts().addAll(user.getProducts());
@@ -68,8 +47,6 @@ public class UserService {
         return userRepository.save(user);
 
     }
-
-    // delete user
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + id));
