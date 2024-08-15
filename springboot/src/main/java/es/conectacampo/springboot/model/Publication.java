@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -31,6 +32,25 @@ public class Publication {
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> products;
+
+    // RELATION - LIKES
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
+
+    // FUNCTIONS - LIKES
+    public void addLike(Like like) {
+        likes.add(like);
+        like.setPublication(this);
+    }
+
+    public void removeLike(Like like) {
+        likes.remove(like);
+        like.setPublication(null);
+    }
+
+    public int getLikeCount() {
+        return likes.size();
+    }
 
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
