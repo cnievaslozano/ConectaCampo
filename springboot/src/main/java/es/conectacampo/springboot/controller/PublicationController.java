@@ -2,6 +2,7 @@ package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.model.Publication;
 import es.conectacampo.springboot.response.ApiResponse;
+import es.conectacampo.springboot.service.LikeService;
 import es.conectacampo.springboot.service.PublicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,29 @@ import java.util.Optional;
 public class PublicationController {
 
     @Autowired
+    private LikeService likeService;
+
+    @Autowired
     private PublicationService publicationService;
+
+    // Like endpoints
+    @PostMapping("/{publicationId}/like")
+    public ResponseEntity<String> likePublication(@PathVariable Long publicationId, @RequestParam Long userId) {
+        likeService.likePublication(userId, publicationId);
+        return ResponseEntity.ok("Publication liked successfully.");
+    }
+
+    @PostMapping("/{publicationId}/unlike")
+    public ResponseEntity<String> unlikePublication(@PathVariable Long publicationId, @RequestParam Long userId) {
+        likeService.unlikePublication(userId, publicationId);
+        return ResponseEntity.ok("Publication unliked successfully.");
+    }
+
+    @GetMapping("/{publicationId}/likeCount")
+    public ResponseEntity<Integer> getLikeCount(@PathVariable Long publicationId) {
+        int likeCount = likeService.getPublicationLikeCount(publicationId);
+        return ResponseEntity.ok(likeCount);
+    }
 
     // Get all publications
     @GetMapping("/all")
