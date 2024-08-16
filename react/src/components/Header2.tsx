@@ -14,7 +14,7 @@ const Header = () => {
         if (event.key === 'Enter') {
           event.preventDefault();
           // Redirigir a la ruta deseada
-          navigate(`/search/${inputValue}`);
+          navigate(`/search?name=${inputValue}`);
         }
       };
       const handleChange = (event:any) => {
