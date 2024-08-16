@@ -1,0 +1,90 @@
+.search-main-container{
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+.search-filters{
+    grid-column: 1;
+    overflow: hidden;
+}
+.search-container{
+    grid-column: 2;
+}
+.search-name-filter{
+    margin-top: 0px;
+}
+/*Generated*/
+/* Estilo general para el formulario */
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para los contenedores de cada filtro */
+form div {
+    margin-bottom: 15px;
+}
+
+/* Estilo para las etiquetas */
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+/* Estilo para los inputs y selects */
+form input[type="number"],
+form select, .search-name-filter {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #2c3e50;
+    background-color: #ecf0f1;
+    transition: border-color 0.3s ease;
+}
+
+/* Estilo para los inputs y selects en foco */
+form input[type="number"]:focus,
+form select:focus, .search-name-filter:focus {
+    border-color: #27ae60;
+    outline: none;
+}
+
+/* Estilo para los checkboxes */
+form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Estilo para los botones */
+form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo para el botón en hover */
+form button[type="submit"]:hover {
+    background-color: #219150;
+}
+
+/* Estilo adicional para ajustar el margen de los inputs de rango de precio */
+form .price-filter-div input {
+    width: calc(50% - 5px);
+    display: inline-block;
+}
+
+form .price-filter-div input:first-child {
+    margin-right: 10px;
+}
