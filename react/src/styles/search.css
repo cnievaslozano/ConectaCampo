@@ -14,7 +14,7 @@
 }
 /*Generated*/
 /* Estilo general para el formulario */
-form {
+.search-filters form {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -23,12 +23,12 @@ form {
 }
 
 /* Estilo para los contenedores de cada filtro */
-form div {
+.search-filters form div {
     margin-bottom: 15px;
 }
 
 /* Estilo para las etiquetas */
-form label {
+.search-filters form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
@@ -36,8 +36,8 @@ form label {
 }
 
 /* Estilo para los inputs y selects */
-form input[type="number"],
-form select, .search-name-filter {
+.search-filters form input[type="number"],
+.search-filters form select, .search-name-filter {
     width: 100%;
     padding: 10px;
     border: 1px solid #bdc3c7;
@@ -49,8 +49,8 @@ form select, .search-name-filter {
 }
 
 /* Estilo para los inputs y selects en foco */
-form input[type="number"]:focus,
-form select:focus, .search-name-filter:focus {
+.search-filters form input[type="number"]:focus,
+.search-filters form select:focus, .search-name-filter:focus {
     border-color: #27ae60;
     outline: none;
 }
