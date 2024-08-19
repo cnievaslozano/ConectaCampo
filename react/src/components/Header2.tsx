@@ -60,7 +60,7 @@ const Header = () => {
                 </li>
                 <li>
                     {logged === false ? (
-                        <Link to="/">
+                        <Link to="/signIn">
                             <Button className="py-2 px-4" text="Inicia" onClick={handleAuth} />
                         </Link>
                     ) : 

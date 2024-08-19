@@ -8,6 +8,7 @@ const UserSettings: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('buyer');
+  const [image, setImage] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,6 +70,19 @@ const UserSettings: React.FC = () => {
                 <option value="buyer">Comprador</option>
                 <option value="seller">Vendedor</option>
               </select>
+            </div>
+            {/* Imagen de Perfil Opcional */}
+            <div className="mb-4">
+              <label className="block text-start text-body-color mb-2" htmlFor="profileImage">Imagen de Perfil:</label>
+              <input
+                type="file"
+                name="profileImage"
+                id="profileImage"
+                accept="image/*"
+                className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-sm outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              />
             </div>
             <button type="submit" className="submit-btn">Guardar Cambios</button>
           </form>
