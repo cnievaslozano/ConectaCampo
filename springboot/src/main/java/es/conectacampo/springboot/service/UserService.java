@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,15 @@ public class UserService {
                         .build())
                 .collect(Collectors.toSet());
 
+        byte[] profileImage = null;
+        if (createUserDTO.getProfileImage() != null) {
+            try {
+                profileImage = createUserDTO.getProfileImage().getBytes();
+            } catch (IOException e) {
+                throw new RuntimeException("Error al procesar la imagen de perfil", e);
+            }
+        }
+
         User user = User.builder()
                 .email(createUserDTO.getEmail())
                 .telephone(createUserDTO.getTelephone())
@@ -54,6 +64,7 @@ public class UserService {
                 .password(passwordEncoder.encode(createUserDTO.getPassword()))
                 .city(createUserDTO.getCity())
                 .roles(roles)
+                .profileImage(profileImage)
                 .build();
 
         return userRepository.save(user);
@@ -62,11 +73,22 @@ public class UserService {
     @Transactional
     public User updateUser(Long id, UpdateUserDTO updateUserDTO) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResolutionException("User not found for this id ->" + id));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado para este id ->" + id));
+
+        if (updateUserDTO.getProfileImage() != null) {
+            try {
+                byte[] profileImage = updateUserDTO.getProfileImage().getBytes();
+                user.setProfileImage(profileImage);
+            } catch (IOException e) {
+                throw new RuntimeException("Error al procesar la imagen de perfil", e);
+            }
+        }
 
         user.setTelephone(updateUserDTO.getTelephone());
         user.setCity(updateUserDTO.getCity());
-        user.setPassword(passwordEncoder.encode(updateUserDTO.getPassword()));
+        if (updateUserDTO.getPassword() != null && !updateUserDTO.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(updateUserDTO.getPassword()));
+        }
         user.setAboutMe(updateUserDTO.getAboutMe());
 
         return userRepository.save(user);

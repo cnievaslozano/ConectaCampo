@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -21,4 +22,6 @@ public class UpdateUserDTO {
 
     @Size(max = 250, message = "La descripción 'Sobre mí' no puede exceder los 250 caracteres")
     private String aboutMe;
+
+    private MultipartFile profileImage;
 }
