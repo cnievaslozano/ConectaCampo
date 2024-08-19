@@ -14,13 +14,14 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className, onDataSend
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [logged, setLog] = useState<boolean>(true);
 
-  //Si le damos al boton de cerrar sesion, enviamos al header que hemos cerrado sesion
+  // Si le damos al botón de cerrar sesión, enviamos al header que hemos cerrado sesión
   const toggleLog = () => {
-    setLog(!logged);
-    onDataSend(logged);
-  }
+    const newLoggedState = !logged; // Invertimos el estado actual
+    setLog(newLoggedState);
+    onDataSend(newLoggedState); // Enviamos el nuevo estado al padre
+  };
 
-  //Controlamos que el modal se abra o cierre
+  // Controlamos que el modal se abra o cierre
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -44,7 +45,6 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className, onDataSend
     };
   }, [dropdownRef]);
 
-
   return (
     <div className="relative inline-block">
       <button
@@ -62,11 +62,10 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className, onDataSend
           className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg"
         >
           <ul className="py-2">
-            <Link to="/"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Feed</li></Link>
+            <Link to="/feed"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Feed</li></Link>
             <Link to="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Perfil</li></Link>
             <Link to="/profile/configuration"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Configuración</li></Link>
-            <Link to="/"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={toggleLog}>Cerrar sesión</li></Link>
-
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={toggleLog}>Cerrar sesión</li>
           </ul>
         </div>
       )}

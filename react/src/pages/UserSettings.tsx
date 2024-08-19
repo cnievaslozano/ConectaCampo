@@ -20,7 +20,7 @@ const UserSettings: React.FC = () => {
     <Layout>
         <Container className=''>
           <div className="settings-container">
-          <h2>Configuración de cuenta</h2>
+          <h2 className='text-xl'>Configuración de cuenta</h2>
           <form className="settings-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Nombre:</label>

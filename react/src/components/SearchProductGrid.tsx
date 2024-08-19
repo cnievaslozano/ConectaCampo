@@ -11,17 +11,10 @@ const SearchProductGrid = () => {
 
         // Agrega más items aquí
       ];
-  const ProfileStyle: React.CSSProperties = {
-    backgroundColor: "#fff",
-    padding: "15px",
-    borderRadius: "8px",
-    boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
-    textAlign: "center",
-    display: "flex",
-  };
+
 
   return (
-    <div>
+    <div> {/**Los estilos de los productos estan en Profile.css, nose xk pero siempre se usan */}
         <div className="items-grid">
               {itemsForSale.map((item) => (
               <div key={item.id} className="item-card">

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
+import Button from "../components/Button";
 
 interface ProfileCardProps {
   imageUrl: string;
@@ -9,6 +10,11 @@ interface ProfileCardProps {
   location: string;
   itemsForSale: { id: number; title: string; description: string; price: number; image: string }[];
 }
+  //TODO Logica que mostrará la opción de añadir producto si es tu propio perfil 
+  // const [isOwnProfile, setIsOwnProfile] = useState(true);
+  // const toggleIsOwnProfile = () => {
+  //   setIsOwnProfile(!isOwnProfile);
+  // }
 
 const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, itemsForSale }) => {
   return (
@@ -20,7 +26,13 @@ const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, 
               <div className="profile-info">
                 <h1 className="profile-name">Juana de Arcos</h1>
                 <p className="profile-description">{description}</p>
-                <p className="profile-location">{location}</p>
+                <div className="flex justify-between">
+                  <p className="profile-location">{location}</p>
+                  <Link to="/addProduct">
+                  <Button text="Añadir Publicación" className="rounded-md p-1 text-gray-100"></Button>
+                  </Link>
+                </div>
+ 
               </div>
               <div className="profile-info-stats">
                 <div className="stat-container">
@@ -42,6 +54,21 @@ const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, 
                 </div>
               </div>
           </div>
+          <h1 className="text-xl mt-10 mb-5">Prublicaciones</h1>
+          <div className="items-grid">
+              {itemsForSale.map((item) => (
+              <div key={item.id} className="item-card">
+                <Link to="/profile">
+                  <img className="item-image" src={item.image} alt="Err" />
+                  <h3 className="item-title">{item.title}</h3>
+                </Link>
+
+                  <p className="item-description">{item.description}</p>
+                  <p className="item-price">{item.price} €/kg</p>
+              </div>
+              ))}
+          </div>
+          <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
           <div className="items-grid">
               {itemsForSale.map((item) => (
               <div key={item.id} className="item-card">
