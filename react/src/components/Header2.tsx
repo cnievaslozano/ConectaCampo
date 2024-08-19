@@ -7,9 +7,9 @@ import UserDropdown from './UserDropdown';
 const Header = () => {
 
     //Bloque para una vez estas autentificado
-    const [logged, setLog] = useState(true);
-    const handleAuth = (event:any) => {
-        setLog(true);
+    const [logged, setLog] = useState<boolean>(true);
+    const handleAuth = () => {
+        setLog(!logged);
       };
 
     //Bloque para usar el input de Explorar alimentos
@@ -27,6 +27,10 @@ const Header = () => {
         setInputValue(event.target.value);
       };
 
+    //Bloque para controlar el cerrar sesion de el Modal de usuario
+    const handleUserModalData = (data: boolean) => {
+        setLog(data);
+      };
 
     return (
 
@@ -60,7 +64,7 @@ const Header = () => {
                             <Button className="py-2 px-4" text="Inicia" onClick={handleAuth} />
                         </Link>
                     ) : 
-                        <UserDropdown text="" className="my-2" />
+                        <UserDropdown text="" className="my-2" onDataSend={handleUserModalData}/>
                     }
                 </li>
             </ul>

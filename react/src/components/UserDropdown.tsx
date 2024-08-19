@@ -5,13 +5,22 @@ import { Link } from 'react-router-dom';
 interface UserDropdownProps {
   text?: string;
   className?: string;
+  onDataSend: (data: boolean) => void;
 }
 
-const UserDropdown: React.FC<UserDropdownProps> = ({ text, className }) => {
+const UserDropdown: React.FC<UserDropdownProps> = ({ text, className, onDataSend }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const [logged, setLog] = useState<boolean>(true);
 
+  //Si le damos al boton de cerrar sesion, enviamos al header que hemos cerrado sesion
+  const toggleLog = () => {
+    setLog(!logged);
+    onDataSend(logged);
+  }
+
+  //Controlamos que el modal se abra o cierre
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -35,6 +44,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className }) => {
     };
   }, [dropdownRef]);
 
+
   return (
     <div className="relative inline-block">
       <button
@@ -55,6 +65,8 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className }) => {
             <Link to="/"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Feed</li></Link>
             <Link to="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Perfil</li></Link>
             <Link to="/profile/configuration"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Configuración</li></Link>
+            <Link to="/"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={toggleLog}>Cerrar sesión</li></Link>
+
           </ul>
         </div>
       )}
