@@ -2,9 +2,15 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import iconConectaCampo from '../assets/conectaCampo.png';
 import Button from './Button';
 import { useState } from 'react';
-import Footer from './Footer';
+import UserDropdown from './UserDropdown';
 
 const Header = () => {
+
+    //Bloque para una vez estas autentificado
+    const [logged, setLog] = useState(true);
+    const handleAuth = (event:any) => {
+        setLog(true);
+      };
 
     //Bloque para usar el input de Explorar alimentos
     const [inputValue, setInputValue] = useState('');
@@ -49,11 +55,14 @@ const Header = () => {
                     <input type="text" id="product_name" className="bg-gray-50 border border-darkGreen2 text-gray-900 rounded-lg ps-4 py-1 mx-2" placeholder="Explora alimentos" value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} required />
                 </li>
                 <li>
-                   <Link to="/signIn">
-                    <Button className="py-2 px-4" text="Inicia" />
-                   </Link> 
+                    {logged === false ? (
+                        <Link to="/">
+                            <Button className="py-2 px-4" text="Inicia" onClick={handleAuth} />
+                        </Link>
+                    ) : 
+                        <UserDropdown text="" className="my-2" />
+                    }
                 </li>
-
             </ul>
         </div>
 
