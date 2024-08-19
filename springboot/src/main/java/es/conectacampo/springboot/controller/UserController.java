@@ -1,9 +1,12 @@
 package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.model.User;
+import es.conectacampo.springboot.dto.CreateUserDTO;
+import es.conectacampo.springboot.dto.UpdateUserDTO;
 import es.conectacampo.springboot.response.ApiResponse;
 import es.conectacampo.springboot.service.FollowService;
 import es.conectacampo.springboot.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,29 +61,28 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    // Get one user by username
-
-    /* Create User
+    // Create User
     @PostMapping
-    public ResponseEntity<ApiResponse> createUser(@RequestBody User user) {
+    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
         try {
-            userService.createUser(user);
-            return ResponseEntity.ok(new ApiResponse("success", "User " + user.getUsername() + " created successfully"));
-        } catch (Exception e) {
+            userService.createUser(createUserDTO);
+            return ResponseEntity.ok(new ApiResponse("success", "User created successfully"));
+
+        } catch  (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("error", "Error creating user: "+ user.getUsername() + e.getMessage()));
+                    .body(new ApiResponse("error", "Error creating user: " + e.getMessage()));
         }
     }
-    */
+
     // Update User
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try {
-            userService.updateUser(id, userDetails);
-            return ResponseEntity.ok(new ApiResponse("success", "User "+ userDetails.getUsername() +" updated successfully"));
+            userService.updateUser(id, updateUserDTO);
+            return ResponseEntity.ok(new ApiResponse("success", "User updated successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("error", "Error updating user: " + userDetails.getUsername() + e.getMessage()));
+                    .body(new ApiResponse("error", "Error updating user: " + e.getMessage()));
         }
     }
 

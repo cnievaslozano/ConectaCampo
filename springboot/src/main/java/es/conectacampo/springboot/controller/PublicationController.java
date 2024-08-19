@@ -1,9 +1,12 @@
 package es.conectacampo.springboot.controller;
 
+import es.conectacampo.springboot.dto.CreatePublicationDTO;
+import es.conectacampo.springboot.dto.UpdatePublicationDTO;
 import es.conectacampo.springboot.model.Publication;
 import es.conectacampo.springboot.response.ApiResponse;
 import es.conectacampo.springboot.service.LikeService;
 import es.conectacampo.springboot.service.PublicationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,9 +58,9 @@ public class PublicationController {
 
     // Create publication
     @PostMapping
-    public ResponseEntity<ApiResponse> createPublication (@RequestBody Publication publication) {
+    public ResponseEntity<ApiResponse> createPublication (@Valid @RequestBody CreatePublicationDTO createPublicationDTO) {
         try {
-            publicationService.createPublication(publication);
+            publicationService.createPublication(createPublicationDTO);
             return ResponseEntity.ok(new ApiResponse("success", "Publication created successfully"));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -67,9 +70,9 @@ public class PublicationController {
 
     // Update publication
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updatePublication(@PathVariable Long id, @RequestBody Publication publicationDetails) {
+    public ResponseEntity<ApiResponse> updatePublication(@PathVariable Long id, @RequestBody UpdatePublicationDTO updatePublicationDTO) {
         try {
-            publicationService.updatePublication(id, publicationDetails);
+            publicationService.updatePublication(id, updatePublicationDTO);
             return ResponseEntity.ok(new ApiResponse("success", "Publication updated successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

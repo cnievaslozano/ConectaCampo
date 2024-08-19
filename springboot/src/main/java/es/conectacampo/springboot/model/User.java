@@ -2,6 +2,9 @@ package es.conectacampo.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,11 +28,11 @@ import java.util.Set;
         @UniqueConstraint(columnNames = "email")
 })
 
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     // Relation - Following/Follower
     @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -44,12 +47,13 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Product> products;
 
-    @Column(name = "city", nullable = false, length = 200)
-    private String city;
+    // Relation - Role
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Role.class, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
+    @Column(name = "city", nullable = false, length = 50)
+    private String city;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -63,13 +67,13 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false, length = 254)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true, length = 200)
+    @Column(name = "email", nullable = false, unique = true, length = 80)
     private String email;
 
-    @Column(name = "telephone", nullable = true, length = 9)
+    @Column(name = "telephone", length = 9)
     private String telephone;
 
-    @Column(name = "about_me", nullable = true, columnDefinition = "TEXT")
+    @Column(name = "about_me", columnDefinition = "TEXT")
     private String aboutMe;
 
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -80,9 +84,4 @@ public class User implements UserDetails {
         this.createdAt = new Timestamp(System.currentTimeMillis());
     }
 
-    // METHODS
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((role.name())));
-    }
 }

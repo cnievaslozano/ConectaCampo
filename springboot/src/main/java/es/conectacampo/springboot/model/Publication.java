@@ -1,7 +1,9 @@
 package es.conectacampo.springboot.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name = "publications")
 public class Publication {
@@ -52,10 +55,10 @@ public class Publication {
         return likes.size();
     }
 
-    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "address", nullable = false, length = 255)
+    @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "schedule", nullable = false, length = 100)
