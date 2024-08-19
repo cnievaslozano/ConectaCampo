@@ -43,16 +43,18 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/*").permitAll();
+                    // Login & Register
+                    auth.requestMatchers("/auth/login").permitAll();
+                    auth.requestMatchers(HttpMethod.POST,"/api/v1/user").permitAll();
+
                     // USER
-                    auth.requestMatchers("/api/v1/user/all").permitAll();
+                    auth.requestMatchers("/api/v1/user/all").permitAll(); // funciona
                     auth.requestMatchers(HttpMethod.GET,"/api/v1/user/*").permitAll();
-                    auth.requestMatchers(HttpMethod.POST,"/api/v1/user/*").permitAll();
                     auth.requestMatchers(HttpMethod.PUT,"/api/v1/user/*").hasAnyRole("FARMER", "USER");
                     auth.requestMatchers(HttpMethod.DELETE,"/api/v1/user/*").hasRole("ADMIN");
 
                     // PRODUCT
-                    auth.requestMatchers("/api/v1/product/all").permitAll();
+                    auth.requestMatchers("/api/v1/product/all").permitAll(); // funciona
                     auth.requestMatchers(HttpMethod.GET,"/api/v1/product/*").permitAll();
                     auth.requestMatchers(HttpMethod.POST,"/api/v1/product").hasRole("FARMER");
                     auth.requestMatchers(HttpMethod.PUT,"/api/v1/product/*").hasRole("FARMER");
@@ -62,7 +64,7 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/v1/publication/*/like").authenticated();
                     auth.requestMatchers("/api/v1/publication/*/unlike").authenticated();
                     auth.requestMatchers("/api/v1/publication/*/likeCount").permitAll();
-                    auth.requestMatchers("/api/v1/publication/all").permitAll();
+                    auth.requestMatchers("/api/v1/publication/all").permitAll(); // funciona
                     auth.requestMatchers(HttpMethod.GET, "/api/v1/publication/*").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/publication").hasRole("FARMER");
                     auth.requestMatchers(HttpMethod.PUT, "/api/v1/publication/*").hasRole("FARMER");
@@ -101,16 +103,5 @@ public class SecurityConfig {
 
         return authManagerBuilder.build();
     }
-
-    /*
-    @Bean
-    AuthenticationManager authenticationManager(HttpSecurity httpSecurity, PasswordEncoder passwordEncoder) throws Exception {
-        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and().build();
-    }*/
-
-
 
 }

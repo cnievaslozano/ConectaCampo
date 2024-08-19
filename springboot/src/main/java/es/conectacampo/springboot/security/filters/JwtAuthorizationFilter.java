@@ -33,10 +33,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         String tokenHeader = request.getHeader("Authorization");
 
-        if(tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
+        if (tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
             String token = tokenHeader.substring(7);
 
-            if(jwtUtils.isTokenValid(token)) {
+            if (jwtUtils.isTokenValid(token)) {
                 String username = jwtUtils.getUsernameFromToken(token);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
@@ -45,9 +45,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
+        } else {
+            // Allow unauthenticated requests to pass through
+            logger.info("Allowing unauthenticated request for: " + request.getRequestURI());
         }
 
         filterChain.doFilter(request, response);
-
     }
+
 }
