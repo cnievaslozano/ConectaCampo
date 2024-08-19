@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +38,7 @@ public class PublicationService {
     }
 
     @Transactional
-    public Publication createPublication (CreatePublicationDTO createPublicationDTO) {
-
+    public Publication createPublication(CreatePublicationDTO createPublicationDTO) throws IOException {
         User user = userRepository.findById(createPublicationDTO.getUserId())
                 .orElseThrow(() -> new ResolutionException("User not found for this id ->" + createPublicationDTO.getUserId()));
 
@@ -47,22 +47,25 @@ public class PublicationService {
                 .description(createPublicationDTO.getDescription())
                 .address(createPublicationDTO.getAddress())
                 .schedule(createPublicationDTO.getSchedule())
+                .image(createPublicationDTO.getImage() != null ? createPublicationDTO.getImage().getBytes() : null)
                 .build();
 
         return publicationRepository.save(publication);
     }
 
     @Transactional
-    public Publication updatePublication (Long id, UpdatePublicationDTO updatePublicationDTO) {
+    public Publication updatePublication(Long id, UpdatePublicationDTO updatePublicationDTO) {
         Publication publication = publicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Publication not found for this id :: " + id));
 
         publication.setDescription(updatePublicationDTO.getDescription());
         publication.setAddress(updatePublicationDTO.getAddress());
         publication.setSchedule(updatePublicationDTO.getSchedule());
+        publication.setImage(updatePublicationDTO.getImage()); // Asumimos que image ya es un byte[]
 
         return publicationRepository.save(publication);
     }
+
 
     public void deletePublication(Long id) {
         Publication publication = publicationRepository.findById(id)

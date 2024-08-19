@@ -22,4 +22,6 @@ public class UpdatePublicationDTO {
     @NotBlank(message = "El horario no puede estar vacío")
     @Size(max = 100, message = "El horario no puede exceder los 100 caracteres")
     private String schedule;
+
+    private byte[] image;
 }

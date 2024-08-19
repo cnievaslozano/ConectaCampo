@@ -67,6 +67,10 @@ public class Publication {
     @Column(name = "active", nullable = false)
     private boolean active = true;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "BLOB")
+    private byte[] image;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
