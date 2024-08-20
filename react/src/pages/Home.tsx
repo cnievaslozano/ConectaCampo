@@ -10,6 +10,7 @@ import comoFuncionaImage4 from '@assets/agri.webp';
 import comoFuncionaImage5 from '@assets/agra.webp';
 import comoFuncionaImage6 from '@assets/agro.webp';
 import beneficiosImage from '@assets/bene.webp'; 
+import HomeLayout from '@components/home/HomeLayout';
 
 const Home = () => {
     return (

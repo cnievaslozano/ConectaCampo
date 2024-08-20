@@ -1,5 +1,5 @@
-import Footer from './Footer';
-import Header2 from './Header2'
+import Footer from '@components/layout/Footer';
+import Header2 from '@components/layout/Header2'
 const HomeLayout = ({ children }:any) => {
   return (
     <div className="">
