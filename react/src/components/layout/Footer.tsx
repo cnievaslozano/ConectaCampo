@@ -1,101 +1,113 @@
-import React from 'react';
+import React from "react";
 import iconConectaCampo from "@assets/conectaCampo.webp";
 
-
-export function FooterWithLogo() {
+export function Footer() {
   return (
-    <footer className="w-full bg-darkGreen1 p-2 text-white">
+    <footer className="w-full bg-darkGreen1 p-4 text-white">
       <div className="flex flex-col items-center text-center">
-        <div className="mb-2">
-          <a href="/#" className="inline-block max-w-[100px]">
-            <img src={iconConectaCampo} alt="logo-conecta-campo" className="max-w-full mx-auto" />
+        <div className="mb-4">
+          <a href="/" className="inline-block max-w-[100px]">
+            <img
+              src={iconConectaCampo}
+              alt="logo-conecta-campo"
+              className="max-w-full mx-auto"
+            />
           </a>
         </div>
-        <div className="w-full lg:w-8/12">
-          <p className="text-xs mb-2">
-            Conectamos agricultores con clientes finales para promover un comercio justo y local, apoyando la calidad y sostenibilidad en cada transacción.
+        <div className="w-full lg:w-8/12 mb-4">
+          <p className="text-xs lg:text-md xl:text-xl">
+            Nos dedicamos a establecer una conexión directa entre agricultores y
+            consumidores finales, con el firme propósito de fomentar un comercio
+            justo y local que beneficie a todas las partes involucradas. Nuestro
+            enfoque se centra en asegurar que cada transacción se realice bajo
+            principios de transparencia, equidad y respeto mutuo, garantizando
+            que los productos ofrecidos sean de la más alta calidad. Además,
+            promovemos prácticas sostenibles que contribuyen a la preservación
+            del medio ambiente y apoyan el desarrollo de comunidades agrícolas,
+            fortaleciendo la economía local y asegurando un futuro más justo y
+            saludable para todos.
           </p>
         </div>
         <div className="w-full mt-4">
           <h4 className="text-sm font-semibold mb-2">Síguenos</h4>
-          <div className="flex justify-center space-x-2">
+          <div className="flex justify-center space-x-4">
             <a
-              href="#"
-              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+              href="https://facebook.com"
+              aria-label="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800 transition-colors duration-300"
             >
-             
               <svg
-                width="6"
-                height="12"
-                viewBox="0 0 6 12"
-                className="fill-current"
-              >
-                <path d="M5.43902 4.4H4.19918H3.75639V3.88387V2.28387V1.76774H4.16709H4.5598V2.78387V3.59151V3.88387V4.40067H5.43902Z" />
-              </svg>
-            </a>
-            <a
-              href="#"
-              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
-            >
-              
-              <svg
-                width="12"
-                height="9"
-                viewBox="0 0 12 9"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
                 fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M7.5 0.625C3.625 0.625 0.625 3.625 0.625 7.5C0.625 11.375 3.625 14.375 7.5 14.375C11.375 14.375 14.375 11.375 14.375 7.5C14.375 3.625 11.375 0.625 7.5 0.625ZM7.5 12.8125C4.375 12.8125 1.5625 10 1.5625 7.5C1.5625 5 4.375 2.1875 7.5 2.1875C10.625 2.1875 13.4375 5 13.4375 7.5C13.4375 10 10.625 12.8125 7.5 12.8125ZM10.625 6.5625H9.0625V5H8.75C8.5625 5 8.4375 5.125 8.4375 5.3125V6.875C8.4375 7.0625 8.5625 7.1875 8.75 7.1875H10.625C10.8125 7.1875 10.9375 7.0625 10.9375 6.875V6.5625C10.9375 6.375 10.8125 6.25 10.625 6.25C10.4375 6.25 10.3125 6.375 10.3125 6.5625H9.0625V6.5625H10.625Z"
-                  fill="currentColor"
-                />
+                <path d="M22.675 0H1.325C.593 0 0 .592 0 1.325v21.35C0 23.408.593 24 1.325 24h11.49V14.708h-3.13v-3.625h3.13V8.413c0-3.1 1.894-4.789 4.662-4.789 1.325 0 2.463.099 2.794.143v3.24l-1.917.001c-1.505 0-1.797.715-1.797 1.764v2.311h3.59l-.467 3.625h-3.122V24h6.11c.73 0 1.324-.592 1.324-1.325V1.325C24 .593 23.408 0 22.675 0z" />
               </svg>
             </a>
             <a
-              href="#"
-              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+              href="https://twitter.com"
+              aria-label="Twitter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800 transition-colors duration-300"
             >
-              
               <svg
-                width="12"
-                height="9"
-                viewBox="0 0 12 9"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
                 fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
               >
-                <path
-                  d="M12.65625 0.84375H0.84375C0.375 0.84375 0 1.21875 0 1.6875V10.3125C0 10.7812 0.375 11.1562 0.84375 11.1562H12.65625C13.125 11.1562 13.5 10.7812 13.5 10.3125V1.6875C13.5 1.21875 13.125 0.84375 12.65625 0.84375ZM12.65625 1.6875L6.75 6.0625L0.84375 1.6875H12.65625ZM0.84375 10.3125V2.90625L6.75 7.28125L12.65625 2.90625V10.3125H0.84375Z"
-                  fill="currentColor"
-                />
+                <path d="M24 4.557a9.825 9.825 0 0 1-2.828.775 4.93 4.93 0 0 0 2.165-2.724 9.867 9.867 0 0 1-3.127 1.195 4.916 4.916 0 0 0-8.379 4.482A13.946 13.946 0 0 1 1.671 3.149 4.917 4.917 0 0 0 3.194 9.71a4.895 4.895 0 0 1-2.225-.615v.062a4.917 4.917 0 0 0 3.946 4.827 4.897 4.897 0 0 1-2.212.084 4.917 4.917 0 0 0 4.588 3.417A9.866 9.866 0 0 1 0 19.54a13.924 13.924 0 0 0 7.548 2.212c9.056 0 14.01-7.5 14.01-14.008 0-.213-.004-.425-.014-.636A10.02 10.02 0 0 0 24 4.557z" />
               </svg>
             </a>
             <a
-              href="#"
-              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+              href="https://instagram.com"
+              aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800 transition-colors duration-300"
             >
-              
               <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="currentColor"
               >
-                <path
-                  d="M8.81193 5.63119C8.76077 5.65878 8.70997 5.67859 8.65276 5.68998C8.12887 5.68998 7.63666 5.82309 7.19064 6.19492C7.04242 6.2719 6.86558 6.31104 6.68272 6.31104C6.1783 6.31104 5.7261 6.04608 5.50639 5.68503C5.37341 5.40667 5.47587 5.1027 5.61676 4.97389C5.77466 4.829 6.02858 4.68684 6.2093 4.61042C6.28281 4.57755 6.35841 4.56019 6.43011 4.56019C6.70789 4.56019 6.96084 4.68766 7.08329 4.85833C7.27403 5.1449 7.38361 5.48534 7.38361 5.84136C7.38361 6.12295 7.36519 6.31489 7.35315 6.37724C7.35111 6.38939 7.35082 6.39189 7.34985 6.39427C7.32157 6.51109 7.24081 6.60187 7.08329 6.6425C7.00945 6.66265 6.9389 6.68371 6.87066 6.70491C6.61111 6.78367 6.35554 6.9114 6.16536 7.08754C6.00259 7.23267 5.96067 7.44083 6.02899 7.64112C6.05729 7.7518 6.10699 7.85092 6.17387 7.91615C6.31334 8.07569 6.46128 8.19116 6.65694 8.2568C6.79369 8.30448 6.92911 8.35053 7.06552 8.38449C7.09804 8.39352 7.13199 8.4025 7.16445 8.41035C7.24302 8.42882 7.32161 8.43086 7.39902 8.43086C7.524 8.43086 7.68358 8.39587 7.8086 8.34894C7.91883 8.30775 8.02906 8.24498 8.12043 8.16063C8.41528 7.865 8.61125 7.54292 8.70608 7.21787C8.76293 7.07415 8.81191 6.94079 8.84285 6.80903C8.86874 6.68607 8.88924 6.56282 8.90438 6.44066C8.91803 6.34171 8.93299 6.24309 8.94401 6.14503C8.95451 6.08274 8.95176 6.02163 8.93919 5.96129C8.92429 5.90256 8.90552 5.84718 8.88292 5.79795C8.85877 5.73893 8.83217 5.68194 8.80159 5.62739C8.77694 5.58248 8.75116 5.53885 8.75116 5.49665V5.63119Z"
-                  fill="currentColor"
-                />
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.349 3.608 1.324.975.975 1.261 2.243 1.324 3.608.058 1.265.069 1.645.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.349 2.633-1.324 3.608-.975.975-2.243 1.261-3.608 1.324-1.265.058-1.645.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.349-3.608-1.324-.975-.975-1.261-2.243-1.324-3.608-.058-1.265-.069-1.645-.069-4.85s.012-3.584.07-4.85c.062-1.366.349-2.633 1.324-3.608C4.517 2.512 5.785 2.225 7.15 2.163c1.265-.058 1.645-.07 4.85-.07zm0-2.163C8.748 0 8.332.013 7.053.072 5.765.131 4.621.368 3.605 1.383c-1.016 1.016-1.252 2.16-1.311 3.448C2.013 6.751 2 7.167 2 12s.013 5.249.072 6.527c.059 1.288.295 2.432 1.311 3.448 1.016 1.016 2.16 1.252 3.448 1.311 1.278.059 1.694.072 6.527.072s5.249-.013 6.527-.072c1.288-.059 2.432-.295 3.448-1.311 1.016-1.016 1.252-2.16 1.311-3.448.059-1.278.072-1.694.072-6.527s-.013-5.249-.072-6.527c-.059-1.288-.295-2.432-1.311-3.448-1.016-1.016-2.16-1.252-3.448-1.311C15.252.013 14.835 0 12 0zm0 5.838c-3.403 0-6.162 2.76-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.76 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.324c-2.295 0-4.162-1.867-4.162-4.162s1.867-4.162 4.162-4.162 4.162 1.867 4.162 4.162-1.867 4.162-4.162 4.162zm6.406-11.845c-.796 0-1.44.645-1.44 1.44s.645 1.44 1.44 1.44 1.44-.645 1.44-1.44-.645-1.44-1.44-1.44z" />
+              </svg>
+            </a>
+            <a
+              href="https://linkedin.com"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800 transition-colors duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="currentColor"
+              >
+                <path d="M20.447 20.452H16.72v-5.337c0-1.274-.024-2.916-1.777-2.916-1.778 0-2.051 1.387-2.051 2.818v5.435H9.215V9h3.59v1.561h.049c.5-.945 1.724-1.942 3.55-1.942 3.798 0 4.5 2.5 4.5 5.754v6.079zM5.337 7.433a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.844 13.019H3.49V9h3.691v11.452zM22.225 0H1.771C.792 0 0 .785 0 1.748v20.505C0 23.215.792 24 1.771 24h20.451c.98 0 1.771-.785 1.771-1.748V1.748C23.997.785 23.206 0 22.225 0z" />
               </svg>
             </a>
           </div>
         </div>
       </div>
-      <hr className="my-2 border-blue-gray-50" />
+      <hr className="my-4 border-white opacity-25" />
       <p className="text-center text-xs font-normal">
-        &copy; 2024 Conecta Campo
+        &copy; 2024 Conecta Campo. Todos los derechos reservados.
       </p>
     </footer>
   );
 }
 
-export default FooterWithLogo;
+export default Footer;
