@@ -39,7 +39,7 @@ const Home = () => {
                 </div>
             </div>
 
-            
+            {/*Cómo funciona section*/}
             <section className="my-16 mx-auto" style={{ backgroundColor: 'white', maxWidth: '80%' }}>
                 <h2 className="text-4xl font-bold text-center mb-8 bg-darkgreen1 text-[#006400] py-4">  ¿Cómo funciona?</h2>
                 <div className="flex justify-center space-x-8 mx-8">
