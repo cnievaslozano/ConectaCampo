@@ -12,8 +12,11 @@ import ValueImage4 from '@assets/inn.webp';
 
 const About = () => {
     return (
+        <Layout>
+
+        
         <div className="bg-white text-black font-sans">
-            <Header />
+            
 
             <main className="bg-white p-4 text-center max-w-5xl mx-auto my-8 shadow-lg rounded-lg">
                 <h1 className="text-4xl font-serif font-bold text-2d572c mb-4 text-center text-[#006400]">Sobre Nosotros</h1>
@@ -102,8 +105,9 @@ const About = () => {
                 </section>
             </main>
 
-            <Footer />
+            
         </div>
+        </Layout>
     );
 }
 
