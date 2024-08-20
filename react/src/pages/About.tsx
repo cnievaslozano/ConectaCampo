@@ -1,12 +1,12 @@
 import React from 'react';
-import CristianImage from '../assets/perfil.jpg'; 
-import DaniImage from '../assets/perfil.jpg'; 
-import MiryamImage from '../assets/perfil.jpg'; 
-import GroupImage from '../assets/agra.jpg'; 
-import ValueImage1 from '../assets/eco.png'; 
-import ValueImage2 from '../assets/honest.png'; 
-import ValueImage3 from '../assets/jus.png'; 
-import ValueImage4 from '../assets/inn.png';
+import CristianImage from '../assets/perfil.webp'; 
+import DaniImage from '../assets/perfil.webp'; 
+import MiryamImage from '../assets/perfil.webp'; 
+import GroupImage from '../assets/agra.webp'; 
+import ValueImage1 from '../assets/eco.webp'; 
+import ValueImage2 from '../assets/honest.webp'; 
+import ValueImage3 from '../assets/jus.webp'; 
+import ValueImage4 from '../assets/inn.webp';
 import HomeLayout from '../components/HomeLayout';
 
 const About = () => {

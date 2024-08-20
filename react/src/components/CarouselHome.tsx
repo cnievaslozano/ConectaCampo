@@ -8,28 +8,28 @@ const products = [
     name: "Tomates camperos",
     price: "$599",
     owner: "Juan Gonzalez",
-    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.jpg?v=1648560931",
+    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.webp?v=1648560931",
   },
   {
     id: 2,
     name: "Lentejas",
     price: "$200",
     owner: "Carlos Sai",
-    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.jpg?v=1648560931",
+    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.webp?v=1648560931",
   },
   {
     id: 3,
     name: "Garbanzos",
     price: "€30",
     owner: "Rafel Dalmeu",
-    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.jpg?v=1648560931",
+    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.webp?v=1648560931",
   },
   {
     id: 4,
     name: "Peras limoneras",
     price: "$400",
     owner: "Andrei Matau",
-    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.jpg?v=1648560931",
+    imageUrl: "https://sembralia.com/cdn/shop/articles/tomate.webp?v=1648560931",
   },
   // Puedes agregar más productos aquí
 ];

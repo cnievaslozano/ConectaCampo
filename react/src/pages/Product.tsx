@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Header from '../components/Header'; 
 import Footer from '../components/Footer';
 import ProductImage from '../assets/manzanas.webp';
-import CorBefore from '../assets/cor antes.png'; 
-import CorAfter from '../assets/corazon.png'; 
+import CorBefore from '../assets/cor antes.webp'; 
+import CorAfter from '../assets/corazon.webp'; 
 import Layout from '../components/Layout';
 import Container from '../components/Container';
 

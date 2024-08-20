@@ -1,14 +1,14 @@
 import '../styles/App.css';
 import '../styles/home.css';
-import frutaImage from '../assets/fru.jpg'; 
+import frutaImage from '../assets/fru.webp'; 
 import React from 'react';
-import comoFuncionaImage1 from '../assets/cesta.png';
-import comoFuncionaImage2 from '../assets/producto.png';
-import comoFuncionaImage3 from '../assets/envio.png';
-import comoFuncionaImage4 from '../assets/agri.jpg';
-import comoFuncionaImage5 from '../assets/agra.jpg';
-import comoFuncionaImage6 from '../assets/agro.jpg';
-import beneficiosImage from '../assets/bene.jpg'; 
+import comoFuncionaImage1 from '../assets/cesta.webp';
+import comoFuncionaImage2 from '../assets/producto.webp';
+import comoFuncionaImage3 from '../assets/envio.webp';
+import comoFuncionaImage4 from '../assets/agri.webp';
+import comoFuncionaImage5 from '../assets/agra.webp';
+import comoFuncionaImage6 from '../assets/agro.webp';
+import beneficiosImage from '../assets/bene.webp'; 
 import HomeLayout from '../components/HomeLayout';
 
 const Home = () => {
