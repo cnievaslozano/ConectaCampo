@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../styles/userSettings.css'
-import Container from "../components/Container";
-import Layout from '../components/Layout';
+import '@styles/userSettings.css'
+import Container from "@components/common/Container";
+import Layout from '@components/layout/Layout';
 
 const UserSettings: React.FC = () => {
   const [name, setName] = useState('');

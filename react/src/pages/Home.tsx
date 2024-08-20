@@ -1,15 +1,15 @@
-import '../styles/App.css';
-import '../styles/home.css';
-import frutaImage from '../assets/fru.webp'; 
+import Layout from '@components/layout/Layout';
+import '@styles/App.css';
+import '@styles/home.css';
+import frutaImage from '@assets/fru.webp'; 
 import React from 'react';
-import comoFuncionaImage1 from '../assets/cesta.webp';
-import comoFuncionaImage2 from '../assets/producto.webp';
-import comoFuncionaImage3 from '../assets/envio.webp';
-import comoFuncionaImage4 from '../assets/agri.webp';
-import comoFuncionaImage5 from '../assets/agra.webp';
-import comoFuncionaImage6 from '../assets/agro.webp';
-import beneficiosImage from '../assets/bene.webp'; 
-import HomeLayout from '../components/HomeLayout';
+import comoFuncionaImage1 from '@assets/cesta.webp';
+import comoFuncionaImage2 from '@assets/producto.webp';
+import comoFuncionaImage3 from '@assets/envio.webp';
+import comoFuncionaImage4 from '@assets/agri.webp';
+import comoFuncionaImage5 from '@assets/agra.webp';
+import comoFuncionaImage6 from '@assets/agro.webp';
+import beneficiosImage from '@assets/bene.webp'; 
 
 const Home = () => {
     return (
@@ -139,7 +139,7 @@ const Home = () => {
                     </div>
                     <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">Mensaje:</label>
-                        <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+                        <textarea className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" rows={4} placeholder="Escribe tu mensaje aquí..."></textarea>
                     </div>
                     <div className="flex justify-center">
                         <button className="bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline" type="button">

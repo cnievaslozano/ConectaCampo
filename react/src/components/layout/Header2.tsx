@@ -1,8 +1,8 @@
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import iconConectaCampo from '../assets/conectaCampo.webp';
-import Button from './Button';
+import iconConectaCampo from '@assets/conectaCampo.webp';
+import Button from '@components/common/Button';
 import { useState } from 'react';
-import UserDropdown from './UserDropdown';
+import UserDropdown from '@components/user/UserDropdown';
 
 const Header = () => {
 

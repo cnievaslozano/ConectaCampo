@@ -1,55 +1,103 @@
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
-import iconConectaCampo from "../assets/conectaCampo.webp"
+import Button from "@components/common/Button";
+import iconConectaCampo from "@assets/conectaCampo.webp";
+import { useState } from "react";
 
-const InputBox = ({ type, placeholder, name }:any) => {
+const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
   return (
     <div className="mb-6">
       <input
+        id={id}
         type={type}
         placeholder={placeholder}
         name={name}
+        value={value}
+        onChange={onChange}
         className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
+        required
       />
     </div>
   );
 };
 
 const Signin = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
+  const handleSubmit = async (e:any) => {
+    e.preventDefault(); // Previene el comportamiento predeterminado del formulario de recargar la página
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      })
+      // ,
+      // mode: 'cors' // Asegúrate de que el servidor esté configurado para permitir CORS
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/auth/login", requestOptions);
+      if (!response.ok) {
+        throw new Error('Failed to sign in');
+      }
+      const result = await response.json(); // Suponiendo que la API devuelve JSON
+      console.log("Sign in successful", result);
+      // Aquí podrías manejar la respuesta, como guardar un token o redirigir al usuario
+    } catch (error:any) {
+      console.error("Error during sign in:", error);
+      setError(error.message); // Muestra el error en la interfaz
+    }
+  };
 
   return (
     <section className="bg-lightGreen3 py-20 dark:bg-dark lg:py-[120px]">
-      <div className={`container mx-auto`}>
+      <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
             <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white px-10 py-16 text-center dark:bg-dark-2 sm:px-12 md:px-[60px]">
               <div className="mb-10 text-center md:mb-16">
-              <Link to="/" className="flex justify-center items-center mb-4 lg:mb-0 w-full">
-                <img src={iconConectaCampo} className="h-20" alt="ConectaCampo Logo" />
-                <div className="flex flex-col justify-center items-center text-3xl font-semibold whitespace-nowrap text-black">
-                  <span className="leading-none mb-0">Conecta</span>
-                  <span className="leading-none mt-0">Campo</span>
-                </div>
-              </Link>
-            </div>
+                <Link
+                  to="/"
+                  className="flex justify-center items-center mb-4 lg:mb-0 w-full"
+                >
+                  <img
+                    src={iconConectaCampo}
+                    className="h-20"
+                    alt="ConectaCampo Logo"
+                  />
+                  <div className="flex flex-col justify-center items-center text-3xl font-semibold whitespace-nowrap text-black">
+                    <span className="leading-none mb-0">Conecta</span>
+                    <span className="leading-none mt-0">Campo</span>
+                  </div>
+                </Link>
+              </div>
 
-              <form method="post">
-                <InputBox type="user" name="username" placeholder="Usuario" />
+              <form onSubmit={handleSubmit}>
+                <InputBox id="username" type="text" name="username" placeholder="Usuario" value={username} onChange={(e:any) => setUsername(e.target.value)} />
                 <InputBox
+                  id="password"
                   type="password"
                   name="password"
                   placeholder="Contraseña"
+                  value={password}
+                  onChange={(e:any) => setPassword(e.target.value)}
                 />
+                {error && <p style={{ color: 'red' }}>Usuario o Contraseña incorrectos</p>}
                 <div className="mb-10">
-                  <Button text="Iniciar sesión" className="p-3" />
+                  <Button type="submit" text="Iniciar sesión" className="p-3" />
                 </div>
               </form>
               <p className="mb-6 text-base text-secondary-color dark:text-dark-7">
                 Conecta con
               </p>
               <ul className="-mx-2 mb-12 flex justify-between">
-
                 <li className="w-full px-2">
                   <a
                     href="/#"
@@ -78,18 +126,12 @@ const Signin = () => {
               </a>
               <p className="text-base text-body-color dark:text-dark-6">
                 <span className="pr-0.5">¿No tienes cuenta?</span>
-                <a
-                  href="/register"
-                  className="text-primary hover:underline"
-                >
+                <a href="/register" className="text-primary hover:underline">
                   Registrate
                 </a>
               </p>
 
-              <div>
-
-
-              </div>
+              <div></div>
             </div>
           </div>
         </div>
@@ -99,4 +141,3 @@ const Signin = () => {
 };
 
 export default Signin;
-

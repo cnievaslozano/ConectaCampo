@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import userImage from '../assets/user1.webp';
+import userImage from '@assets/user1.webp';
 import { Link } from 'react-router-dom';
 
 interface UserDropdownProps {

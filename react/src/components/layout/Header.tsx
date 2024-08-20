@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import iconConectaCampo from '../assets/conectaCampo.webp';
-import Button from './Button';
+import iconConectaCampo from '@assets/conectaCampo.webp';
+import Button from '@components/common/Button';
 import { useState } from 'react';
 
 const Header = () => {

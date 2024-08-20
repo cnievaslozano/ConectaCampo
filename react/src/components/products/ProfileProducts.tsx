@@ -1,6 +1,6 @@
 import React from 'react';
-import User from '../pages/Profile';
-import '../styles/Profile.css';
+import User from '@pages/Profile';
+import '@styles/Profile.css'
 
 const ProductoVenta: React.FC = () => {
   const itemsForSale = [
