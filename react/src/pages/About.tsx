@@ -9,10 +9,11 @@ import ValueImage1 from '@assets/eco.webp';
 import ValueImage2 from '@assets/honest.webp'; 
 import ValueImage3 from '@assets/jus.webp'; 
 import ValueImage4 from '@assets/inn.webp';
+import HomeLayout from '@components/HomeLayout';
 
 const About = () => {
     return (
-        <Layout>
+        <HomeLayout>
 
         
         <div className="bg-white text-black font-sans">
@@ -107,7 +108,7 @@ const About = () => {
 
             
         </div>
-        </Layout>
+        </HomeLayout>
     );
 }
 
