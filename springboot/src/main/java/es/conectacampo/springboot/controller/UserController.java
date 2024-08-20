@@ -1,8 +1,12 @@
 package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.model.User;
+import es.conectacampo.springboot.dto.CreateUserDTO;
+import es.conectacampo.springboot.dto.UpdateUserDTO;
 import es.conectacampo.springboot.response.ApiResponse;
+import es.conectacampo.springboot.service.FollowService;
 import es.conectacampo.springboot.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +16,38 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/user")
+@RequestMapping(path = "/api/v1/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FollowService followService;
+
+    // Follow a user
+    @PostMapping("/{userId}/follow/{followUserId}")
+    public ResponseEntity<?> followUser(@PathVariable Long userId, @PathVariable Long followUserId) {
+        try {
+            followService.follow(userId, followUserId);
+            return ResponseEntity.ok(new ApiResponse("success", "User followed successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error following: " + e.getMessage()));
+        }
+    }
+
+    // Unfollow a user
+    @DeleteMapping("/{userId}/unfollow/{followUserId}")
+    public ResponseEntity<?> unfollowUser(@PathVariable Long userId, @PathVariable Long followUserId) {
+        try {
+            followService.unfollow(userId, followUserId);
+            return ResponseEntity.ok(new ApiResponse("success", "User unfollowed successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error unfollowing: " + e.getMessage()));
+        }
+    }
 
     // Get all users
     @GetMapping("/all")
@@ -24,7 +55,7 @@ public class UserController {
           return userService.getUsers();
     }
 
-    // Get one user
+    // Get one user by id
     @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable Long id){
         return userService.getUserById(id);
@@ -32,25 +63,26 @@ public class UserController {
 
     // Create User
     @PostMapping
-    public ResponseEntity<ApiResponse> createUser(@RequestBody User user) {
+    public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
         try {
-            userService.createUser(user);
-            return ResponseEntity.ok(new ApiResponse("success", "User " + user.getUsername() + " created successfully"));
-        } catch (Exception e) {
+            userService.createUser(createUserDTO);
+            return ResponseEntity.ok(new ApiResponse("success", "User created successfully"));
+
+        } catch  (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("error", "Error creating user: "+ user.getUsername() + e.getMessage()));
+                    .body(new ApiResponse("error", "Error creating user: " + e.getMessage()));
         }
     }
 
     // Update User
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
         try {
-            userService.updateUser(id, userDetails);
-            return ResponseEntity.ok(new ApiResponse("success", "User "+ userDetails.getUsername() +" updated successfully"));
+            userService.updateUser(id, updateUserDTO);
+            return ResponseEntity.ok(new ApiResponse("success", "User updated successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("error", "Error updating user: " + userDetails.getUsername() + e.getMessage()));
+                    .body(new ApiResponse("error", "Error updating user: " + e.getMessage()));
         }
     }
 

@@ -1,12 +1,18 @@
 package es.conectacampo.springboot.service;
 
+import es.conectacampo.springboot.dto.CreatePublicationDTO;
+import es.conectacampo.springboot.dto.UpdatePublicationDTO;
 import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.Publication;
 import es.conectacampo.springboot.model.User;
 import es.conectacampo.springboot.repository.PublicationRepository;
+import es.conectacampo.springboot.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,38 +23,50 @@ public class PublicationService {
     @Autowired
     private PublicationRepository publicationRepository;
 
-    // get all publications
+    @Autowired
+    private UserRepository userRepository;
+
+    // CRUD PUBLICATION
     public List<Publication> getAllPublications() {
         return publicationRepository.findAll();
     }
 
-    // get one publication
     public Optional<Publication> getPublicationById(Long id) {
         Publication publication = publicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Publication not found for this id -> " + id));
         return Optional.ofNullable(publication);
     }
 
-    // create publication
-    public Publication createPublication (Publication publication) {
+    @Transactional
+    public Publication createPublication(CreatePublicationDTO createPublicationDTO) throws IOException {
+        User user = userRepository.findById(createPublicationDTO.getUserId())
+                .orElseThrow(() -> new ResolutionException("User not found for this id ->" + createPublicationDTO.getUserId()));
+
+        Publication publication = Publication.builder()
+                .user(user)
+                .description(createPublicationDTO.getDescription())
+                .address(createPublicationDTO.getAddress())
+                .schedule(createPublicationDTO.getSchedule())
+                .image(createPublicationDTO.getImage() != null ? createPublicationDTO.getImage().getBytes() : null)
+                .build();
+
         return publicationRepository.save(publication);
     }
 
-    // update publication
-    public Publication updatePublication (Long id, Publication publicationDetails) {
+    @Transactional
+    public Publication updatePublication(Long id, UpdatePublicationDTO updatePublicationDTO) {
         Publication publication = publicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Publication not found for this id :: " + id));
 
-        publication.setProducts(publicationDetails.getProducts());
-        publication.setDescription(publicationDetails.getDescription());
-        publication.setAddress(publicationDetails.getAddress());
-        publication.setSchedule(publicationDetails.getSchedule());
-        publication.setActive(publicationDetails.isActive());
+        publication.setDescription(updatePublicationDTO.getDescription());
+        publication.setAddress(updatePublicationDTO.getAddress());
+        publication.setSchedule(updatePublicationDTO.getSchedule());
+        publication.setImage(updatePublicationDTO.getImage()); // Asumimos que image ya es un byte[]
 
         return publicationRepository.save(publication);
     }
 
-    // delete publication
+
     public void deletePublication(Long id) {
         Publication publication = publicationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Publication not found for this id :: " + id));

@@ -1,8 +1,11 @@
 package es.conectacampo.springboot.controller;
 
+import es.conectacampo.springboot.dto.CreateProductDTO;
+import es.conectacampo.springboot.dto.UpdateProductDTO;
 import es.conectacampo.springboot.model.Product;
 import es.conectacampo.springboot.response.ApiResponse;
 import es.conectacampo.springboot.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +35,9 @@ public class ProductController {
 
     // Create Product
     @PostMapping
-    public ResponseEntity<ApiResponse> createPublication(@RequestBody Product product) {
+    public ResponseEntity<ApiResponse> createPublication(@Valid @RequestBody CreateProductDTO createProductDTO) {
         try {
-            productService.createProduct(product);
+            productService.createProduct(createProductDTO);
             return ResponseEntity.ok(new ApiResponse("success", "Product created successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -44,9 +47,9 @@ public class ProductController {
 
     // Update Product
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+    public ResponseEntity<ApiResponse> updateProduct(@PathVariable Long id, @RequestBody UpdateProductDTO updateProductDTO) {
         try {
-            productService.updateProduct(id, productDetails);
+            productService.updateProduct(id, updateProductDTO);
             return ResponseEntity.ok(new ApiResponse("success", "Product updated successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
