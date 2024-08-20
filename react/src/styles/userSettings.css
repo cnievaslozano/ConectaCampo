@@ -1,0 +1,54 @@
+.settings-container {
+
+}
+
+.settings-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.settings-form .form-group {
+    margin-bottom: 15px;
+}
+
+.settings-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.settings-form input,
+.settings-form select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.settings-form input[type="text"],
+.settings-form input[type="email"],
+.settings-form input[type="password"] {
+    box-sizing: border-box;
+}
+
+.settings-form select {
+    background-color: #fff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(138 168 110);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
