@@ -25,10 +25,10 @@ const About = () => {
                     Creemos que al facilitar el acceso directo entre productores y consumidores, no solo garantizamos precios justos, sino que también apoyamos y fortalecemos la agricultura local. Nuestra misión es proporcionar una solución tecnológica que beneficie a todos los involucrados en la cadena de suministro alimentaria, fomentando una economía regional más robusta y sostenible.
                 </p>
 
-                {/* Imagen del grupo */}
+                
                 <img src={GroupImage} alt="Nuestro Equipo" className="w-3/4 h-auto mt-8 mb-12 rounded-lg mx-auto" />
 
-                {/* Nuestra Misión y Visión */}
+                
                 <section className="flex flex-wrap justify-around mt-4">
                     <div className="flex-1 max-w-xs mx-2">
                         <h2 className="text-2xl font-serif font-bold text-2d572c text-[#006400]">Nuestra Misión</h2>
@@ -44,7 +44,7 @@ const About = () => {
                     </div>
                 </section>
 
-                {/* Nuestros Valores */}
+               
                 <section className="my-8">
                     <h2 className="text-2xl font-serif font-bold text-2d572c mb-4 text-center text-[#006400]">Nuestros Valores</h2>
                     <div className="flex justify-between mx-8">
@@ -71,7 +71,7 @@ const About = () => {
                     </div>
                 </section>
 
-                {/* Nuestro Equipo */}
+                
                 <section className="my-4">
                     <h2 className="text-2xl font-serif font-bold text-2d572c mb-4 text-center text-[#006400]">Nuestro Equipo</h2>
                     <div className="flex justify-around flex-wrap">
@@ -90,7 +90,7 @@ const About = () => {
                     </div>
                 </section>
 
-                {/* Llamado a la Acción */}
+                
                 <section className="my-8 text-center">
                     <h2 className="text-2xl font-serif font-bold text-2d572c mb-4 text-[#006400]">Únete a Nosotros</h2>
                     <p className="text-black max-w-3xl mx-auto mb-4">

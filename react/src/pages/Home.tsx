@@ -9,7 +9,7 @@ import comoFuncionaImage3 from '../assets/envio.png';
 import comoFuncionaImage4 from '../assets/agri.jpg';
 import comoFuncionaImage5 from '../assets/agra.jpg';
 import comoFuncionaImage6 from '../assets/agro.jpg';
-import beneficiosImage from '../assets/bene.jpg'; // Añade la imagen aquí
+import beneficiosImage from '../assets/bene.jpg'; 
 
 const Home = () => {
     return (
@@ -39,7 +39,7 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* "Cómo Funciona" Section */}
+            
             <section className="my-16 mx-auto" style={{ backgroundColor: 'white', maxWidth: '80%' }}>
                 <h2 className="text-4xl font-bold text-center mb-8 bg-darkgreen1 text-[#006400] py-4">  ¿Cómo funciona?</h2>
                 <div className="flex justify-center space-x-8 mx-8">
@@ -61,7 +61,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* New "Nuestros Productores Aliados" Section */}
+           
             <section className="my-16 py-8" style={{ backgroundColor: 'white', maxWidth: '85%', margin: 'auto' }}>
                 <h2 className="text-4xl font-bold text-center mb-8 text-[#006400] py-4">Nuestros productores aliados</h2>
                 <p className="text-center text-xl mb-4" style={{ maxWidth: '900px', margin: 'auto' }}>
@@ -83,7 +83,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* "Testimonios de Clientes" Section */}
+           
             <section className="my-16 py-8" style={{ backgroundColor: '#f9f9f9', maxWidth: '85%', margin: 'auto' }}>
                 <h2 className="text-4xl font-bold text-center mb-8 text-[#006400]">Testimonios de Clientes</h2>
                 <div className="flex justify-center space-x-8 mx-8">
@@ -102,7 +102,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* "Beneficios de Nuestros Productos" Section */}
+           
             <section className="my-16 py-8" style={{ maxWidth: '85%', margin: 'auto', backgroundColor: 'white' }}>
                 <h2 className="text-4xl font-bold text-center mb-8 text-[#006400]">Beneficios de Nuestros Productos</h2>
                 <div className="flex justify-center items-center space-x-8 mx-8">
@@ -124,7 +124,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* "Contacto" Section */}
+            
             <section className="my-16 py-8" style={{ backgroundColor: 'white', maxWidth: '85%', margin: 'auto' }}>
                 <h2 className="text-4xl font-bold text-center mb-8 text-[#006400]">Contacto</h2>
                 <p className="text-center text-xl mb-8">¿Tienes alguna pregunta o comentario? ¡Nos encantaría saber de ti!</p>
