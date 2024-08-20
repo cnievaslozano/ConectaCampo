@@ -1,6 +1,8 @@
 import Header from './Header';
 import Footer from './Footer';
 import Header2 from './Header2'
+
+
 const Layout = ({ children }:any) => {
   return (
     <div className="">

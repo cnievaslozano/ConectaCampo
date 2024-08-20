@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import Home from '@pages/Home';
-import About from '@pages/About';
-import Contact from '@pages/Contact';
-import Product from '@pages/Product';
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import Home from "@pages/Home";
+import About from "@pages/About";
+import Contact from "@pages/Contact";
+import Product from "@pages/Product";
 import User from "@pages/Profile";
-import ProductoVenta from '@components/products/ProfileProducts';
-import ProfileFollowList from '@pages/ProfileFollowList';
-import Configuration from '@pages/UserSettings';
-import Signin from '@pages/Signin';
-import Register from '@pages/Register';
-import Search from '@pages/Search';
-import AddProduct from '@components/products/AddProduct';
-import Feed from '@pages/Feed';
+import ProductoVenta from "@components/products/ProfileProducts";
+import ProfileFollowList from "@pages/ProfileFollowList";
+import Configuration from "@pages/UserSettings";
+import Signin from "@pages/Signin";
+import Register from "@pages/Register";
+import Search from "@pages/Search";
+import AddProduct from "@components/products/AddProduct";
+import Feed from "@pages/Feed";
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
 
@@ -24,7 +29,7 @@ const ScrollToTop: React.FC = () => {
   return null;
 };
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
@@ -40,19 +45,16 @@ if (rootElement) {
           <Route path="signIn" element={<Signin />} />
           <Route path="register" element={<Register />} />
           <Route path="profile" element={<ProductoVenta />} />
-          <Route path='search/*' element={<Search />} />
-          <Route path='feed' element={<Feed />} />
-          <Route path='addProduct/*' element={<AddProduct />} />
+          <Route path="search/*" element={<Search />} />
+          <Route path="feed" element={<Feed />} />
+          <Route path="addProduct/*" element={<AddProduct />} />
           <Route path="profile/followList" element={<ProfileFollowList />} />
           <Route path="profile/followerList" element={<ProfileFollowList />} />
           <Route path="profile/configuration" element={<Configuration />} />
-
-
         </Routes>
       </Router>
-    </React.StrictMode>,
-  )
+    </React.StrictMode>
+  );
 } else {
-  console.error('No se pudo encontrar el elemento raíz en el DOM');
+  console.error("No se pudo encontrar el elemento raíz en el DOM");
 }
-
