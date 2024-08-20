@@ -1,4 +1,3 @@
-import Layout from '../components/Layout';
 import '../styles/App.css';
 import '../styles/home.css';
 import frutaImage from '../assets/fru.jpg'; 
@@ -10,10 +9,11 @@ import comoFuncionaImage4 from '../assets/agri.jpg';
 import comoFuncionaImage5 from '../assets/agra.jpg';
 import comoFuncionaImage6 from '../assets/agro.jpg';
 import beneficiosImage from '../assets/bene.jpg'; 
+import HomeLayout from '../components/HomeLayout';
 
 const Home = () => {
     return (
-        <Layout>
+        <HomeLayout>
             <div 
                 className="relative home-container" 
                 style={{ 
@@ -148,7 +148,7 @@ const Home = () => {
                     </div>
                 </form>
             </section>
-        </Layout>
+        </HomeLayout>
     );
 };
 

@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import ProductImage from '../assets/manzanas.webp';
 import CorBefore from '../assets/cor antes.png'; 
 import CorAfter from '../assets/corazon.png'; 
+import Layout from '../components/Layout';
+import Container from '../components/Container';
 
 const ProductPage = () => {
     const [isFavorited, setIsFavorited] = useState(false);
@@ -14,10 +16,8 @@ const ProductPage = () => {
     };
 
     return (
-        <div className="bg-lightGreen3 text-black font-sans">
-            <Header />
-
-            <main className="bg-lightGreen3 p-8">
+        <Layout>
+            <Container className=''>
                 <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
                     <div className="flex-shrink-0 w-full lg:w-1/2">
                         <img src={ProductImage} alt="Producto" className="w-full h-auto object-cover" />
@@ -60,10 +60,8 @@ const ProductPage = () => {
                         </div>
                     </div>
                 </div>
-            </main>
-
-            <Footer />
-        </div>
+            </Container>
+        </Layout>
     );
 }
 

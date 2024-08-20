@@ -1,6 +1,4 @@
 import React from 'react';
-import Header from '../components/Header'; 
-import Footer from '../components/Footer'; 
 import CristianImage from '../assets/perfil.jpg'; 
 import DaniImage from '../assets/perfil.jpg'; 
 import MiryamImage from '../assets/perfil.jpg'; 
@@ -9,11 +7,11 @@ import ValueImage1 from '../assets/eco.png';
 import ValueImage2 from '../assets/honest.png'; 
 import ValueImage3 from '../assets/jus.png'; 
 import ValueImage4 from '../assets/inn.png';
-import Layout from '../components/Layout';
+import HomeLayout from '../components/HomeLayout';
 
 const About = () => {
     return (
-        <Layout>
+        <HomeLayout>
 
         
         <div className="bg-white text-black font-sans">
@@ -108,7 +106,7 @@ const About = () => {
 
             
         </div>
-        </Layout>
+        </HomeLayout>
     );
 }
 
