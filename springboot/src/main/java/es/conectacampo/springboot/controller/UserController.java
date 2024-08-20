@@ -1,47 +1,68 @@
 package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.model.User;
+import es.conectacampo.springboot.response.ApiResponse;
 import es.conectacampo.springboot.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "api/v1/users")
+@RequestMapping(path = "api/v1/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     // Get all users
-    @GetMapping
+    @GetMapping("/all")
     public List<User> getAllUsers() {
           return userService.getUsers();
     }
 
     // Get one user
-    @GetMapping("/{userId}")
-    public Optional<User> getById(@PathVariable("userId") Long userId){
-        return userService.getUser(userId);
+    @GetMapping("/{id}")
+    public Optional<User> getUserById(@PathVariable Long id){
+        return userService.getUserById(id);
     }
 
     // Create User
     @PostMapping
-    public void save(@RequestBody User user){
-        userService.saveOrUpdate(user);
+    public ResponseEntity<ApiResponse> createUser(@RequestBody User user) {
+        try {
+            userService.createUser(user);
+            return ResponseEntity.ok(new ApiResponse("success", "User " + user.getUsername() + " created successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error creating user: "+ user.getUsername() + e.getMessage()));
+        }
     }
 
     // Update User
-    @PutMapping
-    public void update(@RequestBody User user){
-        userService.saveOrUpdate(user);
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        try {
+            userService.updateUser(id, userDetails);
+            return ResponseEntity.ok(new ApiResponse("success", "User "+ userDetails.getUsername() +" updated successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error updating user: " + userDetails.getUsername() + e.getMessage()));
+        }
     }
 
     // Delete User
-    @DeleteMapping("/{userId}")
-    public void delete(@PathVariable("userId") Long userId){
-        userService.delete(userId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id){
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok(new ApiResponse("success", "User deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse("error", "Error deleting user: " + e.getMessage()));
+        }
     }
 }
