@@ -2,26 +2,26 @@ package es.conectacampo.springboot.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "provinces")
-public class Province {
-
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "province", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Location> locations;
-
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products;
 }
