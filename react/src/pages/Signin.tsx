@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
-import iconConectaCampo from "../assets/conectaCampo.png"
+import iconConectaCampo from "../assets/conectaCampo.webp"
 
 const InputBox = ({ type, placeholder, name }:any) => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import iconConectaCampo from '../assets/conectaCampo.png';
+import iconConectaCampo from '../assets/conectaCampo.webp';
 
 export function FooterWithLogo() {
   return (
