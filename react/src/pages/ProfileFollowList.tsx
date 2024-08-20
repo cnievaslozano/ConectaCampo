@@ -1,13 +1,13 @@
 import React from 'react';
-import Layout from '../components/Layout';
-import Container from '../components/Container';
+import Layout from '@components/layout/Layout';
+import Container from '@components/common/Container';
 import { Link } from 'react-router-dom';
 
 
 const ProfileFollowList = () => {
     const followers = [
-        { id: 1, name: "Jorge del Amo", description: "Agricultor autoctono de pura cepa", location: "Reus, Catalunya", image:"https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.jpg" },
-        { id: 2, name: "Rafel Garcia", description: "Campero de la zona de Riudoms, siempre dispuesto", location: "Granada, España", image:"https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.jpg" },
+        { id: 1, name: "Jorge del Amo", description: "Agricultor autoctono de pura cepa", location: "Reus, Catalunya", image:"https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp" },
+        { id: 2, name: "Rafel Garcia", description: "Campero de la zona de Riudoms, siempre dispuesto", location: "Granada, España", image:"https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp" },
 
         // Agrega más items aquí
       ];

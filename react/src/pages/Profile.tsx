@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout";
+import Layout from "@components/layout/Layout";
 import { Link } from "react-router-dom";
-import Container from "../components/Container";
-import Button from "../components/Button";
+import Container from "@components/common/Container";
+import Button from "@components/common/Button";
 
 interface ProfileCardProps {
   imageUrl: string;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import Container from '../components/Container';
+import Layout from '@components/layout/Layout';
+import Container from '@components/common/Container';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import '../styles/search.css';
-import SearchProductGrid from '../components/SearchProductGrid';
+import '@styles/search.css';
+import SearchProductGrid from '@components/products/SearchProductGrid';
 
 const Search = () => {
 

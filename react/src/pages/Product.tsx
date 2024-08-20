@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Header from '../components/Header'; 
-import Footer from '../components/Footer';
-import ProductImage from '../assets/manzanas.webp';
-import CorBefore from '../assets/cor antes.png'; 
-import CorAfter from '../assets/corazon.png'; 
+import Header from '@components/layout/Header'; 
+import Footer from '@components/layout/Footer';
+import ProductImage from '@assets/manzanas.webp';
+import CorBefore from '@assets/cor antes.webp'; 
+import CorAfter from '@assets/corazon.webp'; 
 
 const ProductPage = () => {
     const [isFavorited, setIsFavorited] = useState(false);
