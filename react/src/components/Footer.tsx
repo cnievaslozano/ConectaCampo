@@ -1,96 +1,100 @@
 import React from 'react';
 import iconConectaCampo from '../assets/conectaCampo.png';
 
-const Footer = () => {
-    return (
-        <>
-            <footer className="relative z-10 bg-green-800 pb-10 pt-10 text-white">
-                <div className="container mx-auto">
-                    <div className="flex flex-col items-center text-center">
-                        <div className="mb-6">
-                            <a href="/#" className="inline-block max-w-[160px] mb-6">
-                                <img src={iconConectaCampo} alt="logo" className="max-w-full mx-auto" />
-                            </a>
-                        </div>
-                        <div className="w-full lg:w-8/12">
-                            <p className="text-lg mb-6">
-                                Conectamos agricultores con clientes finales para promover un comercio justo y local, apoyando la calidad y sostenibilidad en cada transacción.
-                            </p>
-                        </div>
-                        <div className="w-full mt-10">
-                            <h4 className="text-lg font-semibold mb-6">Síguenos</h4>
-                            <div className="flex justify-center space-x-3">
-                                <a
-                                    href="#"
-                                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
-                                >
-                                    <svg
-                                        width="8"
-                                        height="16"
-                                        viewBox="0 0 8 16"
-                                        className="fill-current"
-                                    >
-                                        <path d="M7.43902 6.4H6.19918H5.75639V5.88387V4.28387V3.76774H6.16709H6.5598V4.78387V5.59151V5.88387V6.40067H7.43902Z" />
-                                    </svg>
-                                </a>
-                                <a
-                                    href="#"
-                                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
-                                >
-                                    <svg
-                                        width="16"
-                                        height="12"
-                                        viewBox="0 0 16 12"
-                                        fill="fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M10 0.833328C4.83333 0.833328 0.833333 4.83333 0.833333 10C0.833333 15.1667 4.83333 19.1667 10 19.1667C15.1667 19.1667 19.1667 15.1667 19.1667 10C19.1667 4.83333 15.1667 0.833328 10 0.833328ZM10 17.0833C5.83333 17.0833 2.08333 13.3333 2.08333 10C2.08333 6.66667 5.83333 2.91667 10 2.91667C14.1667 2.91667 17.9167 6.66667 17.9167 10C17.9167 13.3333 14.1667 17.0833 10 17.0833ZM14.1667 8.75H12.0833V6.66667H11.6667C11.4167 6.66667 11.25 6.83333 11.25 7.08333V9.16667C11.25 9.41667 11.4167 9.58333 11.6667 9.58333H14.1667C14.4167 9.58333 14.5833 9.41667 14.5833 9.16667V8.75C14.5833 8.5 14.4167 8.33333 14.1667 8.33333C13.9167 8.33333 13.75 8.5 13.75 8.75V8.75H12.0833V8.75H14.1667Z"
-                                            fill="currentColor"
-                                        />
-                                    </svg>
-                                </a>
-                                <a
-                                    href="#"
-                                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
-                                >
-                                    <svg
-                                        width="16"
-                                        height="12"
-                                        viewBox="0 0 16 12"
-                                        fill="fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M16.875 1.125H1.125C0.5 1.125 0 1.625 0 2.25V13.75C0 14.375 0.5 14.875 1.125 14.875H16.875C17.5 14.875 18 14.375 18 13.75V2.25C18 1.625 17.5 1.125 16.875 1.125ZM16.875 2.25L9 7.875L1.125 2.25V2.25H16.875V2.25ZM1.125 13.75V3.875L9 9.5L16.875 3.875V13.75H1.125Z"
-                                            fill="currentColor"
-                                        />
-                                    </svg>
-                                </a>
-                                <a
-                                    href="#"
-                                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
-                                >
-                                    <svg
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 14 14"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M12.6168 7.88348C12.5396 7.91838 12.4628 7.94238 12.3783 7.95468C11.6139 7.95468 10.9097 8.12279 10.2781 8.49369C10.0559 8.60389 9.79294 8.66468 9.5192 8.66468C8.90441 8.66468 8.35147 8.25498 8.09998 7.74347C7.93454 7.32608 8.05765 6.86876 8.23569 6.70379C8.43028 6.512 8.78941 6.32179 9.05537 6.21389C9.17485 6.1601 9.29579 6.13038 9.41348 6.13038C9.69586 6.13038 9.95661 6.27093 10.1021 6.45444C10.3307 6.82691 10.4599 7.28767 10.4599 7.76181C10.4599 8.13726 10.4342 8.37858 10.4175 8.4746C10.4143 8.49119 10.4139 8.49585 10.4126 8.49809C10.3689 8.65945 10.2588 8.78298 10.0617 8.82932C9.97259 8.84828 9.88763 8.86888 9.80455 8.88968C9.55363 8.96934 9.3074 9.10461 9.12864 9.30349C8.96356 9.45858 8.91029 9.67953 8.99109 9.89794C9.02768 10.0449 9.09869 10.1755 9.19182 10.2625C9.39445 10.4916 9.6095 10.6663 9.87828 10.7669C10.0649 10.8326 10.2494 10.8965 10.4347 10.9459C10.4892 10.9617 10.5454 10.9765 10.6005 10.9892C10.7137 11.0118 10.8267 11.0156 10.9384 11.0156C11.0915 11.0156 11.2671 10.9752 11.4075 10.9186C11.5345 10.8683 11.6611 10.804 11.7626 10.7062C12.0895 10.3797 12.3275 10.0154 12.4537 9.64382C12.5439 9.45226 12.6167 9.27127 12.6644 9.09271C12.7083 8.92943 12.7389 8.76043 12.7581 8.59355C12.773 8.45265 12.7908 8.31244 12.8041 8.17288C12.8157 8.09256 12.8122 8.01327 12.7986 7.93416C12.7838 7.85544 12.7647 7.77986 12.7414 7.71061C12.7169 7.62646 12.6905 7.54381 12.6618 7.46348C12.6378 7.39487 12.6131 7.32681 12.6168 7.26023V7.88348Z"
-                                            fill="currentColor"
-                                        />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </>
-    );
-};
+export function FooterWithLogo() {
+  return (
+    <footer className="w-full bg-darkGreen1 p-2 text-white">
+      <div className="flex flex-col items-center text-center">
+        <div className="mb-2">
+          <a href="/#" className="inline-block max-w-[100px]">
+            <img src={iconConectaCampo} alt="logo-conecta-campo" className="max-w-full mx-auto" />
+          </a>
+        </div>
+        <div className="w-full lg:w-8/12">
+          <p className="text-xs mb-2">
+            Conectamos agricultores con clientes finales para promover un comercio justo y local, apoyando la calidad y sostenibilidad en cada transacción.
+          </p>
+        </div>
+        <div className="w-full mt-4">
+          <h4 className="text-sm font-semibold mb-2">Síguenos</h4>
+          <div className="flex justify-center space-x-2">
+            <a
+              href="#"
+              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+            >
+             
+              <svg
+                width="6"
+                height="12"
+                viewBox="0 0 6 12"
+                className="fill-current"
+              >
+                <path d="M5.43902 4.4H4.19918H3.75639V3.88387V2.28387V1.76774H4.16709H4.5598V2.78387V3.59151V3.88387V4.40067H5.43902Z" />
+              </svg>
+            </a>
+            <a
+              href="#"
+              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+            >
+              
+              <svg
+                width="12"
+                height="9"
+                viewBox="0 0 12 9"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.5 0.625C3.625 0.625 0.625 3.625 0.625 7.5C0.625 11.375 3.625 14.375 7.5 14.375C11.375 14.375 14.375 11.375 14.375 7.5C14.375 3.625 11.375 0.625 7.5 0.625ZM7.5 12.8125C4.375 12.8125 1.5625 10 1.5625 7.5C1.5625 5 4.375 2.1875 7.5 2.1875C10.625 2.1875 13.4375 5 13.4375 7.5C13.4375 10 10.625 12.8125 7.5 12.8125ZM10.625 6.5625H9.0625V5H8.75C8.5625 5 8.4375 5.125 8.4375 5.3125V6.875C8.4375 7.0625 8.5625 7.1875 8.75 7.1875H10.625C10.8125 7.1875 10.9375 7.0625 10.9375 6.875V6.5625C10.9375 6.375 10.8125 6.25 10.625 6.25C10.4375 6.25 10.3125 6.375 10.3125 6.5625H9.0625V6.5625H10.625Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+            >
+              
+              <svg
+                width="12"
+                height="9"
+                viewBox="0 0 12 9"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.65625 0.84375H0.84375C0.375 0.84375 0 1.21875 0 1.6875V10.3125C0 10.7812 0.375 11.1562 0.84375 11.1562H12.65625C13.125 11.1562 13.5 10.7812 13.5 10.3125V1.6875C13.5 1.21875 13.125 0.84375 12.65625 0.84375ZM12.65625 1.6875L6.75 6.0625L0.84375 1.6875H12.65625ZM0.84375 10.3125V2.90625L6.75 7.28125L12.65625 2.90625V10.3125H0.84375Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              className="flex h-5 w-5 items-center justify-center rounded-full border border-white text-white hover:bg-white hover:text-green-800"
+            >
+              
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.81193 5.63119C8.76077 5.65878 8.70997 5.67859 8.65276 5.68998C8.12887 5.68998 7.63666 5.82309 7.19064 6.19492C7.04242 6.2719 6.86558 6.31104 6.68272 6.31104C6.1783 6.31104 5.7261 6.04608 5.50639 5.68503C5.37341 5.40667 5.47587 5.1027 5.61676 4.97389C5.77466 4.829 6.02858 4.68684 6.2093 4.61042C6.28281 4.57755 6.35841 4.56019 6.43011 4.56019C6.70789 4.56019 6.96084 4.68766 7.08329 4.85833C7.27403 5.1449 7.38361 5.48534 7.38361 5.84136C7.38361 6.12295 7.36519 6.31489 7.35315 6.37724C7.35111 6.38939 7.35082 6.39189 7.34985 6.39427C7.32157 6.51109 7.24081 6.60187 7.08329 6.6425C7.00945 6.66265 6.9389 6.68371 6.87066 6.70491C6.61111 6.78367 6.35554 6.9114 6.16536 7.08754C6.00259 7.23267 5.96067 7.44083 6.02899 7.64112C6.05729 7.7518 6.10699 7.85092 6.17387 7.91615C6.31334 8.07569 6.46128 8.19116 6.65694 8.2568C6.79369 8.30448 6.92911 8.35053 7.06552 8.38449C7.09804 8.39352 7.13199 8.4025 7.16445 8.41035C7.24302 8.42882 7.32161 8.43086 7.39902 8.43086C7.524 8.43086 7.68358 8.39587 7.8086 8.34894C7.91883 8.30775 8.02906 8.24498 8.12043 8.16063C8.41528 7.865 8.61125 7.54292 8.70608 7.21787C8.76293 7.07415 8.81191 6.94079 8.84285 6.80903C8.86874 6.68607 8.88924 6.56282 8.90438 6.44066C8.91803 6.34171 8.93299 6.24309 8.94401 6.14503C8.95451 6.08274 8.95176 6.02163 8.93919 5.96129C8.92429 5.90256 8.90552 5.84718 8.88292 5.79795C8.85877 5.73893 8.83217 5.68194 8.80159 5.62739C8.77694 5.58248 8.75116 5.53885 8.75116 5.49665V5.63119Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr className="my-2 border-blue-gray-50" />
+      <p className="text-center text-xs font-normal">
+        &copy; 2024 Conecta Campo
+      </p>
+    </footer>
+  );
+}
 
-export default Footer;
+export default FooterWithLogo;
