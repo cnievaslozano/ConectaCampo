@@ -15,21 +15,17 @@ export function Footer() {
           </a>
         </div>
         <div className="w-full lg:w-8/12 mb-4">
-          <p className="text-xs lg:text-md xl:text-xl">
-            Nos dedicamos a establecer una conexión directa entre agricultores y
-            consumidores finales, con el firme propósito de fomentar un comercio
-            justo y local que beneficie a todas las partes involucradas. Nuestro
-            enfoque se centra en asegurar que cada transacción se realice bajo
-            principios de transparencia, equidad y respeto mutuo, garantizando
-            que los productos ofrecidos sean de la más alta calidad. Además,
-            promovemos prácticas sostenibles que contribuyen a la preservación
-            del medio ambiente y apoyan el desarrollo de comunidades agrícolas,
-            fortaleciendo la economía local y asegurando un futuro más justo y
-            saludable para todos.
+          <p className="text-xs lg:text-md xl:text-xl ">
+            Conectamos agricultores con clientes finales para promover un
+            comercio justo y local, apoyando la calidad y sostenibilidad en el
+            mercado. <br />
+            <span className="italic font-bolder">
+              "Más Verde, Más Fresco, Más Local"
+            </span>
           </p>
         </div>
         <div className="w-full mt-4">
-          <h4 className="text-sm font-semibold mb-2">Síguenos</h4>
+          <h4 className="text-md font-semibold mb-2">Síguenos para más</h4>
           <div className="flex justify-center space-x-4">
             <a
               href="https://facebook.com"
