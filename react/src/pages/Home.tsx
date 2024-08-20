@@ -11,12 +11,6 @@ import comoFuncionaImage5 from '../assets/agra.jpg';
 import comoFuncionaImage6 from '../assets/agro.jpg';
 import beneficiosImage from '../assets/bene.jpg'; 
 
-import '../styles/fonts.css';
-import '../styles/home.css';
-import imagenLanding from '../assets/fondo.webp'
-import Button from '../components/Button';
-import CarouselHome from '../components/CarouselHome';
-
 const Home = () => {
     return (
         <Layout>
@@ -32,17 +26,7 @@ const Home = () => {
                     </h1>
                     <p className="text-lg font-bold mt-4">
                         Explora una selección exclusiva de productos frescos <span className="font-bold">cultivados con dedicación por los mejores productores locales.</span> Transforma tu cocina con los sabores más auténticos y de calidad superior.
-            <section className='mt-8 text-center grid grid-cols-2'>
-                <div className='container'>
-                    <h1 className='mb-3 text-3xl text-darkGreen2 font-bold'>Agricultura Local</h1>
-                    <h3 className='mt-4 mb-3 text-xl'>Apoya a los agricultores locales y reduce el desperdicio de alimentos</h3>
-                    <p>
-                        Conecta directamente con los productores de tu zona para aprovechar el sabor de nuestra tierra, que es lo mejor que tenemos.
                     </p>
-                    <div className='mt-3 flex items-center'>
-                        <Button text="Empieza ahora" className="p-2" />
-                        <p className='text-gray-600'>Disfruta de la mejor calidad respetando el medioambiente!</p>
-                    </div>
                 </div>
 
                 <div className="absolute bottom-24 left-8 flex space-x-4">
@@ -54,20 +38,6 @@ const Home = () => {
                     </button>
                 </div>
             </div>
-                <div className='fondo-img'>
-                    <img src={imagenLanding} alt="" />
-                </div>
-            </section>
-
-            <section>
-                <CarouselHome />
-            </section>
-
-            <section className='fond'>
-                <div className='border h-3/4 rounded-lg bg-darkGreen1 shadow-xl opacity-80 border-gray'>
-
-                </div>
-            </section>
 
             
             <section className="my-16 mx-auto" style={{ backgroundColor: 'white', maxWidth: '80%' }}>
