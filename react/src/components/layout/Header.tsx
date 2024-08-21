@@ -92,7 +92,7 @@ const Header = () => {
                 <Button
                   className="rounded-full fade-in-up"
                   text="Inicia"
-                  to="signIn"
+                  to="/signIn"
                   onClick={handleAuth}
                 />
               ) : (
