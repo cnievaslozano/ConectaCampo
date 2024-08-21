@@ -1,7 +1,6 @@
-import Layout from "@components/layout/Layout";
+import HomeLayout from "@components/layout/HomeLayout";
 import "@styles/App.css";
 import "@styles/home.css";
-import frutaImage from "@assets/fru.webp";
 import React, { useEffect, useState } from "react";
 import Button from "@components/common/Button";
 import comoFuncionaImage1 from "@assets/cesta.webp";
@@ -17,7 +16,7 @@ import { FaArrowUp, FaCircle } from "react-icons/fa";
 
 const Home = () => {
   return (
-    <Layout>
+    <HomeLayout>
       <div className="relative w-full h-screen overflow-hidden">
         <video
           src={homeVideo}
@@ -313,7 +312,7 @@ const Home = () => {
         component={<FaArrowUp />}
         className="scroll-top-button"
       />
-    </Layout>
+    </HomeLayout>
   );
 };
 
