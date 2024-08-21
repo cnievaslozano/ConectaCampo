@@ -53,6 +53,13 @@ const Signin = () => {
       const result = await response.json(); // Suponiendo que la API devuelve JSON
       console.log("Sign in successful", result);
       // Aquí podrías manejar la respuesta, como guardar un token o redirigir al usuario
+      const authToken = result.token;
+      localStorage.setItem("token", result.token)
+      console.log(localStorage.getItem("token"));
+      
+      window.location.href = "/"  //Hace que vaya al directorio raiz una vez se haga el login correctamente
+      //TODO toastyfy succesfull
+
     } catch (error: any) {
       console.error("Error during sign in:", error);
       setError(error.message); // Muestra el error en la interfaz
