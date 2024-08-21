@@ -1,15 +1,12 @@
 import React from "react";
-import Header from "@components/layout/Header";
-import Footer from "@components/layout/Footer";
-import CristianImage from "@assets/perfil.webp";
-import DaniImage from "@assets/perfil.webp";
-import MiryamImage from "@assets/perfil.webp";
-import GroupImage from "@assets/agra.webp";
-import ValueImage1 from "@assets/eco.webp";
-import ValueImage2 from "@assets/honest.webp";
-import ValueImage3 from "@assets/jus.webp";
-import ValueImage4 from "@assets/inn.webp";
-import HomeLayout from "@components/layout/HomeLayout";
+import CristianImage from "@assets/about/perfil.webp";
+import DaniImage from "@assets/about/perfil.webp";
+import MiryamImage from "@assets/about/perfil.webp";
+import GroupImage from "@assets/home/agra.webp";
+import ValueImage1 from "@assets/about/eco.webp";
+import ValueImage2 from "@assets/about/honest.webp";
+import ValueImage3 from "@assets/about/jus.webp";
+import ValueImage4 from "@assets/about/inn.webp";
 import Layout from "@components/layout/Layout";
 
 const About = () => {
