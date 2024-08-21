@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Container from "@components/common/Container";
 import Button from "@components/common/Button";
 import CarouselHome from "@components/home/CarouselHome";
+import CardProduct from "@components/products/CardProduct";
 
 interface ProfileCardProps {
   imageUrl: string;
@@ -57,17 +58,10 @@ const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, 
           </div>
           <h1 className="text-xl mt-10 mb-5">Prublicaciones</h1>
           <div className="items-grid">
-              {itemsForSale.map((item) => (
-              <div key={item.id} className="item-card">
-                <Link to="/profile">
-                  <img className="item-image" src={item.image} alt="Err" />
-                  <h3 className="item-title">{item.title}</h3>
-                </Link>
+            <CardProduct />
+            <CardProduct />
+            <CardProduct />
 
-                  <p className="item-description">{item.description}</p>
-                  <p className="item-price">{item.price} €/kg</p>
-              </div>
-              ))}
           </div>
           <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
           <div className="items-grid">
