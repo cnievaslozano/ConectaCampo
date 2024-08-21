@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "@components/common/Button";
-import iconConectaCampo from "@assets/conectaCampo.webp";
+import iconConectaCampo from "@assets/conectaCampo.png";
 import { useState } from "react";
 
 const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
@@ -21,11 +21,11 @@ const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
 };
 
 const Signin = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario de recargar la página
 
     const myHeaders = new Headers();
@@ -37,20 +37,23 @@ const Signin = () => {
       body: JSON.stringify({
         username: username,
         password: password,
-      })
+      }),
       // ,
       // mode: 'cors' // Asegúrate de que el servidor esté configurado para permitir CORS
     };
 
     try {
-      const response = await fetch("http://localhost:8080/auth/login", requestOptions);
+      const response = await fetch(
+        "http://localhost:8080/auth/login",
+        requestOptions
+      );
       if (!response.ok) {
-        throw new Error('Failed to sign in');
+        throw new Error("Failed to sign in");
       }
       const result = await response.json(); // Suponiendo que la API devuelve JSON
       console.log("Sign in successful", result);
       // Aquí podrías manejar la respuesta, como guardar un token o redirigir al usuario
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error during sign in:", error);
       setError(error.message); // Muestra el error en la interfaz
     }
@@ -80,16 +83,27 @@ const Signin = () => {
               </div>
 
               <form onSubmit={handleSubmit}>
-                <InputBox id="username" type="text" name="username" placeholder="Usuario" value={username} onChange={(e:any) => setUsername(e.target.value)} />
+                <InputBox
+                  id="username"
+                  type="text"
+                  name="username"
+                  placeholder="Usuario"
+                  value={username}
+                  onChange={(e: any) => setUsername(e.target.value)}
+                />
                 <InputBox
                   id="password"
                   type="password"
                   name="password"
                   placeholder="Contraseña"
                   value={password}
-                  onChange={(e:any) => setPassword(e.target.value)}
+                  onChange={(e: any) => setPassword(e.target.value)}
                 />
-                {error && <p style={{ color: 'red' }}>Usuario o Contraseña incorrectos</p>}
+                {error && (
+                  <p style={{ color: "red" }}>
+                    Usuario o Contraseña incorrectos
+                  </p>
+                )}
                 <div className="mb-10">
                   <Button type="submit" text="Iniciar sesión" className="p-3" />
                 </div>

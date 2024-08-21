@@ -1,5 +1,5 @@
 import React from "react";
-import iconConectaCampo from "@assets/conectaCampo.webp";
+import iconConectaCampo from "@assets/conectaCampo.png";
 
 export function Footer() {
   return (

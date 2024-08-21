@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Button from "@components/common/Button";
-import iconConectaCampo from "@assets/conectaCampo.webp";
+import iconConectaCampo from "@assets/conectaCampo.png";
 
 const InputBox = ({ type, placeholder, name }: any) => {
   return (
@@ -23,8 +23,15 @@ const Register = () => {
           <div className="w-full px-4">
             <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white px-10 py-16 text-center dark:bg-dark-2 sm:px-12 md:px-[60px]">
               <div className="mb-10 text-center md:mb-16">
-                <Link to="/" className="flex justify-center items-center mb-4 lg:mb-0 w-full">
-                  <img src={iconConectaCampo} className="h-20" alt="ConectaCampo Logo" />
+                <Link
+                  to="/"
+                  className="flex justify-center items-center mb-4 lg:mb-0 w-full"
+                >
+                  <img
+                    src={iconConectaCampo}
+                    className="h-20"
+                    alt="ConectaCampo Logo"
+                  />
                   <div className="flex flex-col justify-center items-center text-3xl font-semibold whitespace-nowrap text-black">
                     <span className="leading-none mb-0">Conecta</span>
                     <span className="leading-none mt-0">Campo</span>
@@ -35,17 +42,30 @@ const Register = () => {
               <form method="post" encType="multipart/form-data">
                 <p className="text-start">Datos de cuenta: </p>
                 <InputBox type="user" name="username" placeholder="Usuario" />
-                <InputBox type="password" name="password" placeholder="Contraseña" />
+                <InputBox
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                />
 
                 <p className="text-start">Datos Personales: </p>
                 <InputBox type="text" name="name" placeholder="Nombre" />
                 <InputBox type="text" name="surname" placeholder="Apellidos" />
                 <InputBox type="email" name="email" placeholder="Email" />
-                <InputBox type="number" name="telephone" placeholder="Telefono" />
+                <InputBox
+                  type="number"
+                  name="telephone"
+                  placeholder="Telefono"
+                />
 
                 {/* Imagen de Perfil Opcional */}
                 <div className="mb-4">
-                  <label className="block text-start mb-2" htmlFor="profileImage">Imagen de Perfil:</label>
+                  <label
+                    className="block text-start mb-2"
+                    htmlFor="profileImage"
+                  >
+                    Imagen de Perfil:
+                  </label>
                   <input
                     type="file"
                     name="profileImage"
@@ -60,9 +80,7 @@ const Register = () => {
                 </div>
               </form>
 
-              <div>
-                {/* Aquí puedes agregar otros enlaces o contenido */}
-              </div>
+              <div>{/* Aquí puedes agregar otros enlaces o contenido */}</div>
             </div>
           </div>
         </div>

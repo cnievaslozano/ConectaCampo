@@ -49,10 +49,12 @@ const Home = () => {
             <div className="flex justify-center space-x-4">
               <Button
                 text="COMPRA AHORA"
+                to="feed"
                 className="inline-flex items-center rounded-full fade-in-up"
               />
               <Button
                 text="SOBRE NOSOSTROS"
+                to="about"
                 className="inline-flex items-center rounded-full border-2 border-green-900 hover:border-green-700 bg-green-900 hover:bg-green-700 fade-in-up"
               />
             </div>
