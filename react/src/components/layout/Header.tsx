@@ -1,10 +1,27 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import iconConectaCampo from "@assets/conectaCampo.png";
 import Button from "@components/common/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserDropdown from "@components/user/UserDropdown";
 
 const Header = () => {
+
+  //Bloque para ver si estas autentificado o no cada vez que se carga el componente
+  useEffect(() => {
+    if (localStorage.getItem("token") && localStorage.getItem("username")) {
+        console.log(localStorage.getItem("token") +" and user: "+ localStorage.getItem("username"));
+        setLog(true);
+
+      const tok = localStorage.getItem("token");
+
+      console.log()
+    }else{
+      console.log("no hay ni token ni user")
+    }
+}, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
+
+
+
   //Bloque para una vez estas autentificado
   const [logged, setLog] = useState<boolean>(false);
   const handleAuth = () => {
@@ -27,6 +44,7 @@ const Header = () => {
   };
 
   //Bloque para controlar el cerrar sesion de el Modal de usuario
+  //Si desde el modal se cierra la sesión, se envia desde el hijo a traves de el DataSend, en la funcion logOut del userDropdown
   const handleUserModalData = (data: boolean) => {
     setLog(data);
   };

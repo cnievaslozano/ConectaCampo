@@ -3,6 +3,7 @@ import Layout from "@components/layout/Layout";
 import { Link } from "react-router-dom";
 import Container from "@components/common/Container";
 import Button from "@components/common/Button";
+import CarouselHome from "@components/home/CarouselHome";
 
 interface ProfileCardProps {
   imageUrl: string;
@@ -82,6 +83,9 @@ const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, 
               </div>
               ))}
           </div>
+          <CarouselHome />
+
+          
       </Container>
 
     </Layout>

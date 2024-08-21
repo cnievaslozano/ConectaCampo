@@ -17,7 +17,7 @@ import { FaArrowUp, FaCircle } from "react-icons/fa";
 const Home = () => {
   return (
     <HomeLayout>
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-screen overflow-hidden z-10">
         <video
           src={homeVideo}
           autoPlay

@@ -55,9 +55,12 @@ const Signin = () => {
       // Aquí podrías manejar la respuesta, como guardar un token o redirigir al usuario
       const authToken = result.token;
       localStorage.setItem("token", result.token)
-      console.log(localStorage.getItem("token"));
-      
+      localStorage.setItem("username", result.Username)
+
       window.location.href = "/"  //Hace que vaya al directorio raiz una vez se haga el login correctamente
+
+      console.log("Succesfully logIn" + localStorage.getItem("token") +" and user: "+ localStorage.getItem("username")); //No se llega a ver
+      
       //TODO toastyfy succesfull
 
     } catch (error: any) {

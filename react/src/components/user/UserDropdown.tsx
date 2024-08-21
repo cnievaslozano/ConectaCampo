@@ -15,10 +15,12 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className, onDataSend
   const [logged, setLog] = useState<boolean>(true);
 
   // Si le damos al botón de cerrar sesión, enviamos al header que hemos cerrado sesión
-  const toggleLog = () => {
-    const newLoggedState = !logged; // Invertimos el estado actual
+  const logOut = () => {
+    const newLoggedState = false; // Invertimos el estado actual
     setLog(newLoggedState);
-    onDataSend(newLoggedState); // Enviamos el nuevo estado al padre
+    localStorage.removeItem("token"); //Eliminamos el token si se hace el logout
+    localStorage.removeItem("username"); //Eliminamos el token si se hace el logout
+    onDataSend(newLoggedState); // Enviamos el nuevo estado al padre osea al header
   };
 
   // Controlamos que el modal se abra o cierre
@@ -59,13 +61,13 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ text, className, onDataSend
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg"
+          className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-20"
         >
           <ul className="py-2">
             <Link to="/feed"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Feed</li></Link>
             <Link to="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Perfil</li></Link>
             <Link to="/profile/configuration"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Configuración</li></Link>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={toggleLog}>Cerrar sesión</li>
+            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={logOut}>Cerrar sesión</li>
           </ul>
         </div>
       )}
