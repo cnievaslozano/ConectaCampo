@@ -23,5 +23,5 @@ public class UpdatePublicationDTO {
     @Size(max = 100, message = "El horario no puede exceder los 100 caracteres")
     private String schedule;
 
-    private byte[] image;
+    private String pathPublicationImage;
 }

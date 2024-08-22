@@ -43,5 +43,5 @@ public class CreateUserDTO {
     @Size(max = 9, message = "El teléfono debe tener hasta 9 caracteres")
     private String telephone;
 
-    private MultipartFile profileImage;
+    private String pathProfileImage;
 }

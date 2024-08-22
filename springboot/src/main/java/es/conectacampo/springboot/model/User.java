@@ -76,9 +76,8 @@ public class User {
     @Column(name = "about_me", columnDefinition = "TEXT")
     private String aboutMe;
 
-    @Lob
-    @Column(name = "profile_image")
-    private byte[] profileImage;
+    @Column(name = "path_profile_image")
+    private String pathProfileImage;
 
 
     @Column(name = "created_at", nullable = false, updatable = false)

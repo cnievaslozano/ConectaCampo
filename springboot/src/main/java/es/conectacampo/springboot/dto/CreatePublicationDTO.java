@@ -28,5 +28,5 @@ public class CreatePublicationDTO {
     @Size(max = 100)
     private String schedule;
 
-    private MultipartFile image;
+    private String pathPublicationImage;
 }

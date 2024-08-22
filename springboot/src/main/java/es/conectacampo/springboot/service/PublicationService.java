@@ -47,7 +47,7 @@ public class PublicationService {
                 .description(createPublicationDTO.getDescription())
                 .address(createPublicationDTO.getAddress())
                 .schedule(createPublicationDTO.getSchedule())
-                .image(createPublicationDTO.getImage() != null ? createPublicationDTO.getImage().getBytes() : null)
+                .pathPublicationImage(createPublicationDTO.getPathPublicationImage())
                 .build();
 
         return publicationRepository.save(publication);
@@ -61,7 +61,7 @@ public class PublicationService {
         publication.setDescription(updatePublicationDTO.getDescription());
         publication.setAddress(updatePublicationDTO.getAddress());
         publication.setSchedule(updatePublicationDTO.getSchedule());
-        publication.setImage(updatePublicationDTO.getImage()); // Asumimos que image ya es un byte[]
+        publication.setPathPublicationImage(updatePublicationDTO.getPathPublicationImage());
 
         return publicationRepository.save(publication);
     }

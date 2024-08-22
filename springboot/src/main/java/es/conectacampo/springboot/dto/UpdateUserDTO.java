@@ -23,5 +23,5 @@ public class UpdateUserDTO {
     @Size(max = 250, message = "La descripción 'Sobre mí' no puede exceder los 250 caracteres")
     private String aboutMe;
 
-    private MultipartFile profileImage;
+    private String pathProfileImage;
 }
