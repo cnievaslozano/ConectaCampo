@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -25,10 +21,8 @@
       "@assets/*": ["assets/*"],
       "@styles/*": ["styles/*"],
       "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "src/declarations.d.ts"
-  ]
+  "include": ["src/**/*", "src/declarations.d.ts"]
 }
