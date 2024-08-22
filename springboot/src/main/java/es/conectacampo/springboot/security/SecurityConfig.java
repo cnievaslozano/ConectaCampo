@@ -49,7 +49,9 @@ public class SecurityConfig {
 
                     // USER
                     auth.requestMatchers("/api/v1/user/all").permitAll();
-                    auth.requestMatchers(HttpMethod.GET,"/api/v1/user/*").permitAll();
+                    auth.requestMatchers("/api/v1/user/*").permitAll();
+                    auth.requestMatchers("/api/v1/user").permitAll(); // register
+                    auth.requestMatchers(HttpMethod.POST,"/api/v1/user/*").permitAll(); // register
                     auth.requestMatchers(HttpMethod.PUT,"/api/v1/user/*").hasAnyRole("FARMER", "USER");
                     auth.requestMatchers(HttpMethod.DELETE,"/api/v1/user/*").hasRole("ADMIN");
 
