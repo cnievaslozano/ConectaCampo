@@ -1,104 +1,163 @@
 import React, { useEffect, useState } from "react";
 import Layout from "@components/layout/Layout";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "@components/common/Container";
 import Button from "@components/common/Button";
 import CarouselHome from "@components/home/CarouselHome";
 import CardProduct from "@components/products/CardProduct";
 
+// {    INFO GET USER in : http://localhost:8080/api/v1/user/3
+//   "id": 3,
+//   "following": [],
+//   "followers": [],
+//   "products": [],
+//   "roles": [
+//       {
+//           "id": 3,
+//           "name": "USER"
+//       }
+//   ],
+//   "city": "Calafell",
+//   "name": "Rafel",
+//   "surname": "López Carmen",
+//   "username": "rafel1234",
+//   "password": "$2a$10$pDELbj2vu8Zh0KC5/puJ/udfNHOJYQNwxj2CYXzQTLlgB7fYczScK",
+//   "email": "rafel1234@gmail.com",
+//   "telephone": "123456789",
+//   "aboutMe": null,
+//   "profileImage": null,
+//   "createdAt": "2024-08-19T21:04:10.000+00:00"
+//   OR GET ALL http://localhost:8080/api/v1/user/all
+//   {
+//     "id": 1,
+//     "products": [],
+//     "location": null,
+//     "role": "CLIENT",
+//     "name": "Paco",
+//     "surname": "Prueba",
+//     "username": "Paco001",
+//     "password": "admin",
+//     "email": "paco001@gmail.com",
+//     "telephone": "",
+//     "createdAt": "2024-07-30T17:47:32.000+00:00"
+// },
+// }
+
 interface ProfileCardProps {
   imageUrl: string;
   description: string;
   location: string;
-  itemsForSale: { id: number; title: string; description: string; price: number; image: string }[];
+  itemsForSale: {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    image: string;
+  }[];
 }
 
+const Profile: React.FC<ProfileCardProps> = ({
+  imageUrl,
+  description,
+  location,
+  itemsForSale,
+}) => { 
+  const [user, setUser] = useState(null)
+  const locationUrl = useLocation(); //Coge la url que hay
+  const userNameUrl = locationUrl.pathname.split("/").filter(Boolean).pop(); //Coge el ultimo segmento para ver el /profile/userName
+  console.log(userNameUrl);
 
-const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, itemsForSale }) => {
+  //Hacemos el fetch cogiendo el usuario que hay en la ruta. Lo haremos por un getAll
+  const handleProfile = async () => {
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow" as RequestRedirect,
+    };
+    
 
-  //Bloque para ver si es tu propio perfil cada vez que se carga el componente
-//   useEffect(() => {
-//     if (localStorage.getItem("username")===  ) {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/user/all", requestOptions);
+      const result = await response.json();
+      //De todo el json se busca el que tenga el usuario igual que la ruta
+      const userFound = result.find((item: { username: string | undefined; }) => item.username === userNameUrl);
+      setUser(userFound);   //TODO no funciona esto de state con el user, dice que es null o undefined
+      console.log(user);
 
 
 
-//     }else{
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
 
-//     }
-// }, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
+  useEffect(() => {handleProfile();console.log(user)}, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
 
-  //TODO Logica que mostrará la opción de añadir producto si es tu propio perfil 
+  //TODO Logica que mostrará la opción de añadir producto si es tu propio perfil
   // const [isOwnProfile, setIsOwnProfile] = useState(true);
   // const toggleIsOwnProfile = () => {
   //   setIsOwnProfile(!isOwnProfile);
   // }
 
-
   return (
     <Layout>
-
       <Container className="">
         <div className="profile-header">
-              <img src={imageUrl} alt="Profile" className="profile-image" />
-              <div className="profile-info">
-                <h1 className="profile-name">Juana de Arcos</h1>
-                <p className="profile-description">{description}</p>
-                <div className="flex justify-between">
-                  <p className="profile-location">{location}</p>
-                  <Link to="/addProduct">
-                  <Button text="Añadir Publicación" className="rounded-md p-1 text-gray-100"></Button>
-                  </Link>
-                </div>
- 
-              </div>
-              <div className="profile-info-stats">
-                <div className="stat-container">
-                  <p className="stat-name">Publicaciones</p>
-                  <p className="stat-indicator">{itemsForSale.length}</p>
-                </div>
-                <div className="stat-container">
-                  <p className="stat-name">Seguidos</p>
-                  <Link to="/profile/followList">
-                      <p className="stat-indicator">2</p>
-                  </Link>
-
-                </div>
-                <div className="stat-container">
-                  <p className="stat-name">Seguidores</p>
-                  <Link to="/profile/followerList">
-                      <p className="stat-indicator">2</p>
-                  </Link>
-                </div>
-              </div>
+          <img src={imageUrl} alt="Profile" className="profile-image" />
+          <div className="profile-info">
+            <h1 className="profile-name">{user.name}</h1>
+            <p className="profile-description">{description}</p>
+            <div className="flex justify-between">
+              <p className="profile-location">{location}</p>
+              <Link to="/addProduct">
+                <Button
+                  text="Añadir Publicación"
+                  className="rounded-md p-1 text-gray-100"
+                ></Button>
+              </Link>
+            </div>
           </div>
-          <h1 className="text-xl mt-10 mb-5">Prublicaciones</h1>
-          <div className="items-grid">
-            <CardProduct />
-            <CardProduct />
-            <CardProduct />
-
+          <div className="profile-info-stats">
+            <div className="stat-container">
+              <p className="stat-name">Publicaciones</p>
+              <p className="stat-indicator">{itemsForSale.length}</p>
+            </div>
+            <div className="stat-container">
+              <p className="stat-name">Seguidos</p>
+              <Link to="/profile/followList">
+                <p className="stat-indicator">2</p>
+              </Link>
+            </div>
+            <div className="stat-container">
+              <p className="stat-name">Seguidores</p>
+              <Link to="/profile/followerList">
+                <p className="stat-indicator">2</p>
+              </Link>
+            </div>
           </div>
-          <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
-          <div className="items-grid">
-              {itemsForSale.map((item) => (
-              <div key={item.id} className="item-card">
-                <Link to="/profile">
-                  <img className="item-image" src={item.image} alt="Err" />
-                  <h3 className="item-title">{item.title}</h3>
-                </Link>
+        </div>
+        <h1 className="text-xl mt-10 mb-5">Prublicaciones</h1>
+        <div className="items-grid">
+          <CardProduct />
+          <CardProduct />
+          <CardProduct />
+        </div>
+        <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
+        <div className="items-grid">
+          {itemsForSale.map((item) => (
+            <div key={item.id} className="item-card">
+              <Link to="/profile">
+                <img className="item-image" src={item.image} alt="Err" />
+                <h3 className="item-title">{item.title}</h3>
+              </Link>
 
-                  <p className="item-description">{item.description}</p>
-                  <p className="item-price">{item.price} €/kg</p>
-              </div>
-              ))}
-          </div>
-          <CarouselHome />
-
-          
+              <p className="item-description">{item.description}</p>
+              <p className="item-price">{item.price} €/kg</p>
+            </div>
+          ))}
+        </div>
+        <CarouselHome />
       </Container>
-
     </Layout>
-
   );
 };
 

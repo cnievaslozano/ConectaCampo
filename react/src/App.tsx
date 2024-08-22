@@ -44,7 +44,7 @@ if (rootElement) {
 
           <Route path="signIn" element={<Signin />} />
           <Route path="register" element={<Register />} />
-          <Route path="profile" element={<ProductoVenta />} />
+          <Route path="profile/*" element={<ProductoVenta />} />
           <Route path="search/*" element={<Search />} />
           <Route path="feed" element={<Feed />} />
           <Route path="addProduct/*" element={<AddProduct />} />

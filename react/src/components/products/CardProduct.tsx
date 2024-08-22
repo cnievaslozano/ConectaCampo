@@ -22,7 +22,7 @@ const CardProduct = (produc:any) => {
     description:"Sandias frescas plantadas al aire libre, sin conservantes ni pesticidas.",
     price: "3,49",
     quantity: 3,
-    userId: "Juan Gonzalez",
+    userId: "pepelozano",
     categoryIds: "Verduras",
     image:
       "https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2022/06/06/16545437734127.jpg",
@@ -49,7 +49,7 @@ const CardProduct = (produc:any) => {
           </Link>
           <div className="flex items-center mt-1 mb-4">
             <div>
-              <Link to="/profile">
+              <Link to={"/profile/" + product.userId}>
                 <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
                   {product.userId}
                 </span>
