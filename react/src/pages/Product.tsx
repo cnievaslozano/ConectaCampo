@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
 import Header from '../components/Header'; 
 import Footer from '../components/Footer';
 import ProductImage from '../assets/manzanas.webp';
@@ -10,7 +11,8 @@ import Container from '../components/Container';
 
 const ProductPage = () => {
     const [isFavorited, setIsFavorited] = useState(false);
-    const userName = "Juan Fernandez"; 
+    const userName = "Juana de Arcos"; 
+
     const toggleFavorite = () => {
         setIsFavorited(!isFavorited);
     };
@@ -21,19 +23,20 @@ const ProductPage = () => {
                 <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
                     <div className="flex-shrink-0 w-full lg:w-1/2">
                         <img src={ProductImage} alt="Producto" className="w-full h-auto object-cover" />
-                    </div>
+                    </div> 
 
                     <div className="flex-grow mt-8 lg:mt-0 lg:ml-8">
-                        <div className="flex justify-between items-center">
-                            <h1 className="text-3xl font-bold text-2d572c">Manzanas</h1>
-                            <div className="flex items-center">
-                                <img src={UserImage} alt="Usuario" className="w-14 h-14 rounded-full" />
-                                <span className="ml-3 text-lg font-semibold text-black-700">{userName}</span>
-                            </div>
+                        <h1 className="text-3xl font-bold text-2d572c">Manzanas</h1>
+                        
+                        <div className="flex items-center mt-4">
+                            <Link to="/profile">
+                                <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center">
+                                    <img src={UserImage} alt="Usuario" className="w-8 h-8 rounded-full mr-3" />
+                                    {userName}
+                                </span>
+                            </Link>
                         </div>
-                        <p className="text-xl text-gray-700 mt-4">
-                            Manzanas BIO
-                        </p>
+
                         <p className="text-2xl text-black mt-4">
                             $4.99
                         </p>
