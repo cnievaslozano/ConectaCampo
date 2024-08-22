@@ -42,6 +42,12 @@ public class UserService {
         return Optional.ofNullable(user);
     }
 
+    public Optional<User> getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for this username -> " + username));
+        return Optional.ofNullable(user);
+    }
+
     @Transactional
     public User createUser(CreateUserDTO createUserDTO) {
         Set<Role> roles = createUserDTO.getRoles().stream()

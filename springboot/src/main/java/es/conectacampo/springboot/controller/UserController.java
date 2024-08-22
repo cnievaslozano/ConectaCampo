@@ -62,6 +62,13 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    // Get one user by username
+    @GetMapping("/{username}")
+    public Optional<User> getUserByUsername(@PathVariable String username){
+        return userService.getUserByUsername(username);
+    }
+
+
     // Create User
     @PostMapping
     public ResponseEntity<ApiResponse> createUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
