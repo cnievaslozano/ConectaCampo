@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@components/layout/Layout";
 import { Link } from "react-router-dom";
 import Container from "@components/common/Container";
@@ -12,13 +12,28 @@ interface ProfileCardProps {
   location: string;
   itemsForSale: { id: number; title: string; description: string; price: number; image: string }[];
 }
+
+
+const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, itemsForSale }) => {
+
+  //Bloque para ver si es tu propio perfil cada vez que se carga el componente
+//   useEffect(() => {
+//     if (localStorage.getItem("username")===  ) {
+
+
+
+//     }else{
+
+//     }
+// }, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
+
   //TODO Logica que mostrará la opción de añadir producto si es tu propio perfil 
   // const [isOwnProfile, setIsOwnProfile] = useState(true);
   // const toggleIsOwnProfile = () => {
   //   setIsOwnProfile(!isOwnProfile);
   // }
 
-const Profile: React.FC<ProfileCardProps> = ({ imageUrl, description, location, itemsForSale }) => {
+
   return (
     <Layout>
 

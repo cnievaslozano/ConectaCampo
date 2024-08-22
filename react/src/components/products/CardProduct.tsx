@@ -65,7 +65,7 @@ const CardProduct = (produc:any) => {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-base font-bold text-gray-800 dark:text-white">
-                {product.price} €/kg - {product.quantity}kg
+                <span className="">{product.price} €/kg</span> - {product.quantity}kg
                 
                
             </span>
