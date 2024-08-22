@@ -54,15 +54,19 @@ const Signin = () => {
       console.log("Sign in successful", result);
       // Aquí podrías manejar la respuesta, como guardar un token o redirigir al usuario
       const authToken = result.token;
-      localStorage.setItem("token", result.token)
-      localStorage.setItem("username", result.Username)
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("username", result.Username);
 
-      window.location.href = "/"  //Hace que vaya al directorio raiz una vez se haga el login correctamente
+      window.location.href = "/"; //Hace que vaya al directorio raiz una vez se haga el login correctamente
 
-      console.log("Succesfully logIn" + localStorage.getItem("token") +" and user: "+ localStorage.getItem("username")); //No se llega a ver
-      
+      console.log(
+        "Succesfully logIn" +
+          localStorage.getItem("token") +
+          " and user: " +
+          localStorage.getItem("username")
+      ); //No se llega a ver
+
       //TODO toastyfy succesfull
-
     } catch (error: any) {
       console.error("Error during sign in:", error);
       setError(error.message); // Muestra el error en la interfaz
@@ -150,9 +154,12 @@ const Signin = () => {
               </a>
               <p className="text-base text-body-color dark:text-dark-6">
                 <span className="pr-0.5">¿No tienes cuenta?</span>
-                <a href="/register" className="text-primary hover:underline">
+                <Link
+                  to="/register"
+                  className="text-md text-blue-500 dark:text-gray-400 hover:underline"
+                >
                   Registrate
-                </a>
+                </Link>
               </p>
 
               <div></div>
