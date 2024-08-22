@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Importa los estilos de Toastify
+import "react-toastify/dist/ReactToastify.css";
 import Button from "@components/common/Button";
 import iconConectaCampo from "@assets/conectaCampo.png";
 import illustration from "@assets/ilustration/ilustrationRegister.png";
 import InputBox from "@components/common/InputBox";
+import { uploadImage } from "@utils/fireBaseUtils";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -16,8 +17,9 @@ const Register = () => {
     email: "",
     telephone: "",
     city: "",
-    profileImage: null,
+    pathProfileImage: "",
     accountType: "normal",
+    profileImageFile: null as File | null,
   });
 
   const navigate = useNavigate();
@@ -25,14 +27,15 @@ const Register = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value, type } = e.target;
+    const { name, value, type, files } = e.target as HTMLInputElement;
 
-    if (type === "file") {
-      const fileInput = e.target as HTMLInputElement;
-      setFormData({
-        ...formData,
-        [name]: fileInput.files ? fileInput.files[0] : null,
-      });
+    if (type === "file" && files && files[0]) {
+      const file = files[0];
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        profileImageFile: file,
+      }));
     } else {
       setFormData({
         ...formData,
@@ -42,15 +45,14 @@ const Register = () => {
   };
 
   const validateForm = () => {
-    const { name, surname, username, password, email, telephone, city } =
-      formData;
+    const { name, surname, username, password, email, city } = formData;
 
     if (!name || !surname || !username || !password || !email || !city) {
       toast.error("Por favor, complete todos los campos obligatorios.");
       return false;
     }
 
-    if (telephone && telephone.length !== 9) {
+    if (formData.telephone && formData.telephone.length !== 9) {
       toast.error("El número de teléfono debe tener 9 caracteres.");
       return false;
     }
@@ -58,57 +60,68 @@ const Register = () => {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    const roles = formData.accountType === "vendedor" ? ["FARMER"] : ["CLIENT"];
+    try {
+      let pathProfileImage = formData.pathProfileImage;
 
-    const data = new FormData();
-    data.append("roles", JSON.stringify(roles));
-    data.append("city", formData.city);
-    data.append("name", formData.name);
-    data.append("surname", formData.surname);
-    data.append("username", formData.username);
-    data.append("password", formData.password);
-    data.append("email", formData.email);
-    data.append("telephone", formData.telephone);
-    if (formData.profileImage) {
-      data.append("profileImage", formData.profileImage);
-    }
+      if (formData.profileImageFile) {
+        pathProfileImage = await uploadImage(formData.profileImageFile);
+      }
 
-    const requestOptions: RequestInit = {
-      method: "POST",
-      body: data,
-      redirect: "follow",
-    };
+      const roles = formData.accountType === "vendedor" ? ["FARMER"] : ["USER"];
 
-    fetch("http://localhost:8080/api/v1/user", requestOptions)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error en la solicitud");
-        }
-        return response.text();
-      })
-      .then((result) => {
-        toast.success("Registro exitoso. Redirigiendo a inicio de sesión...");
-        setTimeout(() => {
-          navigate("/signIn");
-        }, 2000); // Espera 2 segundos antes de redirigir
-      })
-      .catch((error) => {
+      const data = {
+        roles,
+        city: formData.city,
+        name: formData.name,
+        surname: formData.surname,
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        telephone: formData.telephone,
+        pathProfileImage,
+      };
+
+      const requestOptions: RequestInit = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        redirect: "follow",
+      };
+
+      const response = await fetch(
+        "http://localhost:8080/api/v1/user",
+        requestOptions
+      );
+      if (!response.ok) {
+        throw new Error("Error en la solicitud");
+      }
+      const result = await response.text();
+      toast.success("Registro exitoso. Redirigiendo a inicio de sesión...");
+      setTimeout(() => {
+        navigate("/signIn");
+      }, 2000);
+    } catch (error) {
+      if (error instanceof Error) {
         toast.error(`Error: ${error.message}`);
-      });
+      } else {
+        toast.error("Error desconocido.");
+      }
+    }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-lightGreen3">
       <ToastContainer />
       <div className="my-10 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-5xl">
-        {/* Imagen de la izquierda con altura específica */}
         <div className="py-10 w-full flex justify-center items-center lg:w-1/2 overflow-hidden">
           <img
             src={illustration}
@@ -117,7 +130,6 @@ const Register = () => {
           />
         </div>
 
-        {/* Contenedor del formulario */}
         <div className="w-full px-6 py-4 md:px-8 lg:w-1/2">
           <div className="flex justify-center mx-auto">
             <Link to="/">
@@ -134,7 +146,6 @@ const Register = () => {
           </p>
 
           <form className="mt-4" onSubmit={handleSubmit}>
-            {/* Campos del formulario */}
             <div className="flex gap-4">
               <div className="flex-1">
                 <InputBox
@@ -203,7 +214,7 @@ const Register = () => {
             <div className="mb-4">
               <input
                 type="file"
-                name="profileImage"
+                name="pathProfileImage"
                 className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-none dark:border-dark-3 dark:text-white"
                 onChange={handleChange}
               />
