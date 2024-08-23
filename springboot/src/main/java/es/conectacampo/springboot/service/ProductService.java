@@ -45,7 +45,7 @@ public class ProductService {
         User user = userRepository.findById(createProductDTO.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + createProductDTO.getUserId()));
 
-        Set<Category> categories = (Set<Category>) categoryRepository.findAllById(createProductDTO.getCategoryIds());
+        List<Category> categories = (categoryRepository.findAllById(createProductDTO.getCategoryIds()));
 
         Product product = Product.builder()
                 .user(user)

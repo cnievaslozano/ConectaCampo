@@ -1,11 +1,13 @@
 package es.conectacampo.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,8 +22,10 @@ public class Category {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @JsonBackReference
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Product> products;
+    @JsonBackReference
+    private List<Product> products;
 }

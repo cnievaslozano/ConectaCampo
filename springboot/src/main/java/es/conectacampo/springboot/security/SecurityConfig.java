@@ -45,12 +45,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     // Login & Register
                     auth.requestMatchers(   "/auth/login").permitAll();
+                    auth.requestMatchers("/api/v1/user/**").permitAll();
+
                     auth.requestMatchers(HttpMethod.POST,"/api/v1/user").permitAll();
 
                     // USER
                     auth.requestMatchers("/api/v1/user/all").permitAll();
                     auth.requestMatchers("/api/v1/user/username/*").permitAll();
                     auth.requestMatchers("/api/v1/user").permitAll(); // register
+                    auth.requestMatchers("/api/v1/user/id/*").permitAll(); // get by id
                     auth.requestMatchers(HttpMethod.GET,"/api/v1/user/*").permitAll();
                     auth.requestMatchers(HttpMethod.PUT,"/api/v1/user/*").hasAnyRole("FARMER", "USER");
                     auth.requestMatchers(HttpMethod.DELETE,"/api/v1/user/*").hasRole("ADMIN");
@@ -73,8 +76,8 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.DELETE, "/api/v1/publication/*").hasRole("FARMER");
 
                     // FOLLOWER
-                    auth.requestMatchers(HttpMethod.POST,"/api/v1/user/*/follow/*").hasAnyRole("FARMER", "USER");
-                    auth.requestMatchers(HttpMethod.DELETE,"/api/v1/user/*/unfollow/*").hasAnyRole("FARMER", "USER");
+                    auth.requestMatchers(HttpMethod.POST,"/api/v1/user/*/follow/*").permitAll();
+                    auth.requestMatchers(HttpMethod.DELETE,"/api/v1/user/*/unfollow/*").permitAll();
 
                     // CATEGORY
                     auth.requestMatchers("/api/v1/category/").hasAnyRole("FARMER", "ADMIN");
