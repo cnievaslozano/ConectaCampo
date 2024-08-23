@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@components/common/Button";
 import iconConectaCampo from "@assets/conectaCampo.png";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
   return (
@@ -23,7 +25,8 @@ const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
 const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario de recargar la página
@@ -38,8 +41,6 @@ const Signin = () => {
         username: username,
         password: password,
       }),
-      // ,
-      // mode: 'cors' // Asegúrate de que el servidor esté configurado para permitir CORS
     };
 
     try {
@@ -48,33 +49,27 @@ const Signin = () => {
         requestOptions
       );
       if (!response.ok) {
-        throw new Error("Failed to sign in");
+        throw new Error("Usuario o contraseña incorrectos");
       }
-      const result = await response.json(); // Suponiendo que la API devuelve JSON
-      console.log("Sign in successful", result);
-      // Aquí podrías manejar la respuesta, como guardar un token o redirigir al usuario
+      const result = await response.json();
       const authToken = result.token;
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("username", result.Username);
+      localStorage.setItem("token", authToken);
+      localStorage.setItem("username", result.username);
 
-      window.location.href = "/"; //Hace que vaya al directorio raiz una vez se haga el login correctamente
-
-      console.log(
-        "Succesfully logIn" +
-          localStorage.getItem("token") +
-          " and user: " +
-          localStorage.getItem("username")
-      ); //No se llega a ver
-
-      //TODO toastyfy succesfull
+      toast.success("Inicio de sesión exitoso");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error: any) {
       console.error("Error during sign in:", error);
-      setError(error.message); // Muestra el error en la interfaz
+      setError(error.message);
+      toast.error(error.message);
     }
   };
 
   return (
     <section className="bg-lightGreen3 py-20 dark:bg-dark lg:py-[120px]">
+      <ToastContainer />
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
@@ -113,11 +108,6 @@ const Signin = () => {
                   value={password}
                   onChange={(e: any) => setPassword(e.target.value)}
                 />
-                {error && (
-                  <p style={{ color: "red" }}>
-                    Usuario o Contraseña incorrectos
-                  </p>
-                )}
                 <div className="mb-10">
                   <Button type="submit" text="Iniciar sesión" className="p-3" />
                 </div>
