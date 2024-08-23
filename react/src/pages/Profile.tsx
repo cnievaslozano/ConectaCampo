@@ -5,6 +5,7 @@ import Container from "@components/common/Container";
 import Button from "@components/common/Button";
 import CarouselHome from "@components/home/CarouselHome";
 import CardProduct from "@components/products/CardProduct";
+import defaultImage from "@assets/user/defaultUser.webp"
 
 // {    INFO GET USER in : http://localhost:8080/api/v1/user/3
 //   "id": 3,
@@ -43,26 +44,47 @@ import CardProduct from "@components/products/CardProduct";
 // },
 // }
 
-interface ProfileCardProps {
-  imageUrl: string;
-  description: string;
-  location: string;
-  itemsForSale: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    image: string;
-  }[];
+interface User {
+  id: number;
+  following: User[];
+  followers: User[];
+  products: Product[];
+  roles: Role[];
+  city: string;
+  name: string;
+  surname: string;
+  username: string;
+  password: string;
+  email: string;
+  telephone: string;
+  aboutMe: string | null;
+  profileImage: string | null;
+  createdAt: string;
 }
 
-const Profile: React.FC<ProfileCardProps> = ({
-  imageUrl,
-  description,
-  location,
-  itemsForSale,
-}) => { 
-  const [user, setUser] = useState(null)
+interface Product {
+  id: number;
+  categories: Category[];
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  createdAt: string;
+}
+
+interface Category {
+  id?: number;
+  name?: string;
+}
+
+interface Role {
+  id: number;
+  name: string;
+}
+
+const Profile = () => { 
+
+  const [user, setUser] = useState<User | null>(null);
   const locationUrl = useLocation(); //Coge la url que hay
   const userNameUrl = locationUrl.pathname.split("/").filter(Boolean).pop(); //Coge el ultimo segmento para ver el /profile/userName
   console.log(userNameUrl);
@@ -81,10 +103,7 @@ const Profile: React.FC<ProfileCardProps> = ({
       //De todo el json se busca el que tenga el usuario igual que la ruta
       const userFound = result.find((item: { username: string | undefined; }) => item.username === userNameUrl);
       setUser(userFound);   //TODO no funciona esto de state con el user, dice que es null o undefined
-      console.log(user);
-
-
-
+      console.log(userFound);
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
@@ -98,16 +117,17 @@ const Profile: React.FC<ProfileCardProps> = ({
   //   setIsOwnProfile(!isOwnProfile);
   // }
 
-  return (
+  if(user){
+      return (
     <Layout>
       <Container className="">
         <div className="profile-header">
-          <img src={imageUrl} alt="Profile" className="profile-image" />
+          <img src={user.profileImage || defaultImage} alt="Profile" className="profile-image" title={user.username} />
           <div className="profile-info">
-            <h1 className="profile-name">{user.name}</h1>
-            <p className="profile-description">{description}</p>
+            <h1 className="profile-name">{user.name+ " " + user.surname}</h1>
+            <p className="profile-description">{user.aboutMe}</p>
             <div className="flex justify-between">
-              <p className="profile-location">{location}</p>
+              <p className="profile-location">{user.city}</p>
               <Link to="/addProduct">
                 <Button
                   text="Añadir Publicación"
@@ -119,18 +139,18 @@ const Profile: React.FC<ProfileCardProps> = ({
           <div className="profile-info-stats">
             <div className="stat-container">
               <p className="stat-name">Publicaciones</p>
-              <p className="stat-indicator">{itemsForSale.length}</p>
+              <p className="stat-indicator">{user.products.length}</p>
             </div>
             <div className="stat-container">
               <p className="stat-name">Seguidos</p>
               <Link to="/profile/followList">
-                <p className="stat-indicator">2</p>
+                <p className="stat-indicator">{user.following.length}</p>
               </Link>
             </div>
             <div className="stat-container">
               <p className="stat-name">Seguidores</p>
               <Link to="/profile/followerList">
-                <p className="stat-indicator">2</p>
+                <p className="stat-indicator">{user.followers.length}</p>
               </Link>
             </div>
           </div>
@@ -143,7 +163,7 @@ const Profile: React.FC<ProfileCardProps> = ({
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          {itemsForSale.map((item) => (
+          {/* {itemsForSale.map((item) => (
             <div key={item.id} className="item-card">
               <Link to="/profile">
                 <img className="item-image" src={item.image} alt="Err" />
@@ -153,12 +173,14 @@ const Profile: React.FC<ProfileCardProps> = ({
               <p className="item-description">{item.description}</p>
               <p className="item-price">{item.price} €/kg</p>
             </div>
-          ))}
+          ))} */}
         </div>
         <CarouselHome />
       </Container>
     </Layout>
   );
+  }
+
 };
 
 export default Profile;
