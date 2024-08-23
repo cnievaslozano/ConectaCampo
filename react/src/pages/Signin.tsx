@@ -15,7 +15,7 @@ const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
         name={name}
         value={value}
         onChange={onChange}
-        className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-none focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white"
+        className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-body-color outline-none focus:border-green-300 focus-visible:shadow-none dark:border-dark-3 dark:text-white"
         required
       />
     </div>
@@ -54,7 +54,7 @@ const Signin = () => {
       const result = await response.json();
       const authToken = result.token;
       localStorage.setItem("token", authToken);
-      localStorage.setItem("username", result.username);
+      localStorage.setItem("username", result.Username);
 
       toast.success("Inicio de sesión exitoso");
       setTimeout(() => {
@@ -73,7 +73,7 @@ const Signin = () => {
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white px-10 py-16 text-center dark:bg-dark-2 sm:px-12 md:px-[60px]">
+            <div className="relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white px-10 py-16 text-center sm:px-12 md:px-[60px]">
               <div className="mb-10 text-center md:mb-16">
                 <Link
                   to="/"
