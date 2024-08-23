@@ -96,6 +96,15 @@ const CardProduct = ({prod}:any) => {
           </div>
         </div>
       );
+  }else{
+    return(
+      <div
+      
+      className="h-full min-h-full max-h-full flex-shrink-0 flex flex-col items-center overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105"
+    >
+      Loading...
+    </div>
+    );
   }
 
 };

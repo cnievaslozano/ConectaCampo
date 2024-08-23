@@ -19,6 +19,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [logged, setLog] = useState<boolean>(true);
+  
 
   // Si le damos al botón de cerrar sesión, enviamos al header que hemos cerrado sesión
   const logOut = () => {
@@ -81,7 +82,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
                 Feed
               </li>
             </Link>
-            <Link to="/profile">
+            <Link to={"/profile/" + localStorage.getItem("username")}>
               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                 Perfil
               </li>
