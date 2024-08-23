@@ -14,8 +14,20 @@ interface product { //TODO falta implementarlo en el card product. Los fetchs ve
     schedule: string,
     addres: string,
 }
+interface Product { //Este es de product simple, arriba de publication y product
+  id: string;
+  categories: string[];  // O bien un array de objetos si las categorías tienen más propiedades
+  name: string;
+  description: string;
+  price: number;
+  quantity: number;
+  createdAt: string; // Podría ser un Date si prefieres manejar fechas como objetos Date en lugar de strings
+}
 
-const CardProduct = (produc:any) => {
+
+//TODO hay que llamar al usuario, alli se encuentran los products, ver el id del producto y luego buscar ese producto en publications para sacar horario etc
+
+const CardProduct = () => {
   const product = {
     id: 1,
     name: "Tomates camperos",

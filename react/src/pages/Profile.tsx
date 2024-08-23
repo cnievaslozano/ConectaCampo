@@ -6,6 +6,7 @@ import Button from "@components/common/Button";
 import CarouselHome from "@components/home/CarouselHome";
 import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp"
+import '@styles/Profile.css'
 
 // {    INFO GET USER in : http://localhost:8080/api/v1/user/3
 //   "id": 3,

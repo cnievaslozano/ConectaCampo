@@ -19,6 +19,7 @@ import Register from "@pages/Register";
 import Search from "@pages/Search";
 import AddProduct from "@components/products/AddProduct";
 import Feed from "@pages/Feed";
+import Profile from "@pages/Profile";
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
 
@@ -44,7 +45,7 @@ if (rootElement) {
 
           <Route path="signIn" element={<Signin />} />
           <Route path="register" element={<Register />} />
-          <Route path="profile/*" element={<ProductoVenta />} />
+          <Route path="profile/*" element={<Profile />} />
           <Route path="search/*" element={<Search />} />
           <Route path="feed" element={<Feed />} />
           <Route path="addProduct/*" element={<AddProduct />} />
