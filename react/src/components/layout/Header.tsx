@@ -1,50 +1,63 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import iconConectaCampo from "@assets/conectaCampo.png";
 import Button from "@components/common/Button";
 import { useEffect, useState } from "react";
 import UserDropdown from "@components/user/UserDropdown";
 
 const Header = () => {
-
-  //Bloque para ver si estas autentificado o no cada vez que se carga el componente
-  useEffect(() => {
-    if (localStorage.getItem("token") && localStorage.getItem("username")) {
-        console.log(localStorage.getItem("token") +" and user: "+ localStorage.getItem("username"));
-        setLog(true);
-
-      const tok = localStorage.getItem("token");
-
-      console.log()
-    }else{
-      console.log("no hay ni token ni user")
-    }
-}, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
-
-
-
-  //Bloque para una vez estas autentificado
   const [logged, setLog] = useState<boolean>(false);
+  const [userData, setUserData] = useState<any>(null); // Estado para almacenar la información del usuario
+  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+
+    if (token && username) {
+      setLog(true);
+      fetchUserData(username); // Llama a la función para obtener la información del usuario
+    } else {
+      console.log("No hay ni token ni user");
+    }
+  }, []);
+
+  // Función para obtener la información del usuario
+  const fetchUserData = async (username: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/user/username/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+      setUserData(data); // Almacena la información del usuario en el estado
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   const handleAuth = () => {
     setLog(!logged);
   };
 
-  //Bloque para usar el input de Explorar alimentos
-  const [inputValue, setInputValue] = useState("");
-  const navigate = useNavigate();
-
   const handleKeyDown = (event: any) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      // Redirigir a la ruta deseada
       navigate(`/search?name=${inputValue}`);
     }
   };
+
   const handleChange = (event: any) => {
     setInputValue(event.target.value);
   };
 
-  //Bloque para controlar el cerrar sesion de el Modal de usuario
-  //Si desde el modal se cierra la sesión, se envia desde el hijo a traves de el DataSend, en la funcion logOut del userDropdown
   const handleUserModalData = (data: boolean) => {
     setLog(data);
   };
@@ -65,7 +78,7 @@ const Header = () => {
         </Link>
 
         <div className="mr-16 lg:mb-0">
-          <ul className="flex lg:flex-row items-center font-medium rounded-lg text-center ">
+          <ul className="flex lg:flex-row items-center rounded-lg text-center text-lg font-bold">
             <li>
               <Link
                 to="/"
@@ -78,7 +91,7 @@ const Header = () => {
             <li>
               <Link
                 to="/about"
-                className="block py-2 px-3 flex-shrink text-white rounded md:bg-transparent"
+                className="block py-2 px-2 flex-shrink text-white rounded md:bg-transparent"
                 aria-current="page"
               >
                 Sobre Nosotros
@@ -87,7 +100,7 @@ const Header = () => {
             <li>
               <Link
                 to="/feed"
-                className="block py-2 px-2 pe-3 flex-shrink text-white rounded md:bg-transparent"
+                className="block py-2 px-2 flex-shrink text-white rounded md:bg-transparent"
                 aria-current="page"
               >
                 Mercado
@@ -108,7 +121,7 @@ const Header = () => {
             <li>
               {logged === false ? (
                 <Button
-                  className="rounded-full fade-in-up"
+                  className="rounded-full fade-in-up mx-2"
                   text="Inicia"
                   to="/signIn"
                   onClick={handleAuth}
@@ -116,8 +129,9 @@ const Header = () => {
               ) : (
                 <UserDropdown
                   text=""
-                  className="my-2"
+                  className="my-2 mx-2"
                   onDataSend={handleUserModalData}
+                  profileImage={userData?.pathProfileImage}
                 />
               )}
             </li>
