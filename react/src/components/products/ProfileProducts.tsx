@@ -1,16 +1,25 @@
 import React from 'react';
 import '@styles/Profile.css'
+import CardProduct from './CardProduct';
 
-const ProductoVenta: React.FC = () => {
-  const itemsForSale = [
-    { id: 1, title: "Sandias", description: "Sandias frescas de El priorat", price: 100, image:"https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp" },
-    { id: 2, title: "Melones", description: "Melones plantados de temporada", price: 150, image: "https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp" },
-    // Agrega más items aquí
-  ];
+const ProfileProducts = ({userId, products}:any) => {
+  //TODO aqui tiene que ir la logica el grid de las publicaciones de cada usuario
+
+
+
 
   return (
-    null
+    // <>
+    //   <p>{userId}</p>
+    //   <p></p>
+    //   {
+    //     products?.array?.map((product, index) => (
+    //       <CardProduct key={index} prod={product}/>
+    //     ))
+    //   }
+    //   <CardProduct />
+    // </>
   );
 };
 
-export default ProductoVenta;
+export default ProfileProducts;

@@ -7,6 +7,7 @@ import CarouselHome from "@components/home/CarouselHome";
 import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp"
 import '@styles/Profile.css'
+import ProfileProducts from "@components/products/ProfileProducts";
 
 // {    INFO GET USER in : http://localhost:8080/api/v1/user/3
 //   "id": 3,
@@ -88,7 +89,6 @@ const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const locationUrl = useLocation(); //Coge la url que hay
   const userNameUrl = locationUrl.pathname.split("/").filter(Boolean).pop(); //Coge el ultimo segmento para ver el /profile/userName
-  console.log(userNameUrl);
 
   //Hacemos el fetch cogiendo el usuario que hay en la ruta. Lo haremos por un getAll
   const handleProfile = async () => {
@@ -110,7 +110,7 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {handleProfile();console.log(user)}, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
+  useEffect(() => {handleProfile()}, []); // El array vacío asegura que este código se ejecute solo cuando el componente se monta
 
   //TODO Logica que mostrará la opción de añadir producto si es tu propio perfil
   // const [isOwnProfile, setIsOwnProfile] = useState(true);
@@ -164,22 +164,17 @@ const Profile = () => {
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          {/* {itemsForSale.map((item) => (
-            <div key={item.id} className="item-card">
-              <Link to="/profile">
-                <img className="item-image" src={item.image} alt="Err" />
-                <h3 className="item-title">{item.title}</h3>
-              </Link>
-
-              <p className="item-description">{item.description}</p>
-              <p className="item-price">{item.price} €/kg</p>
-            </div>
-          ))} */}
+          {user.products.map((item, index) => (
+              <CardProduct key={item.id} prod={item}/>
+          ))}
         </div>
-        <CarouselHome />
       </Container>
     </Layout>
   );
+  }else{
+    return(
+      <p>No se ha encontrado el usuario. Error 404</p>
+    )
   }
 
 };
