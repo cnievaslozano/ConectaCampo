@@ -5,7 +5,7 @@ import  Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Product from './pages/Product';
-
+import Error from './pages/Error';
 import User from "./pages/Profile";
 import ProductoVenta from './components/ProfileProducts';
 import ProfileFollowList from './pages/ProfileFollowList';
@@ -14,8 +14,9 @@ import Signin from './pages/Signin';
 import Register from './pages/Register';
 import Search from './pages/Search';
 import AddProduct from './components/AddProduct';
-import Feed from './pages/Feed';
+import Feed from './pages/Feed'; 
 const ScrollToTop: React.FC = () => {
+
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -45,7 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="profile/followerList" element={<ProfileFollowList />} />
           <Route path="profile/configuration" element={<Configuration />} />
 
-
+          <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   </React.StrictMode>,
