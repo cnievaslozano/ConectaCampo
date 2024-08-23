@@ -8,6 +8,7 @@ import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp"
 import '@styles/Profile.css'
 import ProfileProducts from "@components/products/ProfileProducts";
+import ErrorComp from "@components/layout/Error";
 
 // {    INFO GET USER in : http://localhost:8080/api/v1/user/3
 //   "id": 3,
@@ -173,7 +174,7 @@ const Profile = () => {
   );
   }else{
     return(
-      <p>No se ha encontrado el usuario. Error 404</p>
+            <ErrorComp />
     )
   }
 

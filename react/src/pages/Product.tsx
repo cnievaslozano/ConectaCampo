@@ -6,12 +6,14 @@ import CorBefore from '@assets/cor antes.webp';
 import CorAfter from '@assets/corazon.webp'; 
 import Layout from '@components/layout/Layout';
 import Container from '@components/common/Container';
+import { Link } from 'react-router-dom'; 
+import userImage from '@assets/user1.webp'
 
 const ProductPage = () => {
     const [isFavorited, setIsFavorited] = useState(false);
+    const userName = "Juana de Arcos"; 
 
     const toggleFavorite = () => {
-
         setIsFavorited(!isFavorited);
     };
 
@@ -21,18 +23,25 @@ const ProductPage = () => {
                 <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
                     <div className="flex-shrink-0 w-full lg:w-1/2">
                         <img src={ProductImage} alt="Producto" className="w-full h-auto object-cover" />
-                    </div>
+                    </div> 
 
                     <div className="flex-grow mt-8 lg:mt-0 lg:ml-8">
-                        <h1 className="text-3xl font-bold text-2d572c"> Manzanas</h1>
-                        <p className="text-xl text-gray-700 mt-4">
-                            Manzanas BIO
-                        </p>
+                        <h1 className="text-3xl font-bold text-2d572c">Manzanas</h1>
+                        
+                        <div className="flex items-center mt-4">
+                            <Link to="/profile">
+                                <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center">
+                                    <img src={userImage} alt="Usuario" className="w-8 h-8 rounded-full mr-3" />
+                                    {userName}
+                                </span>
+                            </Link>
+                        </div>
+
                         <p className="text-2xl text-black mt-4">
                             $4.99
                         </p>
                         <p className="text-lg text-black mt-4">
-                        Manzanas Bio de Villaviciosa, Asturias, cultivadas de manera orgánica en suelos ricos y con un clima perfecto para lograr un sabor y frescura incomparables.
+                            Manzanas Bio de Villaviciosa, Asturias, cultivadas de manera orgánica en suelos ricos y con un clima perfecto para lograr un sabor y frescura incomparables.
                         </p>
                         <ul className="list-disc list-inside mt-4 text-black">
                             <li>Origen: Villaviciosa, Asturias</li>
@@ -49,13 +58,11 @@ const ProductPage = () => {
                                 onClick={toggleFavorite}
                             >
                                 <span className="mr-2">Añadir a Favoritos</span>
-                                <div className="w-6 h-6">
-                                    <img 
-                                        src={isFavorited ? CorAfter : CorBefore} 
-                                        alt="Corazón" 
-                                        className="w-full h-full object-contain"
-                                    />
-                                </div>
+                                <img 
+                                    src={isFavorited ? CorAfter : CorBefore} 
+                                    alt="Corazón" 
+                                    className="w-6 h-6"
+                                />
                             </button>
                         </div>
                     </div>
