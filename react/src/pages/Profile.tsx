@@ -100,13 +100,13 @@ const Profile = () => {
               </div>
               <div className="stat-container">
                 <p className="stat-name">Seguidos</p>
-                <Link to="/profile/followList">
+                <Link to={"/profile/"+ user.username+"/followList"}>
                   <p className="stat-indicator">{user.following.length}</p>
                 </Link>
               </div>
               <div className="stat-container">
                 <p className="stat-name">Seguidores</p>
-                <Link to="/profile/followerList">
+                <Link to={"/profile/"+ user.username+"/followerList"}>
                   <p className="stat-indicator">{user.followers.length}</p>
                 </Link>
               </div>
