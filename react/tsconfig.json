@@ -21,7 +21,8 @@
       "@assets/*": ["assets/*"],
       "@styles/*": ["styles/*"],
       "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"]
     }
   },
   "include": ["src/**/*", "src/declarations.d.ts"]
