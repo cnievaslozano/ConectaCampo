@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Layout from "@components/layout/Layout";
-import Container from "@components/common/Container";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ProfileCard from "@components/user/ProfileCard";
 import { User } from "../../types/models";
@@ -75,23 +74,21 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
   if (user) {
     return (
       <Layout>
-        <Container className="">
-          <div>
-            <p>UserList = {userList.join(", ")}</p>
-            <Link to="/profile">
-              <h1 className="text-3xl text-center mb-10">Rafel Seguidores</h1>
-            </Link>
-            {filteredUsers.length > 0 ? (
-              <>
-                {filteredUsers.map((person) => (
-                  <ProfileCard key={person.id} person={person} />
-                ))}
-              </>
-            ) : (
-              <p>No se encontraron usuarios.</p>
-            )}
-          </div>
-        </Container>
+        <div>
+          <p>UserList = {userList.join(", ")}</p>
+          <Link to="/profile">
+            <h1 className="text-3xl text-center mb-10">Rafel Seguidores</h1>
+          </Link>
+          {filteredUsers.length > 0 ? (
+            <>
+              {filteredUsers.map((person) => (
+                <ProfileCard key={person.id} person={person} />
+              ))}
+            </>
+          ) : (
+            <p>No se encontraron usuarios.</p>
+          )}
+        </div>
       </Layout>
     );
   } else {

@@ -77,66 +77,64 @@ const Header = () => {
           </div>
         </Link>
 
-        <div>
-          <ul className="flex lg:flex-row items-center rounded-lg text-center text-lg font-bold">
-            <li>
-              <Link
-                to="/"
-                className="block py-2 px-2 text-white rounded md:bg-transparent"
-                aria-current="page"
-              >
-                Inicio
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className="block py-2 px-2 text-white rounded md:bg-transparent"
-                aria-current="page"
-              >
-                Sobre Nosotros
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/search"
-                className="block py-2 px-2 text-white rounded md:bg-transparent"
-                aria-current="page"
-              >
-                Mercado
-              </Link>
-            </li>
-            <li>
-              <input
-                type="text"
-                id="product_name"
-                className="bg-gray-50 border border-darkGreen2 text-gray-900 rounded-lg ps-4 py-1 mx-2"
-                placeholder="Explora alimentos"
-                value={inputValue}
-                onChange={handleChange}
-                onKeyDown={handleKeyDown}
-                required
+        <ul className="flex lg:flex-row items-center rounded-lg text-center text-lg font-bold gap-3">
+          <li>
+            <Link
+              to="/"
+              className="block py-2 px-2 text-white rounded md:bg-transparent"
+              aria-current="page"
+            >
+              Inicio
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/about"
+              className="block py-2 px-2 text-white rounded md:bg-transparent"
+              aria-current="page"
+            >
+              Sobre Nosotros
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/search"
+              className="block py-2 px-2 text-white rounded md:bg-transparent"
+              aria-current="page"
+            >
+              Mercado
+            </Link>
+          </li>
+          <li>
+            <input
+              type="text"
+              id="product_name"
+              className="bg-gray-50 border border-darkGreen2 text-gray-900 rounded-lg ps-4 py-1 mx-2"
+              placeholder="Explora alimentos"
+              value={inputValue}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              required
+            />
+          </li>
+          <li>
+            {logged === false ? (
+              <Button
+                className="rounded-full mx-2"
+                text="Inicia"
+                to="/signIn"
+                onClick={handleAuth}
               />
-            </li>
-            <li>
-              {logged === false ? (
-                <Button
-                  className="rounded-full mx-2"
-                  text="Inicia"
-                  to="/signIn"
-                  onClick={handleAuth}
-                />
-              ) : (
-                <UserDropdown
-                  text=""
-                  className="my-2 mx-2"
-                  onDataSend={handleUserModalData}
-                  profileImage={userData?.pathProfileImage}
-                />
-              )}
-            </li>
-          </ul>
-        </div>
+            ) : (
+              <UserDropdown
+                text=""
+                className="my-2 mx-2"
+                onDataSend={handleUserModalData}
+                profileImage={userData?.pathProfileImage}
+              />
+            )}
+          </li>
+        </ul>
       </div>
     </nav>
   );

@@ -15,12 +15,6 @@ export interface ButtonProps {
   to?: string;
 }
 
-// Container.tsx
-export interface ContainerProps {
-  children: ReactNode;
-  className?: string;
-}
-
 // ProfileCard.tsx
 export interface BadgeProps {
   type: string;
