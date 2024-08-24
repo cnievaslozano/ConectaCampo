@@ -22,7 +22,6 @@ public class Category {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @JsonBackReference
     private String name;
 
     @ManyToMany(mappedBy = "categories")
