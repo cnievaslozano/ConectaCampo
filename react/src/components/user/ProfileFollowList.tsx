@@ -39,8 +39,13 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
       const userFound = result.find((item: { username: string | undefined; }) => item.username === usernameUrl);
       if (userFound) {
         setUser(userFound);
-        const userList = userFound.following.map((follower: { id: number }) => follower.id);
-        setUserList(userList); // Actualizamos el estado con los IDs de los usuarios seguidos
+        if (type == "following") {
+          const userList = userFound.following.map((follower: { id: number }) => follower.id);
+          setUserList(userList); // Actualizamos el estado con los IDs de los usuarios seguidos
+        }else if (type == "followers") {
+          const userList = userFound.followers.map((follower: { id: number }) => follower.id);
+          setUserList(userList); // Actualizamos el estado con los IDs de los usuarios seguidos
+        }
         console.log(userList);
       }
     } catch (error) {

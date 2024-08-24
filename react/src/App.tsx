@@ -48,7 +48,7 @@ if (rootElement) {
           <Route path="feed" element={<Feed />} />
           <Route path="addProduct/*" element={<AddProduct />} />
           <Route path={"profile/:usernameUrl/followList"} element={<ProfileFollowList type="following"/>} />
-          <Route path={"profile/"+"/followerList"} element={<ProfileFollowList type="followers" />} />
+          <Route path={"profile/:usernameUrl/followerList"} element={<ProfileFollowList type="followers" />} />
           <Route path="profile/configuration" element={<Configuration />} />
         </Routes>
       </Router>
