@@ -1,9 +1,5 @@
 import React, { ReactNode } from "react";
-
-interface ContainerProps {
-  children: ReactNode;
-  className?: string;
-}
+import { ContainerProps } from "../../types/props";
 
 const ProfileContainer: React.FC<ContainerProps> = ({
   children,

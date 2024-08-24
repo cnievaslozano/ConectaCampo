@@ -3,24 +3,7 @@ import Layout from "@components/layout/Layout";
 import Container from "@components/common/Container";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ProfileCard from "@components/user/ProfileCard";
-
-interface User {
-  id: number;
-  following: User[];
-  followers: User[];
-  products: any[];
-  roles: any[];
-  city: string;
-  name: string;
-  surname: string;
-  username: string;
-  password: string;
-  email: string;
-  telephone: string;
-  aboutMe: string | null;
-  profileImage: string | null;
-  createdAt: string;
-}
+import { User } from "../../types/models";
 
 const ProfileFollowList = ({ type }: { type?: string }) => {
   const { usernameUrl } = useParams();

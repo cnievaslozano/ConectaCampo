@@ -5,45 +5,8 @@ import Container from "@components/common/Container";
 import Button from "@components/common/Button";
 import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp";
+import { User, Product, Category, Role } from "../types/models";
 import "@styles/Profile.css";
-
-interface User {
-  id: number;
-  following: User[];
-  followers: User[];
-  products: Product[];
-  roles: Role[];
-  city: string;
-  name: string;
-  surname: string;
-  username: string;
-  password: string;
-  email: string;
-  telephone: string;
-  aboutMe: string | null;
-  profileImage: string | null;
-  createdAt: string;
-}
-
-interface Product {
-  id: number;
-  categories: Category[];
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  createdAt: string;
-}
-
-interface Category {
-  id?: number;
-  name?: string;
-}
-
-interface Role {
-  id: number;
-  name: string;
-}
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);

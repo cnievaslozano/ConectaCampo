@@ -1,13 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-interface ButtonProps {
-  text: string;
-  className?: string;
-  type?: "button" | "submit" | "reset";
-  onClick?: () => void;
-  to?: string;
-}
+import { ButtonProps } from "../../types/props";
 
 const Button: React.FC<ButtonProps> = ({
   text,

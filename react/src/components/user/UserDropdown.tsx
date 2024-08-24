@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import userImage from "@assets/user/defaultUser.webp";
 import { Link } from "react-router-dom";
-
-interface UserDropdownProps {
-  text?: string;
-  className?: string;
-  onDataSend: (data: boolean) => void;
-  profileImage?: string; // Nueva propiedad para la imagen del perfil
-}
+import { UserDropdownProps } from "../../types/props";
 
 const UserDropdown: React.FC<UserDropdownProps> = ({
   text,
