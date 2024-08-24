@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import defaultUser from '@assets/user/defaultUser.webp'
 
 const FollowerCard = ({ person }:any) => {
-  const ProfileStyle = {
+  const ProfileStyle:any = {
     backgroundColor: '#fff',
     padding: '15px',
     borderRadius: '8px',
@@ -14,8 +15,11 @@ const FollowerCard = ({ person }:any) => {
   return (
     <div style={ProfileStyle} className='my-3'>
       <Link to="/profile" className='flex content-center'>
-        <img className="h-20 rounded-lg" src={person.image} alt="Err" />
-        <p className="text-lg mx-10 self-center">{person.name}</p>
+      <img 
+          className="h-20 rounded-lg" 
+          src={person.image ? person.image : defaultUser} 
+          alt="Err" 
+        />        <p className="text-lg mx-10 self-center">{person.name}</p>
       </Link>
       <div className='flex-col ml-10 content-center'>
         <p>{person.description}</p>
