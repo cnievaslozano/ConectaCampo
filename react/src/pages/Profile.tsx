@@ -3,11 +3,9 @@ import Layout from "@components/layout/Layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Container from "@components/common/Container";
 import Button from "@components/common/Button";
-import CarouselHome from "@components/home/CarouselHome";
 import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp"
 import '@styles/Profile.css'
-import ProfileProducts from "@components/products/ProfileProducts";
 import ErrorComp from "@components/layout/Error";
 
 interface User {
@@ -83,14 +81,17 @@ const Profile = () => {
               <h1 className="profile-name">{user.name + " " + user.surname}</h1>
               <p className="profile-description">{user.aboutMe}</p>
               <div className="flex justify-between">
-                <p className="profile-location">{user.city}</p>
+              <p className="profile-location">{user.city}</p>
+              {localStorage.getItem("username") === userNameUrl ? (
                 <Link to="/addProduct">
                   <Button
                     text="Añadir Publicación"
                     className="rounded-md p-1 text-gray-100"
                   ></Button>
                 </Link>
-              </div>
+              ) : null}
+            </div>
+
             </div>
             <div className="profile-info-stats">
               <div className="stat-container">
