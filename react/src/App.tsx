@@ -8,15 +8,14 @@ import {
 } from "react-router-dom";
 import Home from "@pages/Home";
 import About from "@pages/About";
-import Contact from "@pages/Contact";
 import Product from "@pages/Product";
+import NotFound from "@pages/NotFound";
 import ProfileFollowList from "@components/user/ProfileFollowList";
 import Configuration from "@pages/UserSettings";
 import Signin from "@pages/Signin";
 import Register from "@pages/Register";
 import Search from "@pages/Search";
 import AddProduct from "@components/products/AddProduct";
-import Feed from "@pages/Feed";
 import Profile from "@pages/Profile";
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
@@ -38,18 +37,24 @@ if (rootElement) {
         <Routes>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
           <Route path="product/*" element={<Product />} />
-
           <Route path="signIn" element={<Signin />} />
           <Route path="register" element={<Register />} />
           <Route path="profile/*" element={<Profile />} />
           <Route path="search/*" element={<Search />} />
-          <Route path="feed" element={<Feed />} />
           <Route path="addProduct/*" element={<AddProduct />} />
-          <Route path={"profile/:usernameUrl/followList"} element={<ProfileFollowList type="following"/>} />
-          <Route path={"profile/:usernameUrl/followerList"} element={<ProfileFollowList type="followers" />} />
+          <Route
+            path={"profile/:usernameUrl/followList"}
+            element={<ProfileFollowList type="following" />}
+          />
+          <Route
+            path={"profile/:usernameUrl/followerList"}
+            element={<ProfileFollowList type="followers" />}
+          />
           <Route path="profile/configuration" element={<Configuration />} />
+
+          {/* Ruta 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </React.StrictMode>
