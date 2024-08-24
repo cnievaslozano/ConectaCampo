@@ -4,6 +4,7 @@ import Container from '@components/common/Container';
 import { Link, useParams } from 'react-router-dom';
 import ProfileCard from '@components/user/ProfileCard';
 import ErrorComp from '@components/layout/Error';
+
 interface User {
   id: number;
   following: User[];
@@ -25,7 +26,14 @@ interface User {
 const ProfileFollowList = ({ type }: { type?: string }) => {
   const { usernameUrl } = useParams();
   const [user, setUser] = useState<User | null>(null);
-  const [userList, setUserList] = useState<number[]>([]); // Utilizamos un estado para almacenar el userList
+  const [userList, setUserList] = useState<number[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+
+  const fetchAndFilterUsers = (allUsers: User[]) => {
+    const filtered = allUsers.filter((user) => userList.includes(user.id));
+    console.log("Filtered Users:", filtered); // Verifica si `filteredUsers` se llena correctamente
+    setFilteredUsers(filtered);
+  };
 
   const handleProfile = async () => {
     const requestOptions = {
@@ -36,17 +44,23 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
     try {
       const response = await fetch("http://localhost:8080/api/v1/user/all", requestOptions);
       const result = await response.json();
+      console.log("Fetched Users:", result); // Verifica que el fetch trae datos
       const userFound = result.find((item: { username: string | undefined; }) => item.username === usernameUrl);
       if (userFound) {
         setUser(userFound);
-        if (type == "following") {
-          const userList = userFound.following.map((follower: { id: number }) => follower.id);
-          setUserList(userList); // Actualizamos el estado con los IDs de los usuarios seguidos
-        }else if (type == "followers") {
-          const userList = userFound.followers.map((follower: { id: number }) => follower.id);
-          setUserList(userList); // Actualizamos el estado con los IDs de los usuarios seguidos
+
+        let ids: number[] = [];
+        if (type === "following") {
+          ids = userFound.following.map((follower: { id: number }) => follower.id);
+        } else if (type === "followers") {
+          ids = userFound.followers.map((follower: { id: number }) => follower.id);
         }
-        console.log(userList);
+
+        console.log("User List IDs:", ids); // Verifica si los IDs se obtienen correctamente
+        setUserList(ids); 
+
+        // Filtrar usuarios inmediatamente después de obtener la lista de IDs
+        fetchAndFilterUsers(result);
       }
     } catch (error) {
       console.error("Error fetching profile data:", error);
@@ -55,43 +69,37 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
 
   useEffect(() => {
     handleProfile();
-  }, [usernameUrl]); // Ejecutamos la función cuando el componente se monta y cuando cambia el usernameUrl
+  }, [usernameUrl]);
 
-  const followers = [
-    { id: 1, name: "Jorge del Amo", description: "Agricultor autoctono de pura cepa", location: "Reus, Catalunya", image: null },
-    { id: 2, name: "Rafel Garcia", description: "Campero de la zona de Riudoms, siempre dispuesto", location: "Granada, España", image: null },
-    // Agrega más items aquí
-  ];
+  useEffect(() => {
+    if (userList.length > 0) {
+      handleProfile(); // Asegura que filtramos los usuarios en el momento correcto
+    }
+  }, [userList]);
 
-  const ProfileStyle: React.CSSProperties = {
-    backgroundColor: '#fff',
-    padding: '15px',
-    borderRadius: '8px',
-    boxShadow: '0 0 5px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
-    display: 'flex',
-  };
-
-  if (user) { //Si hay user del fetch carga pagina, sino carga 404 error
-      return (
-    <Layout>
-      <Container className=''>
-        <div>
-          <p>UserList = {userList.join(', ')}</p> {/* Mostramos los IDs como una lista separada por comas */}
-          <Link to="/profile"><h1 className='text-3xl text-center mb-10'>Rafel Seguidores</h1></Link>
-          {followers.map((person) => (
-            <ProfileCard key={person.id} person={person} />
-          ))}
-        </div>
-      </Container>
-    </Layout>
-  );
-  }else{
-    return(
-      <ErrorComp />
-    )
+  if (user) {
+    return (
+      <Layout>
+        <Container className=''>
+          <div>
+            <p>UserList = {userList.join(', ')}</p>
+            <Link to="/profile"><h1 className='text-3xl text-center mb-10'>Rafel Seguidores</h1></Link>
+            {filteredUsers.length > 0 ? (
+              <>
+                {filteredUsers.map((person) => (
+                  <ProfileCard key={person.id} person={person} />
+                ))}
+              </>
+            ) : (
+              <p>No se encontraron usuarios.</p>
+            )}
+          </div>
+        </Container>
+      </Layout>
+    );
+  } else {
+    return <ErrorComp />;
   }
-
 };
 
 export default ProfileFollowList;

@@ -1,8 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import defaultUser from '@assets/user/defaultUser.webp'
+interface User {
+    id: number;
+    following: User[];
+    followers: User[];
+    products: any[];
+    roles: any[];
+    city: string;
+    name: string;
+    surname: string;
+    username: string;
+    password: string;
+    email: string;
+    telephone: string;
+    aboutMe: string | null;
+    profileImage: string | null;
+    createdAt: string;
+  }
+  interface ProfileCardProps {
+    person: User;
+  }
 
-const FollowerCard = ({ person }:any) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ person }) => {
   const ProfileStyle:any = {
     backgroundColor: '#fff',
     padding: '15px',
@@ -14,19 +34,19 @@ const FollowerCard = ({ person }:any) => {
 
   return (
     <div style={ProfileStyle} className='my-3'>
-      <Link to="/profile" className='flex content-center'>
+      <Link to={"/profile/" + person.username} className='flex content-center'>
       <img 
           className="h-20 rounded-lg" 
-          src={person.image ? person.image : defaultUser} 
+          src={person.profileImage ? person.profileImage : defaultUser} 
           alt="Err" 
         />        <p className="text-lg mx-10 self-center">{person.name}</p>
       </Link>
       <div className='flex-col ml-10 content-center'>
-        <p>{person.description}</p>
-        <p className="text-gray-700">{person.location}</p>
+        <p>{person.aboutMe ? person.aboutMe : "Descripcion no introducida"}</p>
+        <p className="text-gray-700">{person.city ? person.city : "Barcelona, España"}</p>
       </div>
     </div>
   );
 };
 
-export default FollowerCard;
+export default ProfileCard;
