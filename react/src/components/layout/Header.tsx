@@ -63,9 +63,9 @@ const Header = () => {
   };
 
   return (
-    <nav>
-      <section className="px-36 p-4 flex flex-col lg:flex-row flex-wrap items-center justify-between mx-auto bg-darkGreen1">
-        <Link to="/" className="flex items-center mx-12 lg:mb-0 p-0">
+    <nav className="w-full bg-darkGreen1">
+      <div className="max-w-[1550px] mx-auto p-4 flex flex-col lg:flex-row flex-wrap items-center justify-between">
+        <Link to="/" className="flex items-center p-0">
           <img
             src={iconConectaCampo}
             className="h-16 p-0"
@@ -77,21 +77,21 @@ const Header = () => {
           </div>
         </Link>
 
-        <div className="mr-16 lg:mb-0">
+        <div>
           <ul className="flex lg:flex-row items-center rounded-lg text-center text-lg font-bold">
             <li>
               <Link
                 to="/"
-                className="block py-2 px-2 flex-shrink text-white rounded md:bg-transparent"
+                className="block py-2 px-2 text-white rounded md:bg-transparent"
                 aria-current="page"
               >
-                Home
+                Inicio
               </Link>
             </li>
             <li>
               <Link
                 to="/about"
-                className="block py-2 px-2 flex-shrink text-white rounded md:bg-transparent"
+                className="block py-2 px-2 text-white rounded md:bg-transparent"
                 aria-current="page"
               >
                 Sobre Nosotros
@@ -99,8 +99,8 @@ const Header = () => {
             </li>
             <li>
               <Link
-                to="/feed"
-                className="block py-2 px-2 flex-shrink text-white rounded md:bg-transparent"
+                to="/search"
+                className="block py-2 px-2 text-white rounded md:bg-transparent"
                 aria-current="page"
               >
                 Mercado
@@ -121,7 +121,7 @@ const Header = () => {
             <li>
               {logged === false ? (
                 <Button
-                  className="rounded-full fade-in-up mx-2"
+                  className="rounded-full mx-2"
                   text="Inicia"
                   to="/signIn"
                   onClick={handleAuth}
@@ -137,7 +137,7 @@ const Header = () => {
             </li>
           </ul>
         </div>
-      </section>
+      </div>
     </nav>
   );
 };
