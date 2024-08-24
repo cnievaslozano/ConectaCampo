@@ -48,7 +48,7 @@ const Home = () => {
             <div className="flex justify-center space-x-4">
               <Button
                 text="COMPRA AHORA"
-                to="feed"
+                to="search/"
                 className="inline-flex items-center rounded-full fade-in-up"
               />
               <Button
