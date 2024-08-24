@@ -54,7 +54,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
     };
   }, [dropdownRef]);
 
-  console.log(profileImage);
+  //console.log(profileImage);
 
   return (
     <div className="relative inline-block">

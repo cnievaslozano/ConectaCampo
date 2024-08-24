@@ -49,7 +49,7 @@ const CardProduct = ({prod}:any) => {
     addres: "Priorat, Cataluña"
   };
 
-  console.log(prod);
+  //console.log(prod); De momento funciona
   if (prod) {
       return (
         <div

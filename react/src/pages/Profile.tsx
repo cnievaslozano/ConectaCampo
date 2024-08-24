@@ -105,7 +105,7 @@ const Profile = () => {
       //De todo el json se busca el que tenga el usuario igual que la ruta
       const userFound = result.find((item: { username: string | undefined; }) => item.username === userNameUrl);
       setUser(userFound);   //TODO no funciona esto de state con el user, dice que es null o undefined
-      console.log(userFound);
+      //console.log(userFound); Se encuentra
     } catch (error) {
       console.error("Error fetching profile data:", error);
     }
