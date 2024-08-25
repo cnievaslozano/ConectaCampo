@@ -1,4 +1,4 @@
-import { User, Product, Publication } from "./models";
+import { User, Product, Publication, Category } from "./models";
 import { ReactNode } from "react";
 
 // ProfileCards.tsx
@@ -17,13 +17,13 @@ export interface ButtonProps {
 
 // ProfileCard.tsx
 export interface BadgeProps {
-  type: string;
+  type: Category[];
   className?: string;
 }
 
 // CardProduct.tsx
 export interface CardProductProps {
-  prod: Product; // Solo acepta objetos que cumplan con la interfaz Product
+  product: Product;
   publication?: Publication;
 }
 
@@ -33,4 +33,11 @@ export interface UserDropdownProps {
   className?: string;
   onDataSend: (data: boolean) => void;
   profileImage?: string; // Nueva propiedad para la imagen del perfil
+}
+
+// Pagination.tsx
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  paginate: (pageNumber: number) => void;
 }

@@ -15,18 +15,23 @@ export interface User {
   profileImage: string | null;
   createdAt: string;
 }
+
+export interface UserData {
+  // para el SearchProductGrid
+  pathProfileImage: string;
+}
+
 export interface Publication {
-  //Partes de la publicacion que me interesan
   id: number; // ID publicación
   user: {
-    id: number; // ID usuario
+    id: number;
   };
   likes: any[]; // Puedes especificar más si sabes la estructura de los likes
   description: string;
   address: string;
   schedule: string;
   active: boolean;
-  pathPublicationImage?: string | null;
+  pathPublicationImage: string;
   createdAt: string;
   likeCount: number;
 }
@@ -38,12 +43,16 @@ export interface Product {
   description: string;
   price: number;
   quantity: number;
-  createdAt: string;
+  image: string;
+  userId: number;
+  imageUser: string;
+  publications: Publication[];
+  createdAt?: string;
 }
 
 export interface Category {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
 }
 
 export interface Role {
