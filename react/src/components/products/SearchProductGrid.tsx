@@ -1,54 +1,119 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import CardProduct from "./CardProduct";
+import { Product, UserData, Category } from "../../types/models";
+import Pagination from "@components/common/Pagination";
 
 const SearchProductGrid = () => {
-  const itemsForSale = [
-    {
-      id: 1,
-      title: "Sandias",
-      description: "Sandias frescas de El priorat",
-      price: 100,
-      image:
-        "https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp",
-    },
-    {
-      id: 2,
-      title: "Melones",
-      description: "Melones plantados de temporada",
-      price: 150,
-      image:
-        "https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp",
-    },
-    {
-      id: 2,
-      title: "Melones",
-      description: "Melones plantados de temporada",
-      price: 150,
-      image:
-        "https://naranjasmarisa.com/wp-content/uploads/2023/04/banner-melones-naranjas-marisa-2023.webp",
-    },
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-    // Agrega más items aquí
-  ];
+  const productsPerPage = 9;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/v1/product/all"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
+        // Obtener todas las IDs de usuario para hacer solicitudes adicionales
+        const userIds = Array.from(
+          new Set(data.map((product: Product) => product.userId))
+        );
+
+        // Hacer solicitudes para obtener las imágenes de los usuarios
+        const userImagesPromises = userIds.map((userId: number) =>
+          fetch(`http://localhost:8080/api/v1/user/id/${userId}`)
+            .then((response) => response.json())
+            .then((userData: UserData) => ({
+              userId,
+              pathProfileImage: userData.pathProfileImage,
+            }))
+        );
+
+        const userImages = await Promise.all(userImagesPromises);
+        const userImagesMap = new Map(
+          userImages.map((userImage) => [
+            userImage.userId,
+            userImage.pathProfileImage,
+          ])
+        );
+
+        // Mapear los productos con las imágenes de los usuarios
+        const fetchedProducts = data.map((product: Product) => {
+          const image =
+            product.publications.length > 0
+              ? product.publications[0].pathPublicationImage
+              : null;
+
+          const categoryName =
+            product.categories.length > 0
+              ? product.categories[0].name
+              : "defaultcategory";
+
+          return {
+            id: product.id,
+            userId: product.userId,
+            categories: categoryName,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            quantity: product.quantity,
+            image: image,
+            imageUser: userImagesMap.get(product.userId) || "", // Obtener la imagen del usuario
+          };
+        });
+
+        setProducts(fetchedProducts);
+        setLoading(false);
+      } catch (error) {
+        setError("Error fetching products: " + error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
-    <div>
-      {" "}
-      {/**Los estilos de los productos estan en Profile.css, nose xk pero siempre se usan */}
-      <div className="items-grid">
-        {itemsForSale.map((item) => (
-          <div key={item.id} className="item-card">
-            <Link to="/profile">
-              <img className="item-image" src={item.image} alt="Err" />
-              <h3 className="item-title">{item.title}</h3>
-            </Link>
-
-            <p className="item-description">{item.description}</p>
-            <p className="item-price">{item.price} €/kg</p>
-          </div>
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+        {currentProducts.map((item) => (
+          <CardProduct key={item.id} product={item} />
         ))}
       </div>
-    </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        paginate={paginate}
+      />
+    </>
   );
 };
 
