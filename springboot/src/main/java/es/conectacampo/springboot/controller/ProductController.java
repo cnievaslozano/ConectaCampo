@@ -1,6 +1,7 @@
 package es.conectacampo.springboot.controller;
 
 import es.conectacampo.springboot.dto.CreateProductDTO;
+import es.conectacampo.springboot.dto.ProductDTO;
 import es.conectacampo.springboot.dto.UpdateProductDTO;
 import es.conectacampo.springboot.model.Product;
 import es.conectacampo.springboot.response.ApiResponse;
@@ -23,8 +24,9 @@ public class ProductController {
 
     // Get all Products
     @GetMapping("/all")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
     }
 
     // Get one Product

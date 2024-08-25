@@ -26,10 +26,15 @@ public class Product {
     private Long id;
 
     // FK - User
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
+
+
 
     // RELATION CATEGORY
     @ManyToMany( fetch = FetchType.EAGER)
@@ -40,6 +45,11 @@ public class Product {
     )
     @JsonManagedReference
     private List<Category> categories;
+
+    // RELATION PUBLICATION
+    @ManyToMany(mappedBy = "products")
+    @JsonManagedReference
+    private List<Publication> publications;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;

@@ -1,5 +1,6 @@
 package es.conectacampo.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -46,7 +47,7 @@ public class User {
 
     // Relation - Product
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @JsonBackReference
     private List<Product> products;
 
     // Relation - Role

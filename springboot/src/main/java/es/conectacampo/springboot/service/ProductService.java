@@ -1,6 +1,7 @@
 package es.conectacampo.springboot.service;
 
 import es.conectacampo.springboot.dto.CreateProductDTO;
+import es.conectacampo.springboot.dto.ProductDTO;
 import es.conectacampo.springboot.dto.UpdateProductDTO;
 import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.Category;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -29,9 +31,25 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    private ProductDTO convertToDTO(Product product) {
+        return ProductDTO.builder()
+                .id(product.getId())
+                .userId(product.getUserId())  // Incluye el userId
+                .categories(product.getCategories())
+                .publications(product.getPublications())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .quantity(product.getQuantity())
+                .build();
+    }
+
     // CRUD PRODUCTS
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public Optional<Product> getProductById(Long id){
