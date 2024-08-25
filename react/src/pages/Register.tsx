@@ -22,6 +22,7 @@ const Register = () => {
     profileImageFile: null as File | null,
   });
 
+  const [loading, setLoading] = useState(false); // Estado de carga
   const navigate = useNavigate();
 
   const handleChange = (
@@ -67,6 +68,8 @@ const Register = () => {
       return;
     }
 
+    setLoading(true); // Activar estado de carga
+
     try {
       let pathProfileImage = formData.pathProfileImage;
 
@@ -107,9 +110,11 @@ const Register = () => {
       const result = await response.text();
       toast.success("Registro exitoso. Redirigiendo a inicio de sesión...");
       setTimeout(() => {
+        setLoading(false); // Desactivar estado de carga
         navigate("/signIn");
       }, 2000);
     } catch (error) {
+      setLoading(false); // Desactivar estado de carga
       if (error instanceof Error) {
         toast.error(`Error: ${error.message}`);
       } else {
@@ -121,6 +126,14 @@ const Register = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-lightGreen3">
       <ToastContainer />
+      {loading && (
+        <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <p className="text-gray-700">Cargando...</p>
+            {/* Puedes agregar un spinner o cualquier otro indicador de carga aquí */}
+          </div>
+        </div>
+      )}
       <div className="my-10 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-5xl">
         <div className="py-10 w-full flex justify-center items-center lg:w-1/2 overflow-hidden">
           <img
