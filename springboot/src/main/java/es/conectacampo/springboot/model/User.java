@@ -47,7 +47,7 @@ public class User {
 
     // Relation - Product
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Product> products;
 
     // Relation - Role
