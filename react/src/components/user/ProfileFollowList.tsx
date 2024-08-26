@@ -3,6 +3,7 @@ import Layout from "@components/layout/Layout";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ProfileCard from "@components/user/ProfileCard";
 import { User } from "../../types/models";
+import Pagination from "@components/common/Pagination";
 
 const ProfileFollowList = ({ type }: { type?: string }) => {
   const { usernameUrl } = useParams();
@@ -61,6 +62,22 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
     }
   };
 
+  // Bloque para controlar la paginacion:
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 6; // Cambia esto si quieres más o menos usuarios por página
+
+  // Calcula los índices de los usuarios que deben mostrarse en la página actual
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Calcula el número total de páginas
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+
   useEffect(() => {
     handleProfile();
   }, [usernameUrl]);
@@ -79,20 +96,25 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
           <Link to="/profile">
             <h1 className="text-3xl text-center mb-10">Rafel Seguidores</h1>
           </Link>
-          {filteredUsers.length > 0 ? (
-            <div className="grid grid-cols-2 gap-6">
-              {filteredUsers.map((person) => (
-                <ProfileCard key={person.id} person={person} />
-              ))}
-            </div>
-          ) : (
-            <p>No se encontraron usuarios.</p>
-          )}
+          {currentUsers.length > 0 ? (
+        <div className="grid grid-cols-2 gap-6">
+          {currentUsers.map((person) => (
+            <ProfileCard key={person.id} person={person} />
+          ))}
+        </div>
+      ) : (
+        <p>No se encontraron usuarios.</p>
+      )}
+      
+      {/* Renderiza la paginación */}
+      <Pagination currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
         </div>
       </Layout>
     );
   } else {
-    return null;
+    return (
+      <p>Fetching API error, User not found in api/v1/user/all</p>
+    );
   }
 };
 
