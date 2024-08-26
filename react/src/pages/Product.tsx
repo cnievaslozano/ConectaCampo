@@ -4,13 +4,16 @@ import CorAfter from "@assets/corazon.webp";
 import Layout from "@components/layout/Layout";
 import { Link, useParams } from "react-router-dom";
 import userImage from "@assets/user1.webp";
-import { Product } from "@types/models";
+import { Product, User } from "@types/models";
 import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
+import fetchUserById from "@components/user/fetchUserById";
 
+//TODO ELiminar bucle infinito por el useEffect de product
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
   const { productId } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const toggleFavorite = () => {
     setIsFavorited(!isFavorited);
@@ -34,10 +37,16 @@ const ProductPage = () => {
       console.error("Error fetching product data:", error);
     }
   };
+  const handleUser = async () => {  //Gestiona el usuario de el producto, despues de el primer fetch se rellena tmbn el user
+    const allUsers = await fetchUserById(product?.userId);
+    setUser(allUsers);
+  }
 
   useEffect(() => {
     handleProduct();
-  }, [productId]);
+    handleUser();
+
+  }, [productId, product]); 
 
   if (!product) {
     return <div>Loading...</div>;
@@ -47,6 +56,7 @@ const ProductPage = () => {
 
   return (
     <Layout>
+      <p>{user?.aboutMe}</p>
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
         <div className="flex-shrink-0 w-full lg:w-1/2">
           <img
