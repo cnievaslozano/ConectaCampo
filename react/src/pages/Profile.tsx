@@ -6,6 +6,7 @@ import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp";
 import { User, Product, Category, Role } from "../types/models";
 import "@styles/Profile.css";
+import ProductProfileCard from "@components/user/ProductProfileCard";
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -104,7 +105,7 @@ const Profile = () => {
         <h1 className="text-xl mt-10 mb-5">Publicaciones</h1>
         <div className="items-grid">
         {user.products.map((item, index) => (
-          item ? <CardProduct key={item.id} product={item} /> : null
+          item ? <ProductProfileCard key={item.id} product={item} /> : null
         ))}
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
