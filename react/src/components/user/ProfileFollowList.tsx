@@ -80,11 +80,11 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
             <h1 className="text-3xl text-center mb-10">Rafel Seguidores</h1>
           </Link>
           {filteredUsers.length > 0 ? (
-            <>
+            <div className="grid grid-cols-2 gap-6">
               {filteredUsers.map((person) => (
                 <ProfileCard key={person.id} person={person} />
               ))}
-            </>
+            </div>
           ) : (
             <p>No se encontraron usuarios.</p>
           )}
