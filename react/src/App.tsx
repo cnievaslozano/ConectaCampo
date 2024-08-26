@@ -37,7 +37,7 @@ if (rootElement) {
         <Routes>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="product/*" element={<Product />} />
+          <Route path="product/:productId" element={<Product />} />
           <Route path="signIn" element={<Signin />} />
           <Route path="register" element={<Register />} />
           <Route path="profile/*" element={<Profile />} />

@@ -1,67 +1,93 @@
-import React, { useState } from "react";
-import Header from "@components/layout/Header";
-import Footer from "@components/layout/Footer";
-import ProductImage from "@assets/manzanas.webp";
+import React, { useEffect, useState } from "react";
 import CorBefore from "@assets/cor antes.webp";
 import CorAfter from "@assets/corazon.webp";
 import Layout from "@components/layout/Layout";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import userImage from "@assets/user1.webp";
+import { Product } from "@types/models";
+import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
 
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
-  const userName = "Juana de Arcos";
+  const { productId } = useParams();
+  const [product, setProduct] = useState<Product | null>(null);
 
   const toggleFavorite = () => {
     setIsFavorited(!isFavorited);
   };
+
+  const handleProduct = async () => {
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow" as RequestRedirect,
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/product/${productId}`,
+        requestOptions
+      );
+      const result = await response.json();
+      setProduct(result);
+      console.log(result);
+    } catch (error) {
+      console.error("Error fetching product data:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleProduct();
+  }, [productId]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  const publication = product.publications[0]; // Suponiendo que siempre habrá al menos una publicación
 
   return (
     <Layout>
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
         <div className="flex-shrink-0 w-full lg:w-1/2">
           <img
-            src={ProductImage}
-            alt="Producto"
+            src={publication.pathPublicationImage}
+            alt={product.name}
             className="w-full h-auto object-cover"
           />
         </div>
 
         <div className="flex-grow mt-8 lg:mt-0 lg:ml-8">
-          <h1 className="text-3xl font-bold text-2d572c">Manzanas</h1>
-
-          <div className="flex items-center mt-4">
-            <Link to="/profile">
+          <div className="flex text-center justify-between">
+            <h1 className="text-3xl font-bold text-2d572c">{product.name}</h1>
+            <Link to={`/profile/${product.userId}`}>
               <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center">
-                <img
-                  src={userImage}
-                  alt="Usuario"
-                  className="w-8 h-8 rounded-full mr-3"
-                />
-                {userName}
+              <img
+                src={userImage}
+                alt="Usuario"
+                className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
+              />
+                {/* Aquí podrías agregar el nombre del usuario si estuviera disponible */}
               </span>
             </Link>
           </div>
+          
 
-          <p className="text-2xl text-black mt-4">$4.99</p>
-          <p className="text-lg text-black mt-4">
-            Manzanas Bio de Villaviciosa, Asturias, cultivadas de manera
-            orgánica en suelos ricos y con un clima perfecto para lograr un
-            sabor y frescura incomparables.
-          </p>
+          <div className="flex items-center">
+            <BadgeTypeProduct className="scale-150" type={product.categories[0].name} />
+          </div>
+
+          <p className="text-2xl text-black mt-4">{`Precio: ${product.price} €`}</p>
+          <p className="text-lg text-black mt-4">{publication.description}</p>
           <ul className="list-disc list-inside mt-4 text-black">
-            <li>Origen: Villaviciosa, Asturias</li>
-            <li>Calidad: 100% orgánicas y sostenibles</li>
-            <li>
-              Variedad: Rojas, verdes y amarillas, con un sabor dulce y
-              equilibrado
-            </li>
+            <li>Lugar de venta: {publication.address}</li>
+            <li>Cantidad disponible: {product.quantity}</li>
+            <li>Horario: {publication.schedule}</li>
+            <li>Fecha de publicación: {new Date(publication.createdAt).toLocaleDateString()}</li>
+            <li>Likes: {publication.likeCount}</li>
           </ul>
 
           <div className="mt-6 flex items-center">
-            <button className="bg-darkGreen1 text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2">
-              Añadir al Carrito
-            </button>
+
             <button
               className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2"
               onClick={toggleFavorite}

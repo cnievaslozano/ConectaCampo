@@ -93,8 +93,11 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
       <Layout>
         <div>
           <p>UserList = {userList.join(", ")}</p>
-          <Link to="/profile">
-            <h1 className="text-3xl text-center mb-10">Rafel Seguidores</h1>
+          <Link to={"/profile/" + usernameUrl}>
+            <h1 className="text-3xl text-center mb-10"> 
+              {type === "followers" ? "Seguidores de: " + usernameUrl :null}
+              {type === "following" ? "Seguidos de: "+ usernameUrl :null}
+            </h1>
           </Link>
           {currentUsers.length > 0 ? (
         <div className="grid grid-cols-2 gap-6">
