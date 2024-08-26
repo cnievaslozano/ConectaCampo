@@ -17,7 +17,9 @@ const CardProduct = ({ product }: CardProductProps) => {
     return description;
   };
 
-  return (
+  console.log(product); //Se pasa como undefined
+  if (product) {
+     return (
     <Link
       to={`/product/${product.id}`}
       key={product.id}
@@ -64,6 +66,10 @@ const CardProduct = ({ product }: CardProductProps) => {
       </div>
     </Link>
   );
+  }else{
+    return null;
+  }
+ 
 };
 
 export default CardProduct;

@@ -103,15 +103,14 @@ const Profile = () => {
         </div>
         <h1 className="text-xl mt-10 mb-5">Publicaciones</h1>
         <div className="items-grid">
-          <CardProduct />
-          <CardProduct />
-          <CardProduct />
+        {user.products.map((item, index) => (
+          item ? <CardProduct key={item.id} product={item} /> : null
+        ))}
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          {user.products.map((item, index) => (
-            <CardProduct key={item.id} prod={item} />
-          ))}
+
+
         </div>
       </Layout>
     );
