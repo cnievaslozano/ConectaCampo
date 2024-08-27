@@ -7,7 +7,10 @@ import { Product, User } from "@types/models";
 import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
 import fetchUserById from "@components/user/fetchUserById";
 import isFavourite from "@components/products/isFavourite";
+import { ToastContainer } from "react-toastify";
+import postFavorite from "@components/products/postFavorite";
 
+//TODO falta corregir que funcione cuando este auth y que haga el post correcto
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
   const { productId } = useParams();
@@ -43,7 +46,7 @@ const ProductPage = () => {
 
   const toggleFavorite = () => {
     setIsFavorited(!isFavorited);
-    postFavorite(!isFavorited);
+    postFavorite(!isFavorited, product? product.id: null); //Vuelve a ser en negacion, ya que aunque se actualice el estado anterior, no da tiempo a cogerlo bien
   };
 
   useEffect(() => {
@@ -64,6 +67,7 @@ const ProductPage = () => {
 
   return (
     <Layout>
+      <ToastContainer />
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
         <div className="flex-shrink-0 w-full lg:w-1/2">
           <img
@@ -136,8 +140,3 @@ const ProductPage = () => {
 
 export default ProductPage;
 
-// Placeholder para la función postFavorite
-const postFavorite = (isFavorited: boolean) => {
-  // Aquí podrías hacer la lógica de la petición POST para agregar o quitar de favoritos
-  console.log(isFavorited ? "Añadir a Favoritos..." : "Eliminar de Favoritos...");
-};
