@@ -14,10 +14,6 @@ const ProductPage = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
-  const toggleFavorite = () => {
-    setIsFavorited(!isFavorited);
-  };
-
   const handleProduct = async () => {
     const requestOptions = {
       method: "GET",
@@ -31,7 +27,10 @@ const ProductPage = () => {
       );
       const result = await response.json();
       setProduct(result);
-      //1console.log(result);
+
+      // Inicializa el estado `isFavorited` usando `isFavourite`
+      const initialIsFavorited = isFavourite(result) === CorAfter;
+      setIsFavorited(initialIsFavorited);
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
@@ -42,7 +41,12 @@ const ProductPage = () => {
     setUser(userFound);
   };
 
-  useEffect(() => { //Se hacen 2 useEffect para que cuando uno este cargado, se realice el otro y omitamos el bucle infinito
+  const toggleFavorite = () => {
+    setIsFavorited(!isFavorited);
+    postFavorite(!isFavorited);
+  };
+
+  useEffect(() => {
     handleProduct();
   }, [productId]);
 
@@ -73,19 +77,27 @@ const ProductPage = () => {
           <div className="flex text-center justify-between">
             <h1 className="text-3xl font-bold text-2d572c">{product.name}</h1>
             <Link to={`/profile/${user?.username}`}>
-              <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center" title={user?.username}>
-              <img
-                src={user?.pathProfileImage}
-                alt="Usuario"
-                className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
-              />
-                <span className="ms-2">{user?.name +" "+ user?.surname}</span>
+              <span
+                className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center"
+                title={user?.username}
+              >
+                <img
+                  src={user?.pathProfileImage}
+                  alt="Usuario"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
+                />
+                <span className="ms-2">
+                  {user?.name + " " + user?.surname}
+                </span>
               </span>
             </Link>
           </div>
-          
+
           <div className="flex items-center">
-            <BadgeTypeProduct className="scale-150" type={product.categories[0].name} />
+            <BadgeTypeProduct
+              className="scale-150"
+              type={product.categories[0].name}
+            />
           </div>
 
           <p className="text-2xl text-black mt-4">{`Precio: ${product.price} €`}</p>
@@ -99,21 +111,22 @@ const ProductPage = () => {
           </ul>
 
           <div className="mt-6 flex items-center">
-          {//TODO localStorage.getItem('token') ? //Si hay token se muestra el boton like, si no no
-            true ?
-            <button
-              className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2"
-              onClick={toggleFavorite}
-            >
-              <span className="mr-2">Añadir a Favoritos</span>
-              <img
-                src={isFavourite(product)}
-                alt="Corazón"
-                className="w-6 h-6"
-              />
-            </button>
-            : null
-            }
+            {//TODO localStorage.getItem('token') ? //Si hay token se muestra el boton like, si no no
+            true ? (
+              <button
+                className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2"
+                onClick={toggleFavorite}
+              >
+                <span className="mr-2">
+                  {isFavorited ? "Eliminar de Favoritos" : "Añadir a Favoritos"}
+                </span>
+                <img
+                  src={isFavorited ? CorAfter : CorBefore} // Cambia la imagen según el estado actual
+                  alt="Corazón"
+                  className="w-6 h-6"
+                />
+              </button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -123,3 +136,8 @@ const ProductPage = () => {
 
 export default ProductPage;
 
+// Placeholder para la función postFavorite
+const postFavorite = (isFavorited: boolean) => {
+  // Aquí podrías hacer la lógica de la petición POST para agregar o quitar de favoritos
+  console.log(isFavorited ? "Añadir a Favoritos..." : "Eliminar de Favoritos...");
+};
