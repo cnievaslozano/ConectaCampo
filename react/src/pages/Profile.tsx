@@ -9,6 +9,7 @@ import ProductProfileCard from "@components/user/ProductProfileCard";
 import isFollowing from "@components/user/isFollowing";
 import CorBefore from "@assets/cor antes.webp";
 import CorAfter from "@assets/corazon.webp";
+import FavouriteProductGrid from "@components/products/FavouriteProductGrid";
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -171,6 +172,12 @@ const Profile = () => {
           )}
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
+        <div className="items-grid">
+          {/* {user.products.map((item, index) =>
+            item ? <ProductProfileCard key={item.id} product={item} /> : null
+          )} */}
+          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson}/>
+        </div>
         <div className="items-grid"></div>
       </Layout>
     );
