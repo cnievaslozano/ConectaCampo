@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class FollowService {
 
@@ -16,6 +18,12 @@ public class FollowService {
 
     @Autowired
     private FollowRepository followRepository;
+
+    // get all follows
+    public List<Follow> getAllFollows () {
+        return followRepository.findAll();
+    }
+
 
     // Follow
     @Transactional
