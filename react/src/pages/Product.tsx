@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { Product, User } from "@types/models";
 import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
 import fetchUserById from "@components/user/fetchUserById";
+import isFavourite from "@components/products/isFavourite";
 
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
@@ -30,7 +31,7 @@ const ProductPage = () => {
       );
       const result = await response.json();
       setProduct(result);
-      console.log(result);
+      //1console.log(result);
     } catch (error) {
       console.error("Error fetching product data:", error);
     }
@@ -106,7 +107,7 @@ const ProductPage = () => {
             >
               <span className="mr-2">Añadir a Favoritos</span>
               <img
-                src={isFavorited ? CorAfter : CorBefore}
+                src={isFavourite(product)}
                 alt="Corazón"
                 className="w-6 h-6"
               />
@@ -121,3 +122,4 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
+

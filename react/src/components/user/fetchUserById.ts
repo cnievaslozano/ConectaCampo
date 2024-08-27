@@ -14,8 +14,8 @@ const fetchUserById = async (userId:any) => {
         (item: { id: number | undefined }) =>
           item.id === userId
       );
-      console.log(result); 
-      console.log(userFound)
+      //console.log(result); 
+      //console.log(userFound)
       return userFound;
 
     } catch (error) {
