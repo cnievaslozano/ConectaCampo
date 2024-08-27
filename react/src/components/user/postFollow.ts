@@ -18,19 +18,26 @@ const postFollow = (isFollowing: boolean, currentUser:number|null) => {
         const ownUser:User = JSON.parse(userString);
         myUserId = ownUser.id;
     }   
+    let requestOptions = {
 
+      };
     if (isFollowing) {
         //Aqui habra que hacer que deje de seguirse
         type= "unfollow"
+        requestOptions = {
+            method: "DELETE",
+            redirect: "follow" as RequestRedirect
+          };
     }else if (!isFollowing) {
         //Aqui hay que hacer que se siga
         type= "follow"
+        requestOptions = {
+            method: "POST",
+            redirect: "follow" as RequestRedirect
+          };
     }
 
-    const requestOptions = {
-      method: "POST",
-      redirect: "follow" as RequestRedirect
-    };
+
     
     fetch("http://localhost:8080/api/v1/user/"+myUserId+"/"+ type+ "/"+userPageId, requestOptions)
       .then((response) => response.text())
