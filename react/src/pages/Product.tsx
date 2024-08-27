@@ -59,7 +59,6 @@ const ProductPage = () => {
 
   return (
     <Layout>
-      <p>{user?.aboutMe}</p>
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
         <div className="flex-shrink-0 w-full lg:w-1/2">
           <img
@@ -73,13 +72,13 @@ const ProductPage = () => {
           <div className="flex text-center justify-between">
             <h1 className="text-3xl font-bold text-2d572c">{product.name}</h1>
             <Link to={`/profile/${user?.username}`}>
-              <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center">
+              <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center" title={user?.username}>
               <img
                 src={user?.pathProfileImage}
                 alt="Usuario"
                 className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
               />
-                {/* Aquí podrías agregar el nombre del usuario si estuviera disponible */}
+                <span className="ms-2">{user?.name +" "+ user?.surname}</span>
               </span>
             </Link>
           </div>
@@ -99,7 +98,8 @@ const ProductPage = () => {
           </ul>
 
           <div className="mt-6 flex items-center">
-          {localStorage.getItem('token') ? //Si hay token se muestra el boton like, si no no
+          {//TODO localStorage.getItem('token') ? //Si hay token se muestra el boton like, si no no
+            true ?
             <button
               className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2"
               onClick={toggleFavorite}

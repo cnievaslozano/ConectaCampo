@@ -3,8 +3,6 @@ import Layout from "@components/layout/Layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "@components/common/Button";
 import defaultImage from "@assets/user/defaultUser.webp";
-import CorBefore from "@assets/cor antes.webp";
-import CorAfter from "@assets/corazon.webp";
 import { User, Product, Category, Role } from "../types/models";
 import "@styles/Profile.css";
 import ProductProfileCard from "@components/user/ProductProfileCard";

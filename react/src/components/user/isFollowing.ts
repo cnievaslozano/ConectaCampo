@@ -37,3 +37,5 @@ const isFollowing = (followerList: { id: number }[] | null, OwnUser: any, allUse
     }
 }
 export default isFollowing;
+
+//Solo funciona para cuando el usuario con el que iniciamos se encuentra en SEGUIDORES de el que visualizamos. Por eso va a medias
