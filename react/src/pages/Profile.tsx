@@ -10,6 +10,8 @@ import ProductProfileCard from "@components/user/ProductProfileCard";
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [userList, setUserList] = useState<number[] | null>(null); //Usuarios totales en /users/all en array de ids
+  const [following, setFollowing] = useState<{ id: number }[] | null>(null);
   const [loading, setLoading] = useState(true); // Estado para manejar el spinner de carga
   const locationUrl = useLocation();
   const userNameUrl = locationUrl.pathname.split("/").filter(Boolean).pop();
@@ -31,12 +33,22 @@ const Profile = () => {
         (item: { username: string | undefined }) =>
           item.username === userNameUrl
       );
-
       if (userFound) {
         setUser(userFound);
       } else {
         navigate("/404");
       }
+      //Bloque para rellenar la variable userList que calcula los users seguidos y seguidores
+        // Extraer los IDs de los usuarios
+        const ids = result.map((user: { id: number; }) => user.id);
+
+        // Guardar los IDs en el estado userList
+        setUserList(ids);
+      //Bloque que guarda los following y followers
+        // Supongamos que quieres comparar el "following" del primer usuario del array
+        if (userFound) {
+          setFollowing(userFound.following); // Guarda el array "following" del primer usuario
+        }
     } catch (error) {
       console.error("Error fetching profile data:", error);
       navigate("/404");
@@ -44,6 +56,22 @@ const Profile = () => {
       setLoading(false); // Detiene el spinner una vez que la solicitud ha terminado
     }
   };
+  //Bloque para contar ids seguidos y seguidores
+  const countMatchingIds = (following: { id: number }[]) => {
+    if (!userList) {
+      return 0;
+    }
+
+    // Crear un set para optimizar la búsqueda de coincidencias
+    const userSet = new Set(userList);
+
+    // Filtrar los IDs de following que están presentes en userList
+    const matchingIds = following.filter(user => userSet.has(user.id));
+
+    // Retornar el número de coincidencias
+    return matchingIds.length;
+  };
+
 
   useEffect(() => {
     handleProfile();
@@ -91,13 +119,13 @@ const Profile = () => {
             <div className="stat-container">
               <p className="stat-name">Seguidos</p>
               <Link to={"/profile/" + user.username + "/followList"}>
-                <p className="stat-indicator">{user.following.length}</p>
+                <p className="stat-indicator">{countMatchingIds(user.following)}</p>
               </Link>
             </div>
             <div className="stat-container">
               <p className="stat-name">Seguidores</p>
               <Link to={"/profile/" + user.username + "/followerList"}>
-                <p className="stat-indicator">{user.followers.length}</p>
+                <p className="stat-indicator">{countMatchingIds(user.followers)}</p>
               </Link>
             </div>
           </div>
