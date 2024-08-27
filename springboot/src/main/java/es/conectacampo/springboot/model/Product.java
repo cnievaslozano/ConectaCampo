@@ -1,7 +1,6 @@
 package es.conectacampo.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,7 +9,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -26,15 +24,13 @@ public class Product {
     private Long id;
 
     // FK - User
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
     public Long getUserId() {
         return user != null ? user.getId() : null;
     }
-
-
 
     // RELATION CATEGORY
     @ManyToMany( fetch = FetchType.EAGER)
@@ -43,13 +39,7 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    @JsonManagedReference
-    private List<Category> categories;
-
-    // RELATION PUBLICATION
-    @ManyToMany(mappedBy = "products")
-    @JsonManagedReference
-    private List<Publication> publications;
+    private Set<Category> categories;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;

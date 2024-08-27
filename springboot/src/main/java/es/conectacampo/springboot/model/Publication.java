@@ -1,7 +1,5 @@
 package es.conectacampo.springboot.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -27,7 +25,6 @@ public class Publication {
     // RELATION - USER
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
     private User user;
 
     // RELATION - PRODUCTS
@@ -37,13 +34,11 @@ public class Publication {
             joinColumns = @JoinColumn(name = "publication_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    @JsonBackReference
     private List<Product> products;
 
     // RELATION - LIKES
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Like> likes;
+    private List<Like> likes = new ArrayList<>();
 
     // FUNCTIONS - LIKES
     public void addLike(Like like) {
@@ -72,7 +67,7 @@ public class Publication {
     @Column(name = "active", nullable = false)
     private boolean active = true;
 
-    @Column(name = "path_publication_image")
+    @Column(name = "path_publication_Image")
     private String pathPublicationImage;
 
     @Column(name = "created_at", nullable = false, updatable = false)

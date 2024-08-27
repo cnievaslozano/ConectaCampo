@@ -35,8 +35,8 @@ public class ProductService {
         return ProductDTO.builder()
                 .id(product.getId())
                 .userId(product.getUserId())  // Incluye el userId
-                .categories(product.getCategories())
-                .publications(product.getPublications())
+                .categories((List<Category>) product.getCategories())
+               // .publications(product.getPublications())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
@@ -67,7 +67,7 @@ public class ProductService {
 
         Product product = Product.builder()
                 .user(user)
-                .categories(categories)
+                //.categories(categories)
                 .name(createProductDTO.getName())
                 .description(createProductDTO.getDescription())
                 .price(createProductDTO.getPrice())
