@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@components/common/Button";
 import iconConectaCampo from "@assets/conectaCampo.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -56,6 +56,9 @@ const Signin = () => {
       localStorage.setItem("token", authToken);
       localStorage.setItem("username", result.Username);
 
+      // Aquí llamas a la función que realiza el fetch de la información del usuario
+      await fetchAndStoreUserData(result.Username);
+
       toast.success("Inicio de sesión exitoso");
       setTimeout(() => {
         navigate("/");
@@ -64,6 +67,34 @@ const Signin = () => {
       console.error("Error during sign in:", error);
       setError(error.message);
       toast.error(error.message);
+    }
+  };
+
+  const fetchAndStoreUserData = async (username: string) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/user/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // Añadir token si es necesario
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al obtener los datos de usuario");
+      }
+
+      const users = await response.json();
+      const matchedUser = users.find((user: any) => user.username === username);
+
+      if (matchedUser) {
+        localStorage.setItem("userData", JSON.stringify(matchedUser));
+        console.log("User data stored in localStorage");
+      } else {
+        console.error("No se encontró el usuario con el username proporcionado");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
     }
   };
 
