@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import Layout from "@components/layout/Layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "@components/common/Button";
-import CardProduct from "@components/products/CardProduct";
 import defaultImage from "@assets/user/defaultUser.webp";
+import CorBefore from "@assets/cor antes.webp";
+import CorAfter from "@assets/corazon.webp";
 import { User, Product, Category, Role } from "../types/models";
 import "@styles/Profile.css";
 import ProductProfileCard from "@components/user/ProductProfileCard";
+import isFollowing from "@components/user/isFollowing";
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
   const [userList, setUserList] = useState<number[] | null>(null); //Usuarios totales en /users/all en array de ids
-  const [following, setFollowing] = useState<{ id: number }[] | null>(null);
+  const [followers, setFollowers] = useState<{ id: number }[] | null>(null);
+  const [allUsersJson, setAllUsersJson] = useState<User[] | null>(null);
+
   const [loading, setLoading] = useState(true); // Estado para manejar el spinner de carga
   const locationUrl = useLocation();
   const userNameUrl = locationUrl.pathname.split("/").filter(Boolean).pop();
@@ -47,8 +51,12 @@ const Profile = () => {
       //Bloque que guarda los following y followers
         // Supongamos que quieres comparar el "following" del primer usuario del array
         if (userFound) {
-          setFollowing(userFound.following); // Guarda el array "following" del primer usuario
+          setFollowers(userFound.followers); // Guarda el array "following" del primer usuario
+        //Aqui tambien cogemos el JSON completo para la funcion isFollowing
+        setAllUsersJson(result);
         }
+      
+        
     } catch (error) {
       console.error("Error fetching profile data:", error);
       navigate("/404");
@@ -90,12 +98,27 @@ const Profile = () => {
     return (
       <Layout>
         <div className="profile-header">
-          <img
-            src={user.pathProfileImage || defaultImage}
-            alt="Profile"
-            className="profile-image"
-            title={user.username}
-          />
+        <div className="profile-image-container">
+    <img
+      src={user.pathProfileImage || defaultImage}
+      alt="Profile"
+      className="profile-image"
+      title={user.username}
+    />
+    {//localStorage.getItem("token") && user.username !== localStorage.getItem("username") ? //Si no estas logged no te saldra para seguir, y si es tu propio perfil tampoco
+     true ? 
+      <div className="heart-icon rounded-full bg-[#8AA86E]">
+      <img
+        src={isFollowing(followers, localStorage.getItem("Username"), allUsersJson)} // Aquí pones la imagen del corazón
+        alt="Favorite"
+        className="heart"
+      />
+    </div>
+    :null
+    }
+
+
+  </div>
           <div className="profile-info">
             <h1 className="profile-name">{user.name + " " + user.surname}</h1>
             <p className="profile-description">{user.aboutMe}</p>

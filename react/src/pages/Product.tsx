@@ -99,7 +99,7 @@ const ProductPage = () => {
           </ul>
 
           <div className="mt-6 flex items-center">
-
+          {localStorage.getItem('token') ? //Si hay token se muestra el boton like, si no no
             <button
               className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2"
               onClick={toggleFavorite}
@@ -111,6 +111,8 @@ const ProductPage = () => {
                 className="w-6 h-6"
               />
             </button>
+            : null
+            }
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@ const CardProduct = ({ product }: CardProductProps) => {
     return description;
   };
 
-  console.log(product); //Se pasa como undefined
+  //console.log(product); //Se pasa como undefined
   if (product) {
      return (
     <Link

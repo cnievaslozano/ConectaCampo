@@ -12,7 +12,10 @@
     align-items: center;
     margin-bottom: 20px;
   }
-  
+  .profile-image-container {
+    position: relative;
+    display: inline-block;
+  }
   .profile-image {
     width: 100px;
     height: 100px;
@@ -23,6 +26,17 @@
     -moz-border-radius: 20%;
     -ms-border-radius: 20%;
     -o-border-radius: 20%;
+}
+.heart-icon {
+  position: absolute;
+  bottom: -10px; /* Ajusta este valor según lo necesites */
+  right: 10px;  /* Ajusta este valor según lo necesites */
+  width: 30px;   /* Ajusta el tamaño del corazón según lo necesites */
+  height: 30px;
+  cursor: pointer;
+}
+.heart{
+  padding: 0.30rem;
 }
   
   .profile-info {
