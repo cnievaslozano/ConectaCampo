@@ -3,12 +3,10 @@ import CorBefore from "@assets/cor antes.webp";
 import CorAfter from "@assets/corazon.webp";
 import Layout from "@components/layout/Layout";
 import { Link, useParams } from "react-router-dom";
-import userImage from "@assets/user1.webp";
 import { Product, User } from "@types/models";
 import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
 import fetchUserById from "@components/user/fetchUserById";
 
-//TODO ELiminar bucle infinito por el useEffect de product
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
   const { productId } = useParams();
@@ -37,16 +35,21 @@ const ProductPage = () => {
       console.error("Error fetching product data:", error);
     }
   };
-  const handleUser = async () => {  //Gestiona el usuario de el producto, despues de el primer fetch se rellena tmbn el user
-    const allUsers = await fetchUserById(product?.userId);
-    setUser(allUsers);
-  }
+
+  const handleUser = async (userId: number) => {
+    const userFound = await fetchUserById(userId);
+    setUser(userFound);
+  };
+
+  useEffect(() => { //Se hacen 2 useEffect para que cuando uno este cargado, se realice el otro y omitamos el bucle infinito
+    handleProduct();
+  }, [productId]);
 
   useEffect(() => {
-    handleProduct();
-    handleUser();
-
-  }, [productId, product]); 
+    if (product?.userId) {
+      handleUser(product.userId);
+    }
+  }, [product]);
 
   if (!product) {
     return <div>Loading...</div>;
@@ -72,7 +75,7 @@ const ProductPage = () => {
             <Link to={`/profile/${product.userId}`}>
               <span className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center">
               <img
-                src={userImage}
+                src={user?.pathProfileImage}
                 alt="Usuario"
                 className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
               />
@@ -81,7 +84,6 @@ const ProductPage = () => {
             </Link>
           </div>
           
-
           <div className="flex items-center">
             <BadgeTypeProduct className="scale-150" type={product.categories[0].name} />
           </div>

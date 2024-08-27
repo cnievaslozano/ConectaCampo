@@ -31,7 +31,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ person, userList }) => {
       <Link to={"/profile/" + person.username} className="flex items-center">
         <img
           className="h-20 w-20 rounded-full object-cover border-2 border-gray-300"
-          src={person.profileImage ? person.profileImage : defaultUser}
+          src={person.pathProfileImage ? person.pathProfileImage : defaultUser}
           alt={`${person.name} profile`}
           title={person.username}
         />

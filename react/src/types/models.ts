@@ -12,7 +12,7 @@ export interface User {
   email: string;
   telephone: string;
   aboutMe: string | null;
-  profileImage: string | null;
+  pathProfileImage: string | null;
   createdAt: string;
 }
 

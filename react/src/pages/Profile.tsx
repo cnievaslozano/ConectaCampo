@@ -91,7 +91,7 @@ const Profile = () => {
       <Layout>
         <div className="profile-header">
           <img
-            src={user.profileImage || defaultImage}
+            src={user.pathProfileImage || defaultImage}
             alt="Profile"
             className="profile-image"
             title={user.username}
