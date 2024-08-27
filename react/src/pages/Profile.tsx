@@ -10,6 +10,8 @@ import isFollowing from "@components/user/isFollowing";
 import CorBefore from "@assets/cor antes.webp";
 import CorAfter from "@assets/corazon.webp";
 import FavouriteProductGrid from "@components/products/FavouriteProductGrid";
+import postFollow from "@components/user/postFollow";
+import { ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -85,7 +87,7 @@ const Profile = () => {
   const handleToggleFollow = () => {
     const newIsFollowingState = !isFollowingState;
     setIsFollowingState(newIsFollowingState); // Cambia visualmente el estado de seguimiento
-    postFollow(newIsFollowingState); // Ejecuta la función postFollow con el nuevo estado
+    postFollow(newIsFollowingState, user ? user.id : null); // Ejecuta la función postFollow con el nuevo estado
   };
 
   useEffect(() => {
@@ -104,6 +106,7 @@ const Profile = () => {
   if (user) {
     return (
       <Layout>
+        <ToastContainer />
         <div className="profile-header">
           <div className="profile-image-container">
             <img
@@ -173,9 +176,6 @@ const Profile = () => {
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          {/* {user.products.map((item, index) =>
-            item ? <ProductProfileCard key={item.id} product={item} /> : null
-          )} */}
           <FavouriteProductGrid userId={user.id} allUsers={allUsersJson}/>
         </div>
         <div className="items-grid"></div>
@@ -188,8 +188,3 @@ const Profile = () => {
 
 export default Profile;
 
-// Placeholder para la función postFollow
-const postFollow = (isFollowing: boolean) => {
-  // Aquí podrías hacer la lógica de la petición POST para seguir o dejar de seguir
-  console.log(isFollowing ? "Following..." : "Unfollowing...");
-};
