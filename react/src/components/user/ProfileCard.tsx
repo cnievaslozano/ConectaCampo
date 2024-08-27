@@ -3,12 +3,27 @@ import { Link } from "react-router-dom";
 import defaultUser from "@assets/user/defaultUser.webp";
 import { ProfileCardProps } from "../../types/props";
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ person }) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ person, userList }) => {
     const truncateDescription = (description: string, maxLength: number) => {
         if (description.length > maxLength) {
           return description.substring(0, maxLength) + "...";
         }
         return description;
+      };
+
+      const countMatchingIds = (following: { id: number }[]) => { //Compara la array de los id users creados con los followers id que le pases, si existen devuelve el length para contar seguidos y seguidores
+        if (!userList) {
+          return 0;
+        }
+    
+        // Crear un set para optimizar la búsqueda de coincidencias
+        const userSet = new Set(userList);
+    
+        // Filtrar los IDs de following que están presentes en userList
+        const matchingIds = following.filter(user => userSet.has(user.id));
+    
+        // Retornar el número de coincidencias
+        return matchingIds.length;
       };
 
   return (
@@ -35,11 +50,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ person }) => {
         </p>
         <div className="flex mt-4 space-x-6 text-sm text-gray-500">
           <p>
-            <span className="font-semibold">{person.followers.length}</span>{" "}
+            <span className="font-semibold">{countMatchingIds(person.followers)}</span>{" "}
             Seguidores
           </p>
           <p>
-            <span className="font-semibold">{person.following.length}</span>{" "}
+            <span className="font-semibold">{countMatchingIds(person.following)}</span>{" "}
             Siguiendo
           </p>
         </div>

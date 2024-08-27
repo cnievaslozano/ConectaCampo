@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 // ProfileCards.tsx
 export interface ProfileCardProps {
   person: User;
+  userList: number[] | null;
 }
 
 // Button.tsx

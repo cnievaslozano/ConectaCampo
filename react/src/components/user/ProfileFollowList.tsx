@@ -8,12 +8,13 @@ import Pagination from "@components/common/Pagination";
 const ProfileFollowList = ({ type }: { type?: string }) => {
   const { usernameUrl } = useParams();
   const [user, setUser] = useState<User | null>(null);
-  const [userList, setUserList] = useState<number[]>([]);
+  const [allUserList, setallUserList] = useState<number[] | null>(null);
+  const [userFollowList, setUserFollowList] = useState<number[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const navigate = useNavigate();
 
   const fetchAndFilterUsers = (allUsers: User[]) => {
-    const filtered = allUsers.filter((user) => userList.includes(user.id));
+    const filtered = allUsers.filter((user) => userFollowList.includes(user.id));
     console.log("Filtered Users:", filtered); // Verifica si `filteredUsers` se llena correctamente
     setFilteredUsers(filtered);
   };
@@ -49,11 +50,20 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
           );
         }
 
+
         console.log("User List IDs:", ids); // Verifica si los IDs se obtienen correctamente
-        setUserList(ids);
+        setUserFollowList(ids);
 
         // Filtrar usuarios inmediatamente después de obtener la lista de IDs
         fetchAndFilterUsers(result);
+
+        //Despues de las comprobaciones sacamos los usersList total para introducirlo en las cards y que cada card compruebe si tiene los usuarios que sigue existen
+          // Extraer los IDs de los usuarios
+          const allUserIds = result.map((user: { id: number; }) => user.id);
+
+          // Guardar los IDs en el estado allUserList
+          setallUserList(allUserIds);
+
       } else {
         navigate("/404");
       }
@@ -83,16 +93,16 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
   }, [usernameUrl]);
 
   useEffect(() => {
-    if (userList.length > 0) {
+    if (userFollowList.length > 0) {
       handleProfile(); // Asegura que filtramos los usuarios en el momento correcto
     }
-  }, [userList]);
+  }, [userFollowList]);
 
   if (user) {
     return (
       <Layout>
         <div>
-          <p>UserList = {userList.join(", ")}</p>
+          <p>userFollowList = {userFollowList.join(", ")}</p>
           <Link to={"/profile/" + usernameUrl}>
             <h1 className="text-3xl text-center mb-10"> 
               {type === "followers" ? "Seguidores de: " + usernameUrl :null}
@@ -102,7 +112,7 @@ const ProfileFollowList = ({ type }: { type?: string }) => {
           {currentUsers.length > 0 ? (
         <div className="grid grid-cols-2 gap-6">
           {currentUsers.map((person) => (
-            <ProfileCard key={person.id} person={person} />
+            <ProfileCard key={person.id} person={person} userList={allUserList} />
           ))}
         </div>
       ) : (
