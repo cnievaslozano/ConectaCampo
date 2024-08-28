@@ -4,6 +4,7 @@ import Layout from "@components/layout/Layout";
 import { User } from "@types/models";
 import { toast, ToastContainer } from "react-toastify";
 import fetchUserById from "@components/user/fetchUserById";
+import { uploadImage } from "@utils/fireBaseUtils";
 
 const UserSettings: React.FC = () => {
   let userString = localStorage.getItem("userData");
@@ -17,30 +18,43 @@ const UserSettings: React.FC = () => {
   const [city, setCity] = useState("");
   const [password, setPassword] = useState("");
   const [aboutMe, setAboutMe] = useState("");
-  const [pathProfileImage, setPathProfileImage] = useState("");
+  const [pathProfileImage, setPathProfileImage] = useState(userState.pathProfileImage || "");
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null); // Nuevo estado para el archivo de imagen
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setProfileImageFile(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userData = {
-      name: name || userState.name,
-      surname: surname || userState.surname,
-      username: username || userState.username,
-      telephone: telephone || userState.telephone,
-      city: city || userState.city,
-      password: password || userState.password,
-      aboutMe: aboutMe || userState.aboutMe,
-      pathProfileImage: pathProfileImage || userState.pathProfileImage,
-    };
-
     try {
+      let updatedPathProfileImage = pathProfileImage;
+
+      // Subir la imagen si el usuario ha seleccionado una nueva
+      if (profileImageFile) {
+        updatedPathProfileImage = await uploadImage(profileImageFile);
+      }
+
+      const userData = {
+        name: name || userState.name,
+        surname: surname || userState.surname,
+        username: username || userState.username,
+        telephone: telephone || userState.telephone,
+        city: city || userState.city,
+        password: password || userState.password,
+        aboutMe: aboutMe || userState.aboutMe,
+        pathProfileImage: updatedPathProfileImage,
+      };
+
       const token = localStorage.getItem("token");
-      const ownUserId = userState.id; // Asegúrate de usar userState.id
+      const ownUserId = userState.id;
       if (!ownUserId) {
         throw new Error("User ID is undefined");
       }
-
-      console.log("http://localhost:8080/api/v1/user/" + ownUserId);
 
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
@@ -56,16 +70,14 @@ const UserSettings: React.FC = () => {
         toast.error("Error en la petición");
         throw new Error("Error en la petición");
       }
-      toast.success("Datos actualizados con éxito");
-      console.log("Datos enviados con éxito:", userData);
 
-      // Reintroducimos el nuevo user en el localStorage y actualizamos el estado
+      toast.success("Datos actualizados con éxito");
+
+      // Actualizar el estado del usuario en localStorage y el estado del componente
       const updatedUser = await fetchUserById(ownUserId);
       localStorage.setItem("userData", JSON.stringify(updatedUser));
       setUserState(updatedUser);
-      //Se reintroduce para las proximas veces que usemos el username:
-      // localStorage.removeItem("username");
-      localStorage.setItem("username", updatedUser.username)
+      localStorage.setItem("username", updatedUser.username);
 
     } catch (error) {
       toast.error("Error al enviar los datos");
@@ -79,7 +91,7 @@ const UserSettings: React.FC = () => {
       <div className="settings-container">
         <h2 className="text-3xl">Configuración de cuenta</h2>
         <form className="settings-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+          <div className="form-group">
             <label htmlFor="name">Nombre:</label>
             <input 
               type="text"
@@ -99,20 +111,9 @@ const UserSettings: React.FC = () => {
               placeholder="Introduce tu apellido"
               value={surname}
               onChange={(e) => setSurname(e.target.value)}
-              autoComplete="off" // Desactiva el autocompletado
+              autoComplete="off" 
             />
           </div>
-          {/* <div className="form-group"> //NOMBRE DE USUARIO SI CAMBIA DA PROBLEMAS POR EL LOCALSTORAGE EN EL HEADER, OMITIMOS
-            <label htmlFor="username">Nombre de usuario:</label>
-            <input 
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Introduce tu nombre de usuario"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div> */}
           <div className="form-group">
             <label htmlFor="password">Contraseña:</label>
             <input
@@ -145,7 +146,6 @@ const UserSettings: React.FC = () => {
               placeholder="Introduce tu ciudad"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              
             />
           </div>
           <div className="form-group">
@@ -157,21 +157,27 @@ const UserSettings: React.FC = () => {
               placeholder="Cuéntanos sobre ti"
               value={aboutMe}
               onChange={(e) => setAboutMe(e.target.value)}
-              
             />
           </div>
           <div className="form-group">
-            <label htmlFor="pathProfileImage">Imagen de Perfil (URL):</label>
+            <label htmlFor="profileImage">Imagen de Perfil:</label>
             <input
-              type="text"
-              id="pathProfileImage"
-              name="pathProfileImage"
-              placeholder="Introduce la URL de tu imagen de perfil"
-              value={pathProfileImage}
-              onChange={(e) => setPathProfileImage(e.target.value)}
-              
+              type="file"
+              id="profileImage"
+              name="profileImage"
+              onChange={handleImageChange}
             />
           </div>
+          {pathProfileImage && (
+            <div className="form-group">
+              <label>Vista previa de la imagen:</label>
+              <img
+                src={pathProfileImage}
+                alt="Imagen de perfil"
+                className="w-24 h-24 object-cover rounded-full"
+              />
+            </div>
+          )}
           <button type="submit" className="submit-btn">
             Guardar Cambios
           </button>
