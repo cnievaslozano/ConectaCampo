@@ -10,31 +10,32 @@ const postFollow = (isFollowing: boolean, currentUser:number|null) => {
     const userPageId = currentUser;
     let userString = localStorage.getItem("userData");
     let myUserId = null;
-    console.log("Entrando funcion post follow")
+    
     if (!userString) { //Si no existe localStorage, hacemos fake data y que sea el usuario 8
         myUserId = 8;
-
+        console.log("Usuario null")
     }else if(userString){   //Si existe token, hacemos que sea lo que saca de el localStorage, el usuario
         const ownUser:User = JSON.parse(userString);
         myUserId = ownUser.id;
+        console.log("Usuario json .get data correcto")
     }   
-    let requestOptions = {
-
-      };
-    if (isFollowing) {
+    let requestOptions = {};
+    if (!isFollowing) {
         //Aqui habra que hacer que deje de seguirse
         type= "unfollow"
         requestOptions = {
             method: "DELETE",
             redirect: "follow" as RequestRedirect
           };
-    }else if (!isFollowing) {
+          console.log("Delete follow")
+    }else if (isFollowing) {
         //Aqui hay que hacer que se siga
         type= "follow"
         requestOptions = {
             method: "POST",
             redirect: "follow" as RequestRedirect
           };
+          console.log("Post Follow")
     }
 
 
@@ -50,7 +51,6 @@ const postFollow = (isFollowing: boolean, currentUser:number|null) => {
         toast.error(error.message)
     });
 
-    console.log(isFollowing ? "Following..." : "Unfollowing...");
     return null;
 }
 export default postFollow;

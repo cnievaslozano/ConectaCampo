@@ -9,9 +9,11 @@ const postFavorite = (isFavorited: boolean, prodId: number|null) => {
     let userId = null;
     if (!userString) { //Si no existe localStorage, hacemos fake data y que sea el usuario 8
         userId = 8;
+        console.log("Userdata NO found")
     }else if(userString){   //Si existe token, hacemos que sea lo que saca de el localStorage, el usuario
         const ownUser:User = JSON.parse(userString);
         userId = ownUser.id;
+        console.log("Userdata Json found")
     }   
 
     //TODO Necesito también el usuario de el currentUser y el de el productoId
@@ -20,11 +22,13 @@ const postFavorite = (isFavorited: boolean, prodId: number|null) => {
     if(isFavorited){
         // Si es true, se hará el POST para añadir a favoritos, o sea han cambiado de no-like a like
         urlType = "like"; // Establece el tipo de URL para la operación "like"
+        console.log("LIKE TO PUBLICATION")
     } else if(!isFavorited){
         // Si es false, se hace el POST para eliminar de favoritos, ya que estaba en true y nos llega el !isFavorited
         urlType = "unlike"; // Establece el tipo de URL para la operación "unlike"
+        console.log("UNLIKE TO PUBLICATION")
     }
-
+    
     // Configuración del requestOptions, que se mantendrá como un POST en ambos casos
     const requestOptions = {
         method: "POST", // Siempre se usa el método POST, ya sea para "like" o "unlike"

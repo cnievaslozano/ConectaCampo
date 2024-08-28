@@ -7,6 +7,7 @@ import { Product, User, Publication } from "../types/models";
 import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
 import { ToastContainer } from "react-toastify";
 import postFavorite from "@components/products/postFavorite";
+import isFavourite from "@components/products/isFavourite";
 
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
@@ -41,7 +42,8 @@ const ProductPage = () => {
         setUser(userData);
 
         // Verificar si el producto es favorito
-        const isFavoritedResponse = await isFavourite(productId);
+
+        const isFavoritedResponse = isFavourite(publicationData);
         setIsFavorited(isFavoritedResponse);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -55,7 +57,7 @@ const ProductPage = () => {
   const toggleFavorite = async () => {
     try {
       if (product) {
-        await postFavorite(product.id, !isFavorited);
+        postFavorite(!isFavorited, product.id);
         setIsFavorited(!isFavorited);
       }
     } catch (error) {

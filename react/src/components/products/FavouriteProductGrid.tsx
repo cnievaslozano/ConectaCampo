@@ -39,8 +39,8 @@ const FavouriteProductGrid = ({ userId, allUsers ,  products }: { userId: number
         if (product) {
           // Si se encuentra el producto, añadirlo al `Set` de productos favoritos
           favouriteProductsSet.add(product);
-          console.log("Publicación con like:", publication);
-          console.log("Producto añadido a favoritos:", product);
+          // console.log("Publicación con like:", publication);
+          // console.log("Producto añadido a favoritos:", product);
         }
       }
     });
