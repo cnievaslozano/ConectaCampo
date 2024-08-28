@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import BadgeTypeProduct from "../products/BadgeTypeProduct";
 import { CardProductProps } from "../../types/props";
 
-const CardProduct = ({ product }: CardProductProps) => {
+const CardProduct = ({ product, publication }: CardProductProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleImageLoad = () => {
@@ -36,7 +36,7 @@ const CardProduct = ({ product }: CardProductProps) => {
             className={`h-48 w-full rounded-t-lg transition-opacity duration-300 ${
               imageLoaded ? "opacity-100" : "opacity-0"
             }`}
-            src={product.publications[0].pathPublicationImage}
+            src={publication?.pathPublicationImage}
             alt={product.name}
             onLoad={handleImageLoad}
           />

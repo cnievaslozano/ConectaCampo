@@ -3,7 +3,7 @@ import Layout from "@components/layout/Layout";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "@components/common/Button";
 import defaultImage from "@assets/user/defaultUser.webp";
-import { User, Product, Category, Role } from "../types/models";
+import { User, Product, Publication } from "../types/models";
 import "@styles/Profile.css";
 import ProductProfileCard from "@components/user/ProductProfileCard";
 import isFollowing from "@components/user/isFollowing";
@@ -18,6 +18,8 @@ const Profile = () => {
   const [userList, setUserList] = useState<number[] | null>(null); // Usuarios totales en /users/all en array de ids
   const [followers, setFollowers] = useState<{ id: number }[] | null>(null);
   const [allUsersJson, setAllUsersJson] = useState<User[] | null>(null);
+  const [userProducts, setUserProducts] = useState<Product[]>([]); // Estado para los productos del usuario
+  const [userPublications, setUserPublications] = useState<Publication[]>([]); // Estado para las publicaciones del usuario
   const [loading, setLoading] = useState(true); // Estado para manejar el spinner de carga
   const [isFollowingState, setIsFollowingState] = useState<boolean>(false); // Estado para manejar el estado de seguimiento
 
@@ -53,6 +55,9 @@ const Profile = () => {
           result
         );
         setIsFollowingState(!!isUserFollowing);
+
+        // Realiza un fetch para obtener los productos de este usuario
+        fetchUserProducts(userFound.id);
       } else {
         navigate("/404");
       }
@@ -65,6 +70,40 @@ const Profile = () => {
       navigate("/404");
     } finally {
       setLoading(false); // Detiene el spinner una vez que la solicitud ha terminado
+    }
+  };
+
+  // Función para obtener los productos del usuario basado en userId
+  const fetchUserProducts = async (userId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/product/all`);
+      const products = await response.json();
+      // Filtrar los productos que pertenecen a este usuario
+      const filteredProducts = products.filter(
+        (product: Product) => product.userId === userId
+      );
+      setUserProducts(filteredProducts); // Guardar los productos filtrados en el estado
+
+      // Ahora, realizar fetch de publicaciones para cada producto
+      fetchUserPublications(filteredProducts);
+    } catch (error) {
+      console.error("Error fetching user products:", error);
+    }
+  };
+
+  // Función para obtener las publicaciones basadas en los productos del usuario
+  const fetchUserPublications = async (products: Product[]) => {
+    try {
+      const publicationsPromises = products.map((product) =>
+        fetch(`http://localhost:8080/api/v1/publication/${product.publicationId}`)
+      );
+      
+      const publicationsResponses = await Promise.all(publicationsPromises);
+      const publications = await Promise.all(publicationsResponses.map(res => res.json()));
+      
+      setUserPublications(publications); // Guardar las publicaciones en el estado
+    } catch (error) {
+      console.error("Error fetching user publications:", error);
     }
   };
 
@@ -87,7 +126,7 @@ const Profile = () => {
   const handleToggleFollow = () => {
     const newIsFollowingState = !isFollowingState;
     setIsFollowingState(newIsFollowingState); // Cambia visualmente el estado de seguimiento
-    //postFollow(newIsFollowingState, user ? user.id : null); // Ejecuta la función postFollow con el nuevo estado
+    postFollow(newIsFollowingState, user ? user.id : null); // Ejecuta la función postFollow con el nuevo estado
   };
 
   useEffect(() => {
@@ -115,20 +154,20 @@ const Profile = () => {
               className="profile-image"
               title={user.username}
             />
-            {//localStorage.getItem("token") && user.username !== localStorage.getItem("username") ? //Si no estas logged no te saldra para seguir, y si es tu propio perfil tampoco
-              true ? (
-                <div
-                  className="heart-icon rounded-full bg-[#8AA86E]"
-                  onClick={handleToggleFollow}
-                  style={{ cursor: "pointer" }}
-                >
-                  <img
-                    src={isFollowingState ? CorAfter : CorBefore} // Aquí pones la imagen del corazón
-                    alt="Favorite"
-                    className="heart"
-                  />
-                </div>
-              ) : null}
+            {localStorage.getItem("token") &&
+            user.username !== localStorage.getItem("username") ? ( //Si no estas logged no te saldra para seguir, y si es tu propio perfil tampoco
+              <div
+                className="heart-icon rounded-full bg-[#8AA86E]"
+                onClick={handleToggleFollow}
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src={isFollowingState ? CorAfter : CorBefore} // Aquí pones la imagen del corazón
+                  alt="Favorite"
+                  className="heart"
+                />
+              </div>
+            ) : null}
           </div>
           <div className="profile-info">
             <h1 className="profile-name">{user.name + " " + user.surname}</h1>
@@ -148,7 +187,7 @@ const Profile = () => {
           <div className="profile-info-stats">
             <div className="stat-container">
               <p className="stat-name">Publicaciones</p>
-              <p className="stat-indicator">{user.products.length}</p>
+              <p className="stat-indicator">{userProducts.length}</p>
             </div>
             <div className="stat-container">
               <p className="stat-name">Seguidos</p>
@@ -170,15 +209,14 @@ const Profile = () => {
         </div>
         <h1 className="text-xl mt-10 mb-5">Publicaciones</h1>
         <div className="items-grid">
-          {user.products.map((item, index) =>
-            item ? <ProductProfileCard key={item.id} product={item} /> : null
+          {userProducts.map((item, index) =>
+            item ? <ProductProfileCard key={item.id} product={item} publication={userPublications[index]} /> : null
           )}
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson}/>
+          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson} />
         </div>
-        <div className="items-grid"></div>
       </Layout>
     );
   } else {
@@ -187,4 +225,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
