@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import CardProduct from "./CardProduct";
-import { Product, UserData, Category } from "../../types/models";
+import { Product, UserData } from "../../types/models";
 import Pagination from "@components/common/Pagination";
 
-const SearchProductGrid = () => {
+interface SearchProductGridProps {
+  filters: Record<string, boolean>;
+  sortOrder: string;
+  name: string;
+}
+
+const SearchProductGrid = ({
+  filters,
+  sortOrder,
+  name,
+}: SearchProductGridProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,7 +101,53 @@ const SearchProductGrid = () => {
           };
         });
 
-        setProducts(fetchedProducts);
+        // Aplicar filtros
+        let filteredProducts = fetchedProducts;
+
+        // Filtrar por nombre del producto
+        if (name) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.name.toLowerCase().includes(name.toLowerCase())
+          );
+        }
+
+        if (filters.popular) {
+          filteredProducts = filteredProducts.filter(
+            (product) => product.popular
+          );
+        }
+
+        if (filters.newest) {
+          filteredProducts = filteredProducts.sort((a, b) => b.id - a.id);
+        }
+
+        // Filtrar por categorías
+        const selectedCategories = Object.keys(filters).filter(
+          (key) => filters[key]
+        );
+        if (selectedCategories.length > 0) {
+          filteredProducts = filteredProducts.filter((product) =>
+            selectedCategories.includes(product.categories)
+          );
+        }
+
+        if (sortOrder) {
+          if (sortOrder === "price-desc") {
+            filteredProducts = filteredProducts.sort(
+              (a, b) => b.price - a.price
+            );
+          } else if (sortOrder === "price-asc") {
+            filteredProducts = filteredProducts.sort(
+              (a, b) => a.price - b.price
+            );
+          } else if (sortOrder === "recent") {
+            filteredProducts = filteredProducts.sort((a, b) => b.id - a.id);
+          } else if (sortOrder === "oldest") {
+            filteredProducts = filteredProducts.sort((a, b) => a.id - b.id);
+          }
+        }
+
+        setProducts(filteredProducts);
         setLoading(false);
       } catch (error) {
         setError("Error fetching products: " + error);
@@ -100,7 +156,7 @@ const SearchProductGrid = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [filters, sortOrder, name]);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -111,10 +167,6 @@ const SearchProductGrid = () => {
 
   const totalPages = Math.ceil(products.length / productsPerPage);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>{error}</div>;

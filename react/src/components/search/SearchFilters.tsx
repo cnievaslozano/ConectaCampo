@@ -1,21 +1,36 @@
 import React, { useState } from "react";
 import Button from "@components/common/Button";
 
-const SearchFilters = () => {
-  const [sortOrder, setSortOrder] = useState("");
+interface SearchFiltersProps {
+  sortOrder: string;
+  onSortChange: (sortOrder: string) => void;
+  onCategoryChange: (category: string, checked: boolean) => void;
+}
+
+const SearchFilters = ({
+  sortOrder,
+  onSortChange,
+  onCategoryChange,
+}: SearchFiltersProps) => {
   const [popular, setPopular] = useState(false);
   const [newest, setNewest] = useState(false);
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOrder(e.target.value);
+    onSortChange(e.target.value);
   };
 
   const handlePopularChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPopular(e.target.checked);
+    onCategoryChange("popular", e.target.checked);
   };
 
   const handleNewestChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewest(e.target.checked);
+    onCategoryChange("newest", e.target.checked);
+  };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onCategoryChange(e.target.name, e.target.checked);
   };
 
   return (
@@ -50,8 +65,8 @@ const SearchFilters = () => {
             { id: "1verduras", label: "Verduras" },
             { id: "3lacteos", label: "Lácteos" },
             { id: "5granos", label: "Granos" },
-            { id: "6hogitech", label: "Hierbas" },
-            { id: "7frutos", label: "Semillas" },
+            { id: "6hierbas", label: "Hierbas" },
+            { id: "7semillas", label: "Semillas" },
             { id: "7aceites", label: "Aceites" },
             { id: "8miel", label: "Miel" },
           ].map(({ id, label }) => (
@@ -59,10 +74,8 @@ const SearchFilters = () => {
               <input
                 type="checkbox"
                 id={id}
-                name={id}
-                // Aquí puedes usar una función para manejar el cambio
-                // checked={yourCheckedState}
-                // onChange={handleCategoryChange}
+                name={label}
+                onChange={handleCategoryChange}
                 className="mr-2"
               />
               <label htmlFor={id}>{label}</label>
@@ -71,7 +84,7 @@ const SearchFilters = () => {
         </div>
       </div>
 
-      <Button text="Buscar" className="w-full" />
+      <Button text="Buscar" className="w-full mt-4" />
     </>
   );
 };
