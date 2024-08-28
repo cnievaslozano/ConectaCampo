@@ -9,7 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -33,13 +37,22 @@ public class Product {
     }
 
     // RELATION CATEGORY
-    @ManyToMany( fetch = FetchType.EAGER)
+    @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(
             name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories;
+    private List<Category> categories;
+
+    @OneToMany(mappedBy = "product")
+    private Set<PublicationProduct> publicationProducts;
+    public List<String> getPublicationImagePaths() {
+        return publicationProducts.stream()
+                .map(pp -> pp.getPublication().getPathPublicationImage())
+                .collect(Collectors.toList());
+    }
+
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -59,6 +72,10 @@ public class Product {
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void setPublications(Set<PublicationProduct> publicationProducts) {
+        this.publicationProducts = publicationProducts;
     }
 
 }

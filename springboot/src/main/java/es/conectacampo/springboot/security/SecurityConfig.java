@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
                     // Login & Register
-                    auth.requestMatchers(   "/auth/login").permitAll();
+                    auth.requestMatchers("/login", "/auth/**", "/error", "/logout").permitAll();
                     auth.requestMatchers(   "/error").permitAll();
                     auth.requestMatchers(   "/api/v1/follow/all").permitAll();
                     auth.requestMatchers("/api/v1/user/**").permitAll();

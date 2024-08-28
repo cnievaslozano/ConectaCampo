@@ -19,11 +19,32 @@ public class FollowService {
     @Autowired
     private FollowRepository followRepository;
 
-    // get all follows
-    public List<Follow> getAllFollows () {
+    // Obtener seguidores de un usuario
+    public List<Follow> getFollowers(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return followRepository.findByFollowed(user);
+    }
+
+    // Obtener personas a las que sigue un usuario
+    public List<Follow> getFollowing(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return followRepository.findByFollower(user);
+    }
+
+
+    public List<Follow> getAllFollows() {
         return followRepository.findAll();
     }
 
+    public List<Follow> getFollowsByFollower(Long followerId) {
+        return followRepository.findByFollowerId(followerId);
+    }
+
+    public List<Follow> getFollowsByFollowed(Long followedId) {
+        return followRepository.findByFollowedId(followedId);
+    }
 
     // Follow
     @Transactional
@@ -32,8 +53,8 @@ public class FollowService {
         User followUser = userRepository.findById(followUserId).orElseThrow(() -> new RuntimeException("User to follow not found"));
 
         Follow follow = new Follow();
-        follow.setFollower(user);
-        follow.setFollowed(followUser);
+        follow.setFollowed(user);
+        follow.setFollower(followUser);
 
         followRepository.save(follow);
     }

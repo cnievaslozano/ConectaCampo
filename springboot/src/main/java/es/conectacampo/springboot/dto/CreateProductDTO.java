@@ -21,6 +21,9 @@ public class CreateProductDTO {
     @NotEmpty(message = "categoryIds no puede estar vacío")
     private Set<Long> categoryIds;
 
+    @NotEmpty(message = "publicationIds no puede estar vacío")
+    private Set<Long> publicationIds; // Añadir este campo para manejar publicaciones
+
     @NotBlank(message = "name no puede estar vacío")
     @Size(max = 50)
     private String name;

@@ -1,7 +1,9 @@
 package es.conectacampo.springboot.service;
 
+import es.conectacampo.springboot.dto.UserDTO;
 import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.ERole;
+import es.conectacampo.springboot.model.Follow;
 import es.conectacampo.springboot.model.Role;
 import es.conectacampo.springboot.model.User;
 import es.conectacampo.springboot.repository.UserRepository;
@@ -29,23 +31,46 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private FollowService followService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // CRUD USERS
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    private UserDTO convertToDTO(User user) {
+
+        return UserDTO.builder()
+                .id(user.getId())
+                .following(user.getFollowing())
+                .followers(user.getFollowers())
+                .products(user.getProducts())
+                .roles(user.getRoles())
+                .city(user.getCity())
+                .name(user.getName())
+                .surname(user.getSurname())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .telephone(user.getTelephone())
+                .aboutMe(user.getAboutMe())
+                .pathProfileImage(user.getPathProfileImage())
+                .build();
     }
 
-    public Optional<User> getUserById(Long id) {
+    // CRUD USERS
+    public List<UserDTO> getUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + id));
-        return Optional.ofNullable(user);
+        return convertToDTO(user);
     }
 
-    public Optional<User> getUserByUsername(String username) {
+    public UserDTO getUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this username -> " + username));
-        return Optional.ofNullable(user);
+        return convertToDTO(user);
     }
 
     @Transactional

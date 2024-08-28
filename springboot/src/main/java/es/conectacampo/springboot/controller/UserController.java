@@ -1,5 +1,6 @@
 package es.conectacampo.springboot.controller;
 
+import es.conectacampo.springboot.dto.UserDTO;
 import es.conectacampo.springboot.model.User;
 import es.conectacampo.springboot.dto.CreateUserDTO;
 import es.conectacampo.springboot.dto.UpdateUserDTO;
@@ -52,20 +53,20 @@ public class UserController {
 
     // Get all users
     @GetMapping("/all")
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
           return userService.getUsers();
     }
 
     // Get one user by id
     @GetMapping("/id/{id}")
-    public Optional<User> getUserById(@PathVariable Long id){
-        return userService.getUserById(id);
+    public Optional<UserDTO> getUserById(@PathVariable Long id){
+        return Optional.ofNullable(userService.getUserById(id));
     }
 
     // Get one user by username
     @GetMapping("/username/{username}")
-    public Optional<User> getUserByUsername(@PathVariable String username){
-        return userService.getUserByUsername(username);
+    public Optional<UserDTO> getUserByUsername(@PathVariable String username){
+        return Optional.ofNullable(userService.getUserByUsername(username));
     }
 
 
