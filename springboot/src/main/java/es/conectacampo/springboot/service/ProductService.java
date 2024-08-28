@@ -40,6 +40,7 @@ public class ProductService {
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .publicationId(product.getId())
                 .quantity(product.getQuantity())
                 .build();
     }

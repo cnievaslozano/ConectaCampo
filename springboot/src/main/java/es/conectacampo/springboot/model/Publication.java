@@ -34,7 +34,7 @@ public class Publication {
     // RELATION - PRODUCTS
     @OneToMany(mappedBy = "publication")
     @JsonIgnore
-    private Set<PublicationProduct> publicationProducts;
+    private List<PublicationProduct> publicationProducts;
 
     // RELATION - LIKES
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)

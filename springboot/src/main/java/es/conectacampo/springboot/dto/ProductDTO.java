@@ -18,8 +18,9 @@ public class ProductDTO {
 
     private Long id;
     private Long userId;
+    private Long publicationId;
     private List<Category> categories;
-    private Set<PublicationProductDTO> publicationProducts;
+   // private Set<PublicationProductDTO> publicationProducts;
     private String name;
     private String description;
     private double price;

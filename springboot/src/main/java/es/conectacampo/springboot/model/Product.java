@@ -28,7 +28,7 @@ public class Product {
     private Long id;
 
     // FK - User
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
     private User user;
@@ -47,12 +47,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<PublicationProduct> publicationProducts;
-    public List<String> getPublicationImagePaths() {
-        return publicationProducts.stream()
-                .map(pp -> pp.getPublication().getPathPublicationImage())
-                .collect(Collectors.toList());
-    }
-
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
