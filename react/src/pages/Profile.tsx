@@ -7,14 +7,20 @@ import { User, Product, Category, Role } from "../types/models";
 import "@styles/Profile.css";
 import ProductProfileCard from "@components/user/ProductProfileCard";
 import isFollowing from "@components/user/isFollowing";
+import CorBefore from "@assets/cor antes.webp";
+import CorAfter from "@assets/corazon.webp";
+import FavouriteProductGrid from "@components/products/FavouriteProductGrid";
+import postFollow from "@components/user/postFollow";
+import { ToastContainer } from "react-toastify";
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [userList, setUserList] = useState<number[] | null>(null); //Usuarios totales en /users/all en array de ids
+  const [userList, setUserList] = useState<number[] | null>(null); // Usuarios totales en /users/all en array de ids
   const [followers, setFollowers] = useState<{ id: number }[] | null>(null);
   const [allUsersJson, setAllUsersJson] = useState<User[] | null>(null);
-
   const [loading, setLoading] = useState(true); // Estado para manejar el spinner de carga
+  const [isFollowingState, setIsFollowingState] = useState<boolean>(false); // Estado para manejar el estado de seguimiento
+
   const locationUrl = useLocation();
   const userNameUrl = locationUrl.pathname.split("/").filter(Boolean).pop();
   const navigate = useNavigate();
@@ -37,24 +43,23 @@ const Profile = () => {
       );
       if (userFound) {
         setUser(userFound);
+        setFollowers(userFound.followers);
+        setAllUsersJson(result);
+
+        // Set initial isFollowingState based on isFollowing function
+        const isUserFollowing = isFollowing(
+          userFound.followers,
+          localStorage.getItem("Username"),
+          result
+        );
+        setIsFollowingState(!!isUserFollowing);
       } else {
         navigate("/404");
       }
-      //Bloque para rellenar la variable userList que calcula los users seguidos y seguidores
-        // Extraer los IDs de los usuarios
-        const ids = result.map((user: { id: number; }) => user.id);
 
-        // Guardar los IDs en el estado userList
-        setUserList(ids);
-      //Bloque que guarda los following y followers
-        // Supongamos que quieres comparar el "following" del primer usuario del array
-        if (userFound) {
-          setFollowers(userFound.followers); // Guarda el array "following" del primer usuario
-        //Aqui tambien cogemos el JSON completo para la funcion isFollowing
-        setAllUsersJson(result);
-        }
-      
-        
+      // Bloque para rellenar la variable userList que calcula los users seguidos y seguidores
+      const ids = result.map((user: { id: number }) => user.id);
+      setUserList(ids);
     } catch (error) {
       console.error("Error fetching profile data:", error);
       navigate("/404");
@@ -62,7 +67,8 @@ const Profile = () => {
       setLoading(false); // Detiene el spinner una vez que la solicitud ha terminado
     }
   };
-  //Bloque para contar ids seguidos y seguidores
+
+  // Bloque para contar ids seguidos y seguidores
   const countMatchingIds = (following: { id: number }[]) => {
     if (!userList) {
       return 0;
@@ -78,6 +84,11 @@ const Profile = () => {
     return matchingIds.length;
   };
 
+  const handleToggleFollow = () => {
+    const newIsFollowingState = !isFollowingState;
+    setIsFollowingState(newIsFollowingState); // Cambia visualmente el estado de seguimiento
+    //postFollow(newIsFollowingState, user ? user.id : null); // Ejecuta la función postFollow con el nuevo estado
+  };
 
   useEffect(() => {
     handleProfile();
@@ -95,28 +106,30 @@ const Profile = () => {
   if (user) {
     return (
       <Layout>
+        <ToastContainer />
         <div className="profile-header">
-        <div className="profile-image-container">
-    <img
-      src={user.pathProfileImage || defaultImage}
-      alt="Profile"
-      className="profile-image"
-      title={user.username}
-    />
-    {//localStorage.getItem("token") && user.username !== localStorage.getItem("username") ? //Si no estas logged no te saldra para seguir, y si es tu propio perfil tampoco
-     true ? 
-      <div className="heart-icon rounded-full bg-[#8AA86E]">
-      <img
-        src={isFollowing(followers, localStorage.getItem("Username"), allUsersJson)} // Aquí pones la imagen del corazón
-        alt="Favorite"
-        className="heart"
-      />
-    </div>
-    :null
-    }
-
-
-  </div>
+          <div className="profile-image-container">
+            <img
+              src={user.pathProfileImage || defaultImage}
+              alt="Profile"
+              className="profile-image"
+              title={user.username}
+            />
+            {//localStorage.getItem("token") && user.username !== localStorage.getItem("username") ? //Si no estas logged no te saldra para seguir, y si es tu propio perfil tampoco
+              true ? (
+                <div
+                  className="heart-icon rounded-full bg-[#8AA86E]"
+                  onClick={handleToggleFollow}
+                  style={{ cursor: "pointer" }}
+                >
+                  <img
+                    src={isFollowingState ? CorAfter : CorBefore} // Aquí pones la imagen del corazón
+                    alt="Favorite"
+                    className="heart"
+                  />
+                </div>
+              ) : null}
+          </div>
           <div className="profile-info">
             <h1 className="profile-name">{user.name + " " + user.surname}</h1>
             <p className="profile-description">{user.aboutMe}</p>
@@ -140,28 +153,32 @@ const Profile = () => {
             <div className="stat-container">
               <p className="stat-name">Seguidos</p>
               <Link to={"/profile/" + user.username + "/followList"}>
-                <p className="stat-indicator">{countMatchingIds(user.following)}</p>
+                <p className="stat-indicator">
+                  {countMatchingIds(user.following)}
+                </p>
               </Link>
             </div>
             <div className="stat-container">
               <p className="stat-name">Seguidores</p>
               <Link to={"/profile/" + user.username + "/followerList"}>
-                <p className="stat-indicator">{countMatchingIds(user.followers)}</p>
+                <p className="stat-indicator">
+                  {countMatchingIds(user.followers)}
+                </p>
               </Link>
             </div>
           </div>
         </div>
         <h1 className="text-xl mt-10 mb-5">Publicaciones</h1>
         <div className="items-grid">
-        {user.products.map((item, index) => (
-          item ? <ProductProfileCard key={item.id} product={item} /> : null
-        ))}
+          {user.products.map((item, index) =>
+            item ? <ProductProfileCard key={item.id} product={item} /> : null
+          )}
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-
-
+          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson}/>
         </div>
+        <div className="items-grid"></div>
       </Layout>
     );
   } else {
@@ -170,3 +187,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
