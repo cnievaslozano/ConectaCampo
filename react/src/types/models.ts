@@ -45,8 +45,8 @@ export interface Product {
   quantity: number;
   image: string;
   userId: number;
+  publicationId: number;
   imageUser: string;
-  publications: Publication[];
   createdAt?: string;
 }
 
