@@ -24,4 +24,13 @@ public class UpdateUserDTO {
     private String aboutMe;
 
     private String pathProfileImage;
+
+    @Size(max = 50, message = "El nombre no puede exceder los 50 caracteres")
+    private String name;
+
+    @Size(max = 50, message = "El apellido no puede exceder los 50 caracteres")
+    private String surname;
+
+    @Size(max = 50, message = "El nombre de usuario no puede exceder los 50 caracteres")
+    private String username;
 }

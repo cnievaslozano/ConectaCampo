@@ -106,6 +106,9 @@ public class UserService {
         user.setCity(updateUserDTO.getCity());
         user.setPathProfileImage(updateUserDTO.getPathProfileImage());
         user.setAboutMe(updateUserDTO.getAboutMe());
+        user.setName(updateUserDTO.getName());
+        user.setSurname(updateUserDTO.getSurname());
+        user.setUsername(updateUserDTO.getUsername());
 
         // Guardar y devolver el usuario actualizado
         return userRepository.save(user);

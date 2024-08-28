@@ -10,6 +10,9 @@ const UserSettings: React.FC = () => {
   let ownUser: User = JSON.parse(userString ? userString : "");
 
   const [userState, setUserState] = useState(ownUser);
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
   const [telephone, setTelephone] = useState("");
   const [city, setCity] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +23,9 @@ const UserSettings: React.FC = () => {
     e.preventDefault();
 
     const userData = {
+      name: name || userState.name,
+      surname: surname || userState.surname,
+      username: username || userState.username,
       telephone: telephone || userState.telephone,
       city: city || userState.city,
       password: password || userState.password,
@@ -57,6 +63,9 @@ const UserSettings: React.FC = () => {
       const updatedUser = await fetchUserById(ownUserId);
       localStorage.setItem("userData", JSON.stringify(updatedUser));
       setUserState(updatedUser);
+      //Se reintroduce para las proximas veces que usemos el username:
+      // localStorage.removeItem("username");
+      localStorage.setItem("username", updatedUser.username)
 
     } catch (error) {
       toast.error("Error al enviar los datos");
@@ -68,8 +77,54 @@ const UserSettings: React.FC = () => {
     <Layout>
       <ToastContainer />
       <div className="settings-container">
-        <h2 className="text-xl">Configuración de cuenta</h2>
+        <h2 className="text-3xl">Configuración de cuenta</h2>
         <form className="settings-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+            <label htmlFor="name">Nombre:</label>
+            <input 
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Introduce tu nombre"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="surname">Apellido:</label>
+            <input 
+              type="text"
+              id="surname"
+              name="surname"
+              placeholder="Introduce tu apellido"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              autoComplete="off" // Desactiva el autocompletado
+            />
+          </div>
+          {/* <div className="form-group"> //NOMBRE DE USUARIO SI CAMBIA DA PROBLEMAS POR EL LOCALSTORAGE EN EL HEADER, OMITIMOS
+            <label htmlFor="username">Nombre de usuario:</label>
+            <input 
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Introduce tu nombre de usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div> */}
+          <div className="form-group">
+            <label htmlFor="password">Contraseña:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Introduce tu nueva contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="new-password"
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="telephone">Teléfono:</label>
             <input 
@@ -90,18 +145,6 @@ const UserSettings: React.FC = () => {
               placeholder="Introduce tu ciudad"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Contraseña:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Introduce tu nueva contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               
             />
           </div>
