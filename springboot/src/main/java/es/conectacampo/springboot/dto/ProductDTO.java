@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -17,12 +18,12 @@ public class ProductDTO {
 
     private Long id;
     private Long userId;
+    private Long publicationId;
     private List<Category> categories;
-    private List<Publication> publications;
+   // private Set<PublicationProductDTO> publicationProducts;
     private String name;
     private String description;
     private double price;
     private int quantity;
-
 
 }

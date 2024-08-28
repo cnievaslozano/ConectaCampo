@@ -1,5 +1,7 @@
 package es.conectacampo.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -9,7 +11,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,17 +32,17 @@ public class Publication {
     private User user;
 
     // RELATION - PRODUCTS
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "publication_products",
-            joinColumns = @JoinColumn(name = "publication_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+    @OneToMany(mappedBy = "publication")
+    @JsonIgnore
+    private List<PublicationProduct> publicationProducts;
 
     // RELATION - LIKES
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Like> likes = new ArrayList<>();
+
+    public Publication(Long publicationId) {
+    }
 
     // FUNCTIONS - LIKES
     public void addLike(Like like) {
