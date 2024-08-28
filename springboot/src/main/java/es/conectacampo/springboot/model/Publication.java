@@ -37,9 +37,9 @@ public class Publication {
     private List<PublicationProduct> publicationProducts;
 
     // RELATION - LIKES
-    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Like> likes = new ArrayList<>();
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    //@JsonIgnore
+    private List<Like> likes;
 
     public Publication(Long publicationId) {
     }
