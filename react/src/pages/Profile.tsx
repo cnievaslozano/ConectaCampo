@@ -87,7 +87,7 @@ const Profile = () => {
   const handleToggleFollow = () => {
     const newIsFollowingState = !isFollowingState;
     setIsFollowingState(newIsFollowingState); // Cambia visualmente el estado de seguimiento
-    postFollow(newIsFollowingState, user ? user.id : null); // Ejecuta la función postFollow con el nuevo estado
+    //postFollow(newIsFollowingState, user ? user.id : null); // Ejecuta la función postFollow con el nuevo estado
   };
 
   useEffect(() => {

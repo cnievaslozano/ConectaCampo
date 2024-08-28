@@ -46,7 +46,7 @@ const ProductPage = () => {
 
   const toggleFavorite = () => {
     setIsFavorited(!isFavorited);
-    postFavorite(!isFavorited, product? product.id: null); //Vuelve a ser en negacion, ya que aunque se actualice el estado anterior, no da tiempo a cogerlo bien
+    //postFavorite(!isFavorited, product? product.id: null); //Vuelve a ser en negacion, ya que aunque se actualice el estado anterior, no da tiempo a cogerlo bien
   };
 
   useEffect(() => {
