@@ -3,134 +3,151 @@ import CorBefore from "@assets/cor antes.webp";
 import CorAfter from "@assets/corazon.webp";
 import Layout from "@components/layout/Layout";
 import { Link, useParams } from "react-router-dom";
-import { Product, User } from "@types/models";
+import { Product, User, Publication } from "../types/models";
 import BadgeTypeProduct from "@components/products/BadgeTypeProduct";
-import fetchUserById from "@components/user/fetchUserById";
-import isFavourite from "@components/products/isFavourite";
 import { ToastContainer } from "react-toastify";
 import postFavorite from "@components/products/postFavorite";
 
-//TODO falta corregir que funcione cuando este auth y que haga el post correcto
 const ProductPage = () => {
   const [isFavorited, setIsFavorited] = useState(false);
-  const { productId } = useParams();
+  const { productId } = useParams<{ productId: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [publication, setPublication] = useState<Publication | null>(null);
 
-  const handleProduct = async () => {
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow" as RequestRedirect,
+  // Función para obtener los datos del producto, la publicación y el usuario
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Obtener los datos del producto
+        const productResponse = await fetch(
+          `http://localhost:8080/api/v1/product/${productId}`
+        );
+        const productData = await productResponse.json();
+        setProduct(productData);
+
+        // Obtener los datos de la publicación usando el id del producto (asumiendo que es igual al id de la publicación)
+        const publicationResponse = await fetch(
+          `http://localhost:8080/api/v1/publication/${productId}`
+        );
+        const publicationData = await publicationResponse.json();
+        setPublication(publicationData);
+
+        // Obtener los datos del usuario usando el id del usuario en la publicación
+        const userResponse = await fetch(
+          `http://localhost:8080/api/v1/user/id/${publicationData.user.id}`
+        );
+        const userData = await userResponse.json();
+        setUser(userData);
+
+        // Verificar si el producto es favorito
+        const isFavoritedResponse = await isFavourite(productId);
+        setIsFavorited(isFavoritedResponse);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/product/${productId}`,
-        requestOptions
-      );
-      const result = await response.json();
-      setProduct(result);
-
-      // Inicializa el estado `isFavorited` usando `isFavourite`
-      const initialIsFavorited = isFavourite(result) === CorAfter;
-      setIsFavorited(initialIsFavorited);
-    } catch (error) {
-      console.error("Error fetching product data:", error);
-    }
-  };
-
-  const handleUser = async (userId: number) => {
-    const userFound = await fetchUserById(userId);
-    setUser(userFound);
-  };
-
-  const toggleFavorite = () => {
-    setIsFavorited(!isFavorited);
-    //postFavorite(!isFavorited, product? product.id: null); //Vuelve a ser en negacion, ya que aunque se actualice el estado anterior, no da tiempo a cogerlo bien
-  };
-
-  useEffect(() => {
-    handleProduct();
+    fetchData();
   }, [productId]);
 
-  useEffect(() => {
-    if (product?.userId) {
-      handleUser(product.userId);
+  // Función para gestionar el favorito
+  const toggleFavorite = async () => {
+    try {
+      if (product) {
+        await postFavorite(product.id, !isFavorited);
+        setIsFavorited(!isFavorited);
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
     }
-  }, [product]);
+  };
 
-  if (!product) {
+  // Mostrar una pantalla de carga mientras se obtienen los datos
+  if (!product || !publication || !user) {
     return <div>Loading...</div>;
   }
-
-  const publication = product.publications[0]; // Suponiendo que siempre habrá al menos una publicación
 
   return (
     <Layout>
       <ToastContainer />
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row">
-        <div className="flex-shrink-0 w-full lg:w-1/2">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row h-[700px] shadow-lg rounded-lg overflow-hidden">
+        <div className="flex-shrink-0 w-full lg:w-1/2 relative">
           <img
             src={publication.pathPublicationImage}
             alt={product.name}
-            className="w-full h-auto object-cover"
+            className="w-full h-full object-cover rounded-t-lg lg:rounded-l-lg"
           />
         </div>
 
-        <div className="flex-grow mt-8 lg:mt-0 lg:ml-8">
-          <div className="flex text-center justify-between">
-            <h1 className="text-3xl font-bold text-2d572c">{product.name}</h1>
-            <Link to={`/profile/${user?.username}`}>
+        <div className="flex-grow mt-8 lg:mt-0 lg:ml-8 p-6 lg:p-8 rounded-r-lg shadow-md">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-4xl font-extrabold text-[#2d572c]">
+              {product.name}
+            </h1>
+            <Link to={`/profile/${user.username}`}>
               <span
-                className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded dark:bg-blue-200 dark:text-blue-800 flex items-center"
-                title={user?.username}
+                className="bg-blue-200 text-blue-900 text-sm font-semibold px-4 py-2 rounded-full flex items-center shadow-sm hover:bg-blue-300 transition duration-200"
+                title={user.username}
               >
                 <img
-                  src={user?.pathProfileImage}
+                  src={user.pathProfileImage}
                   alt="Usuario"
                   className="w-12 h-12 rounded-full object-cover border-2 border-gray-300"
                 />
-                <span className="ms-2">
-                  {user?.name + " " + user?.surname}
+                <span className="ml-2 text-lg font-medium">
+                  {user.name} {user.surname}
                 </span>
               </span>
             </Link>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center mb-4">
             <BadgeTypeProduct
               className="scale-150"
-              type={product.categories[0].name}
+              type={product.categories[0]?.name || "defaultcategory"}
             />
           </div>
 
-          <p className="text-2xl text-black mt-4">{`Precio: ${product.price} €`}</p>
-          <p className="text-lg text-black mt-4">{publication.description}</p>
-          <ul className="list-disc list-inside mt-4 text-black">
-            <li>Lugar de venta: {publication.address}</li>
-            <li>Cantidad disponible: {product.quantity}</li>
-            <li>Horario: {publication.schedule}</li>
-            <li>Fecha de publicación: {new Date(publication.createdAt).toLocaleDateString()}</li>
-            <li>Likes: {publication.likeCount}</li>
+          <p className="text-2xl text-[#333] font-semibold mt-4">{`Precio: ${product.price} €`}</p>
+          <p className="text-lg text-gray-700 mt-4">
+            {publication.description}
+          </p>
+          <ul className="list-disc list-inside mt-4 text-gray-800">
+            <li>
+              <strong>Lugar de venta:</strong> {publication.address}
+            </li>
+            <li>
+              <strong>Cantidad disponible:</strong> {product.quantity}
+            </li>
+            <li>
+              <strong>Horario:</strong> {publication.schedule}
+            </li>
+            <li>
+              <strong>Fecha de publicación:</strong>{" "}
+              {new Date(publication.createdAt).toLocaleDateString()}
+            </li>
+            <li>
+              <strong>Likes:</strong> {publication.likeCount}
+            </li>
           </ul>
 
-          <div className="mt-6 flex items-center">
-            {//TODO localStorage.getItem('token') ? //Si hay token se muestra el boton like, si no no
-            true ? (
+          <div className="mt-8 flex items-center">
+            {localStorage.getItem("token") && (
               <button
-                className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-2 px-4 rounded hover:bg-lightGreen2"
+                className="ml-4 flex items-center bg-[#8AA86E] text-white font-bold py-3 px-5 rounded-full shadow-md hover:bg-[#769E5F] transition duration-200 transform hover:scale-105"
                 onClick={toggleFavorite}
               >
                 <span className="mr-2">
                   {isFavorited ? "Eliminar de Favoritos" : "Añadir a Favoritos"}
                 </span>
                 <img
-                  src={isFavorited ? CorAfter : CorBefore} // Cambia la imagen según el estado actual
+                  src={isFavorited ? CorAfter : CorBefore}
                   alt="Corazón"
                   className="w-6 h-6"
                 />
               </button>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
@@ -139,4 +156,3 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
-

@@ -28,6 +28,11 @@ const SearchProductGrid = () => {
           new Set(data.map((product: Product) => product.userId))
         );
 
+        // Obtener todas las IDs de publicaciones para hacer solicitudes adicionales
+        const publicationIds = Array.from(
+          new Set(data.map((product: Product) => product.publicationId))
+        );
+
         // Hacer solicitudes para obtener las imágenes de los usuarios
         const userImagesPromises = userIds.map((userId: number) =>
           fetch(`http://localhost:8080/api/v1/user/id/${userId}`)
@@ -46,13 +51,28 @@ const SearchProductGrid = () => {
           ])
         );
 
-        // Mapear los productos con las imágenes de los usuarios
-        const fetchedProducts = data.map((product: Product) => {
-          const image =
-            product.publications.length > 0
-              ? product.publications[0].pathPublicationImage
-              : null;
+        // Hacer solicitudes para obtener las imágenes de las publicaciones
+        const publicationImagesPromises = publicationIds.map(
+          (publicationId: number) =>
+            fetch(`http://localhost:8080/api/v1/publication/${publicationId}`)
+              .then((response) => response.json())
+              .then((publicationData) => ({
+                publicationId,
+                pathPublicationImage: publicationData.pathPublicationImage,
+              }))
+        );
 
+        const publicationImages = await Promise.all(publicationImagesPromises);
+        const publicationImagesMap = new Map(
+          publicationImages.map((publicationImage) => [
+            publicationImage.publicationId,
+            publicationImage.pathPublicationImage,
+          ])
+        );
+
+        // Mapear los productos con las imágenes de los usuarios y publicaciones
+        const fetchedProducts = data.map((product: Product) => {
+          const image = publicationImagesMap.get(product.publicationId) || null;
           const categoryName =
             product.categories.length > 0
               ? product.categories[0].name
@@ -66,8 +86,8 @@ const SearchProductGrid = () => {
             description: product.description,
             price: product.price,
             quantity: product.quantity,
-            image: image,
-            imageUser: userImagesMap.get(product.userId) || "", // Obtener la imagen del usuario
+            image: image, // Imagen de la publicación
+            imageUser: userImagesMap.get(product.userId) || "", // Imagen del usuario
           };
         });
 
