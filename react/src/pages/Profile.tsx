@@ -18,6 +18,7 @@ const Profile = () => {
   const [userList, setUserList] = useState<number[] | null>(null); // Usuarios totales en /users/all en array de ids
   const [followers, setFollowers] = useState<{ id: number }[] | null>(null);
   const [allUsersJson, setAllUsersJson] = useState<User[] | null>(null);
+  const [allProductsJson, setAllProductsJson] = useState<Product[] | null>(null);
   const [userProducts, setUserProducts] = useState<Product[]>([]); // Estado para los productos del usuario
   const [userPublications, setUserPublications] = useState<Publication[]>([]); // Estado para las publicaciones del usuario
   const [loading, setLoading] = useState(true); // Estado para manejar el spinner de carga
@@ -79,6 +80,7 @@ const Profile = () => {
       const response = await fetch(`http://localhost:8080/api/v1/product/all`);
       const products = await response.json();
       // Filtrar los productos que pertenecen a este usuario
+      setAllProductsJson(products);
       const filteredProducts = products.filter(
         (product: Product) => product.userId === userId
       );
@@ -215,7 +217,7 @@ const Profile = () => {
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson} />
+          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson} products={allProductsJson} />
         </div>
       </Layout>
     );
