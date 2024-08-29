@@ -1,0 +1,14 @@
+version: '3.8'  # Puedes quitar la versión si te da advertencia de que es obsoleta
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password  # Usa una contraseña segura aquí
+      MYSQL_DATABASE: db_conecta_campo
+      # MYSQL_USER: user  # Asegúrate de que este no sea 'root'
+      # MYSQL_PASSWORD: userpassword  # Define una contraseña para el usuario regular si es necesario
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
