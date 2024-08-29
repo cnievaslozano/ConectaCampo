@@ -19,6 +19,11 @@ RUN npm run build
 
 # Utilizar Nginx para servir la aplicación
 FROM nginx:stable-alpine
+
+# Copiar configuración personalizada de Nginx
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# Copiar la aplicación construida
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Exponer el puerto 80
