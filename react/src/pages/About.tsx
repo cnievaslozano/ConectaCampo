@@ -131,7 +131,7 @@ const About = () => {
         <div className="flex justify-around flex-wrap">
           <div className="text-center mx-4">
             <img
-              src={CristianImage}
+              src="https://firebasestorage.googleapis.com/v0/b/conectacampo-9691f.appspot.com/o/images%2Fcristian.webp?alt=media&token=15813cfc-4bb6-4fec-ace4-e4980e4d723d"
               alt="Cristian"
               className="w-20 h-20 rounded-full mx-auto"
             />
@@ -139,7 +139,7 @@ const About = () => {
           </div>
           <div className="text-center mx-4">
             <img
-              src={DaniImage}
+              src="https://firebasestorage.googleapis.com/v0/b/conectacampo-9691f.appspot.com/o/images%2FRetocada_1_linquedin.jpg?alt=media&token=9b13b959-00d1-4712-95f9-c718765bee07"
               alt="Dani"
               className="w-20 h-20 rounded-full mx-auto"
             />
@@ -147,7 +147,7 @@ const About = () => {
           </div>
           <div className="text-center mx-4">
             <img
-              src={MiryamImage}
+              src="https://firebasestorage.googleapis.com/v0/b/conectacampo-9691f.appspot.com/o/images%2Fmiryam.jpeg?alt=media&token=b0121b2f-aac8-4868-9b63-1ad17622233c"
               alt="Miryam"
               className="w-20 h-20 rounded-full mx-auto"
             />

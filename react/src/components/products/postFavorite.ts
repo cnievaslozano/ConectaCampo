@@ -43,11 +43,13 @@ const postFavorite = (isFavorited: boolean, prodId: number|null) => {
         .then((response) => response.text()) // Manejar la respuesta como texto
         .then((result) => {
             console.log(result); // Log para depuración
-            toast.success(result); // Mostrar un toast de éxito con el mensaje de la respuesta
+            //toast.success(result); // Mostrar un toast de éxito con el mensaje de la respuesta
+            toast.success("Acción ejecutada con éxito");
         })
         .catch((error) => {
             console.error(error); // Log para depuración de errores
-            toast.error(error.message); // Mostrar un toast de error con el mensaje del error
+            //toast.error(error.message); // Mostrar un toast de error con el mensaje del error
+            toast.error("Error al ejecutar acción")
         });
 
     console.log(isFavorited ? "Añadir a Favoritos..." : "Eliminar de Favoritos...");

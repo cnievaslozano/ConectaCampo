@@ -44,7 +44,9 @@ const postFollow = (isFollowing: boolean, currentUser:number|null) => {
       .then((response) => response.text())
       .then((result) => {
         console.log(result)
-        toast.success(result)
+        //toast.success(result)
+        toast.success("Acción ejecutada con exito")
+
     })
       .catch((error) => {
         console.error(error)
