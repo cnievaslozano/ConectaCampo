@@ -4,6 +4,7 @@ import iconConectaCampo from "@assets/conectaCampo.png";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth, provider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from "../../firebaseConfig";
 
 const InputBox = ({ id, type, placeholder, name, value, onChange }: any) => {
   return (
@@ -28,7 +29,54 @@ const Signin = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: any) => {
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        console.log("Obteniendo resultado de redirección...");
+        const result = await getRedirectResult(auth);
+        console.log("Resultado de redirección:", result);
+  
+        if (result) {
+          if (result.user) {
+            console.log("Inicio de sesión correcto con Google");
+            const user = result.user;
+            const token = await user.getIdToken();
+            localStorage.setItem("token", token);
+            localStorage.setItem("userData", JSON.stringify(user));
+            toast.success("Inicio de sesión con Google exitoso");
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+          } else {
+            console.log("No se encontró un usuario en el resultado.");
+          }
+        } else {
+          console.log("Resultado de redirección es nulo, puede que no se haya completado el flujo de autenticación correctamente.");
+        }
+      } catch (error) {
+        console.error("Error durante la autenticación con Google:", error);
+      }
+    };
+  
+    handleRedirectResult();
+  
+    // Escuchar cambios en el estado de autenticación
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Usuario autenticado después de redirección");
+        navigate("/");
+      }
+    });
+  
+    return () => unsubscribe();
+  }, [navigate]);
+  
+
+  const handleGoogleLogin = () => {
+    signInWithRedirect(auth, provider);
+  };
+
+  const handleSubmit = async (e?: any) => {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario de recargar la página
 
     const myHeaders = new Headers();
@@ -64,7 +112,7 @@ const Signin = () => {
         navigate("/");
       }, 2000);
     } catch (error: any) {
-      console.error("Error during sign in:", error);
+      console.error("Error durante el inicio de sesión:", error);
       setError(error.message);
       toast.error(error.message);
     }
@@ -89,12 +137,12 @@ const Signin = () => {
 
       if (matchedUser) {
         localStorage.setItem("userData", JSON.stringify(matchedUser));
-        console.log("User data stored in localStorage");
+        console.log("Datos del usuario guardados en localStorage");
       } else {
         console.error("No se encontró el usuario con el username proporcionado");
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error("Error al obtener los datos del usuario:", error);
     }
   };
 
@@ -149,7 +197,8 @@ const Signin = () => {
               <ul className="-mx-2 mb-12 flex justify-between">
                 <li className="w-full px-2">
                   <a
-                    href="/#"
+                    href="#"
+                    onClick={handleGoogleLogin}
                     className="flex h-11 items-center justify-center rounded-md bg-primary hover:bg-opacity-90"
                   >
                     <svg
