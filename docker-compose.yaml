@@ -5,14 +5,16 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # Permite acceso sin contraseña
       MYSQL_DATABASE: db_conecta_campo
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 10s
       retries: 5
       start_period: 30s
-    ports:
-      - "3306:3306"
 
   springboot:
     build: ./springboot
