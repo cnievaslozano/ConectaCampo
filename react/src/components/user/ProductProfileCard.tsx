@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BadgeTypeProduct from "../products/BadgeTypeProduct";
 import { CardProductProps } from "../../types/props";
+import DeleteProduct from "@components/products/deleteProduct";
+import { User } from "@types/models";
 
 const CardProduct = ({ product, publication }: CardProductProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [userData, setUserData] = useState();
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -16,6 +20,16 @@ const CardProduct = ({ product, publication }: CardProductProps) => {
     }
     return description;
   };
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
+    if (userDataString) {
+      const userData:User = JSON.parse(userDataString);
+      if (userData.id === publication?.user.id) {
+        setShowDeleteButton(true);
+      }
+    }
+  }, [product, imageLoaded]);
 
   //console.log(product); //Se pasa como undefined
   if (product) {
@@ -51,9 +65,12 @@ const CardProduct = ({ product, publication }: CardProductProps) => {
           <div className="text-sm mb-4">
             {truncateDescription(product.description, 50)}
           </div>
-          <span className="text-base font-bold text-gray-800 dark:text-white">
+          <div className="flex justify-between text-base font-bold text-gray-800 dark:text-white">
             {product.price} €/kg
-          </span>
+            {showDeleteButton && <DeleteProduct product={product} />}
+
+          </div>
+          
         </div>
       </div>
     </Link>

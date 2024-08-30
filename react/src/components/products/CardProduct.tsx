@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BadgeTypeProduct from "./BadgeTypeProduct";
+import DeleteProduct from "@components/products/deleteProduct"; // Asegúrate de tener la ruta correcta
 import { CardProductProps } from "../../types/props";
 
 const CardProduct = ({ product }: CardProductProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      if (userData.userId === product.publicationId) {
+        setShowDeleteButton(true);
+      }
+    }
+  }, [product]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
@@ -17,30 +29,27 @@ const CardProduct = ({ product }: CardProductProps) => {
     return description;
   };
 
-  console.log(product); //Se pasa como undefined
-  if (product) {
-     return (
+  if (!product) {
+    return null; // Si el producto es undefined, retornar null directamente
+  }
+
+  return (
     <Link
       to={`/product/${product.id}`}
       key={product.id}
       className="flex-shrink-0 flex flex-col items-center transition-transform duration-300 ease-in-out transform hover:scale-105"
     >
       <div className="w-64 min-h-fit bg-white border border-gray-200 rounded-lg shadow">
-        {" "}
-        {/* Ancho fijo */}
         <div className="relative w-full">
           {!imageLoaded && (
             <div className="h-48 absolute inset-0 bg-gray-300 animate-pulse rounded-t-lg"></div>
           )}
           <img
-            className={`h-48 w-full rounded-t-lg transition-opacity duration-300 ${
-              imageLoaded ? "opacity-100" : "opacity-0"
-            }`}
+            className={`h-48 w-full rounded-t-lg transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
             src={product.image}
             alt={product.name}
             onLoad={handleImageLoad}
           />
-          {/* Imagen de usuario dentro de la card en la esquina inferior derecha */}
           <div className="absolute bottom-2 right-2">
             <img
               className="w-10 h-10 rounded-full border-2 shadow-xl"
@@ -59,17 +68,15 @@ const CardProduct = ({ product }: CardProductProps) => {
           <div className="text-sm mb-4">
             {truncateDescription(product.description, 50)}
           </div>
-          <span className="text-base font-bold text-gray-800 dark:text-white">
+          <div className="flex justify-between text-base font-bold text-gray-800 dark:text-white">
             {product.price} €/kg
-          </span>
+            {/* {showDeleteButton && <DeleteProduct product={product} />} */}
+
+          </div>
         </div>
       </div>
     </Link>
   );
-  }else{
-    return null;
-  }
- 
 };
 
 export default CardProduct;
