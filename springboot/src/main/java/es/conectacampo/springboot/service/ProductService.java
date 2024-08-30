@@ -6,13 +6,13 @@ import es.conectacampo.springboot.dto.PublicationProductDTO;
 import es.conectacampo.springboot.dto.UpdateProductDTO;
 import es.conectacampo.springboot.exception.ResourceNotFoundException;
 import es.conectacampo.springboot.model.*;
-import es.conectacampo.springboot.repository.CategoryRepository;
-import es.conectacampo.springboot.repository.ProductRepository;
-import es.conectacampo.springboot.repository.UserRepository;
+import es.conectacampo.springboot.repository.*;
+import io.micrometer.common.util.internal.logging.InternalLogger;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,6 +29,11 @@ public class ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private PublicationProductRepository publicationProductRepository;
+
+    @Autowired
+    PublicationProductRepository publicationRepository;
 
     private ProductDTO convertToDTO(Product product) {
         // Extraer pathPublicationImages de las publicaciones asociadas
@@ -60,30 +65,57 @@ public class ProductService {
         return Optional.ofNullable(product);
     }
 
-    @Transactional
+
     public Product createProduct(CreateProductDTO createProductDTO) {
-        User user = userRepository.findById(createProductDTO.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + createProductDTO.getUserId()));
+        try {
+            // Buscar usuario por ID
+            User user = userRepository.findById(createProductDTO.getUserId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found for this id -> " + createProductDTO.getUserId()));
 
-        Set<Category> categories = (Set<Category>) categoryRepository.findAllById(createProductDTO.getCategoryIds());
+            // Buscar categorías por IDs
+            List<Category> categories = categoryRepository.findAllById(createProductDTO.getCategoryIds());
 
-        Product product = Product.builder()
-                .user(user)
-                .categories((List<Category>) categories)
-                .name(createProductDTO.getName())
-                .description(createProductDTO.getDescription())
-                .price(createProductDTO.getPrice())
-                .quantity(createProductDTO.getQuantity())
-                .build();
+            // Crear el producto preliminarmente para obtener el productId
+            Product product = Product.builder()
+                    .user(user)
+                    .categories(categories)
+                    .name(createProductDTO.getName())
+                    .description(createProductDTO.getDescription())
+                    .price(createProductDTO.getPrice())
+                    .quantity(createProductDTO.getQuantity())
+                    .build();
 
-        // Crear PublicationProduct para cada publicación
-        Set<PublicationProduct> publicationProducts = createProductDTO.getPublicationIds().stream()
-                .map(publicationId -> new PublicationProduct(product, new Publication(publicationId)))
-                .collect(Collectors.toSet());
+            // Guardar temporalmente el producto para obtener su ID generado
+            productRepository.save(product);
 
-        product.setPublicationProducts(publicationProducts);
+            // Buscar la publicación por ID proporcionado
+            /*Publication publication = publicationRepository.findById(product.getId()) // me pedia un PublicationProductId no un Long
+                    .orElseThrow(() -> new ResourceNotFoundException("Publication not found for this id -> " + createProductDTO.getPublicationId())).getPublication();
 
-        return productRepository.save(product);
+            // Crear un PublicationProductId usando el ID del producto y el ID de la publicación
+             PublicationProductId publicationProductId = new PublicationProductId(
+                    product.getId(), // ID del producto
+                    publication.getId() // ID de la publicación
+            );
+
+            Crear y configurar el PublicationProduct correctamente
+            PublicationProduct newPublicationProduct = new PublicationProduct();
+            newPublicationProduct.setId(publicationProductId);
+            newPublicationProduct.setProduct(product);
+            newPublicationProduct.setPublication(publication);
+
+            // Guardar el nuevo PublicationProduct
+            publicationProductRepository.save(newPublicationProduct);
+
+            // Asignar publicaciones al producto y guardarlo definitivamente
+            product.setPublications(Collections.singleton(newPublicationProduct));
+            return productRepository.save(product);*/
+
+        } catch (Exception e) {
+            // Manejar cualquier otra excepción no controlada
+            throw new RuntimeException("An unexpected error occurred while creating the product: " + e);
+        }
+        return null;
     }
 
 
@@ -97,17 +129,7 @@ public class ProductService {
         product.setPrice(updateProductDTO.getPrice());
         product.setQuantity(updateProductDTO.getQuantity());
 
-        if (updateProductDTO.getCategoryIds() != null && !updateProductDTO.getCategoryIds().isEmpty()) {
-            List<Category> categories = categoryRepository.findAllById(updateProductDTO.getCategoryIds());
-            product.setCategories(categories);
-        }
 
-        if (updateProductDTO.getPublicationIds() != null && !updateProductDTO.getPublicationIds().isEmpty()) {
-            Set<PublicationProduct> publicationProducts = updateProductDTO.getPublicationIds().stream()
-                    .map(publicationId -> new PublicationProduct(product, new Publication(publicationId)))
-                    .collect(Collectors.toSet());
-            product.setPublications(publicationProducts);
-        }
 
         return productRepository.save(product);
     }

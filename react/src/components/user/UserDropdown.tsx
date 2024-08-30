@@ -70,11 +70,6 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
           className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-20"
         >
           <ul className="py-2">
-            <Link to="/search">
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                Mercado
-              </li>
-            </Link>
             <Link to={"/profile/" + localStorage.getItem("username")}>
               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                 Perfil

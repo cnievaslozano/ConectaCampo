@@ -37,7 +37,7 @@ public class ProductController {
 
     // Create Product
     @PostMapping
-    public ResponseEntity<ApiResponse> createPublication(@Valid @RequestBody CreateProductDTO createProductDTO) {
+    public ResponseEntity<ApiResponse> createPublication(@RequestBody @Valid CreateProductDTO createProductDTO) {
         try {
             productService.createProduct(createProductDTO);
             return ResponseEntity.ok(new ApiResponse("success", "Product created successfully"));

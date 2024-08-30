@@ -18,7 +18,9 @@ const Profile = () => {
   const [userList, setUserList] = useState<number[] | null>(null); // Usuarios totales en /users/all en array de ids
   const [followers, setFollowers] = useState<{ id: number }[] | null>(null);
   const [allUsersJson, setAllUsersJson] = useState<User[] | null>(null);
-  const [allProductsJson, setAllProductsJson] = useState<Product[] | null>(null);
+  const [allProductsJson, setAllProductsJson] = useState<Product[] | null>(
+    null
+  );
   const [userProducts, setUserProducts] = useState<Product[]>([]); // Estado para los productos del usuario
   const [userPublications, setUserPublications] = useState<Publication[]>([]); // Estado para las publicaciones del usuario
   const [loading, setLoading] = useState(true); // Estado para manejar el spinner de carga
@@ -97,12 +99,16 @@ const Profile = () => {
   const fetchUserPublications = async (products: Product[]) => {
     try {
       const publicationsPromises = products.map((product) =>
-        fetch(`http://localhost:8080/api/v1/publication/${product.publicationId}`)
+        fetch(
+          `http://localhost:8080/api/v1/publication/${product.publicationId}`
+        )
       );
-      
+
       const publicationsResponses = await Promise.all(publicationsPromises);
-      const publications = await Promise.all(publicationsResponses.map(res => res.json()));
-      
+      const publications = await Promise.all(
+        publicationsResponses.map((res) => res.json())
+      );
+
       setUserPublications(publications); // Guardar las publicaciones en el estado
     } catch (error) {
       console.error("Error fetching user publications:", error);
@@ -119,7 +125,7 @@ const Profile = () => {
     const userSet = new Set(userList);
 
     // Filtrar los IDs de following que están presentes en userList
-    const matchingIds = following.filter(user => userSet.has(user.id));
+    const matchingIds = following.filter((user) => userSet.has(user.id));
 
     // Retornar el número de coincidencias
     return matchingIds.length;
@@ -212,12 +218,22 @@ const Profile = () => {
         <h1 className="text-xl mt-10 mb-5">Publicaciones</h1>
         <div className="items-grid">
           {userProducts.map((item, index) =>
-            item ? <ProductProfileCard key={item.id} product={item} publication={userPublications[index]} /> : null
+            item ? (
+              <ProductProfileCard
+                key={item.id}
+                product={item}
+                publication={userPublications[index]}
+              />
+            ) : null
           )}
         </div>
         <h1 className="text-xl mt-10 mb-5">Favoritos guardados</h1>
         <div className="items-grid">
-          <FavouriteProductGrid userId={user.id} allUsers={allUsersJson} products={allProductsJson} />
+          <FavouriteProductGrid
+            userId={user.id}
+            allUsers={allUsersJson}
+            products={allProductsJson}
+          />
         </div>
       </Layout>
     );

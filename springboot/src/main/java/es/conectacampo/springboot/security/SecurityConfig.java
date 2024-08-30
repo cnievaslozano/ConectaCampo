@@ -63,9 +63,9 @@ public class SecurityConfig {
                     // PRODUCT
                     auth.requestMatchers("/api/v1/product/all").permitAll();
                     auth.requestMatchers(HttpMethod.GET,"/api/v1/product/*").permitAll();
-                    auth.requestMatchers(HttpMethod.POST,"/api/v1/product").hasRole("FARMER");
-                    auth.requestMatchers(HttpMethod.PUT,"/api/v1/product/*").hasRole("FARMER");
-                    auth.requestMatchers(HttpMethod.DELETE,"/api/v1/product/*").hasRole("FARMER");
+                    auth.requestMatchers(HttpMethod.POST,"/api/v1/product").permitAll();
+                    auth.requestMatchers(HttpMethod.PUT,"/api/v1/product/*").permitAll();
+                    auth.requestMatchers(HttpMethod.DELETE,"/api/v1/product/*").permitAll();
 
                     // PUBLICATION
                     auth.requestMatchers("/api/v1/publication/*/like").authenticated();
@@ -73,9 +73,9 @@ public class SecurityConfig {
                     auth.requestMatchers("/api/v1/publication/*/likeCount").permitAll();
                     auth.requestMatchers("/api/v1/publication/all").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/v1/publication/*").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, "/api/v1/publication").hasRole("FARMER");
-                    auth.requestMatchers(HttpMethod.PUT, "/api/v1/publication/*").hasRole("FARMER");
-                    auth.requestMatchers(HttpMethod.DELETE, "/api/v1/publication/*").hasRole("FARMER");
+                    auth.requestMatchers(HttpMethod.POST, "/api/v1/publication").permitAll();
+                    auth.requestMatchers(HttpMethod.PUT, "/api/v1/publication/*").permitAll();
+                    auth.requestMatchers(HttpMethod.DELETE, "/api/v1/publication/*").permitAll();
 
                     // FOLLOWER
                     auth.requestMatchers(HttpMethod.POST,"/api/v1/user/*/follow/*").permitAll();

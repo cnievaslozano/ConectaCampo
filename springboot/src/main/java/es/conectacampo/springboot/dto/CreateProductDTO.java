@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -16,13 +17,13 @@ import java.util.Set;
 public class CreateProductDTO {
 
     @NotNull(message = "UserId no puede ser NULL")
-    private Long userId;
+        private Long userId;
 
     @NotEmpty(message = "categoryIds no puede estar vacío")
-    private Set<Long> categoryIds;
+    private List<Long> categoryIds;
 
-    @NotEmpty(message = "publicationIds no puede estar vacío")
-    private Set<Long> publicationIds; // Añadir este campo para manejar publicaciones
+    @NotNull
+    private Long publicationId; // Añadir este campo para manejar publicaciones
 
     @NotBlank(message = "name no puede estar vacío")
     @Size(max = 50)
@@ -35,5 +36,5 @@ public class CreateProductDTO {
     private Double price;
 
     @NotNull(message = "quantity no puede ser NULL")
-    private Integer quantity;
+    private int quantity;
 }

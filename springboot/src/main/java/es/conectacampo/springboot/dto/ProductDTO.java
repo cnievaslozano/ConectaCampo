@@ -2,6 +2,7 @@ package es.conectacampo.springboot.dto;
 
 import es.conectacampo.springboot.model.Category;
 import es.conectacampo.springboot.model.Publication;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class ProductDTO {
 
     private Long id;
     private Long userId;
+    @NotNull(message = "Publication ID no puede ser nulo")
     private Long publicationId;
     private List<Category> categories;
    // private Set<PublicationProductDTO> publicationProducts;

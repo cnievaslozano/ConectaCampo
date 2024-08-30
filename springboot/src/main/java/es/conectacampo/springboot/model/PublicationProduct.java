@@ -17,16 +17,17 @@ public class PublicationProduct {
     @EmbeddedId
     private PublicationProductId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("publicationId")
     @JoinColumn(name = "publication_id")
     private Publication publication;
 
+    // Constructor para asignar correctamente product y publication
     public PublicationProduct(Product product, Publication publication) {
         this.product = product;
         this.publication = publication;
