@@ -1,0 +1,83 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.home-container {
+    width: 150%;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    margin: 0;
+    padding: 0;
+}
+
+.element.style {}
+
+
+.fond {
+    background-image: url('../assets/pexel1.webp');
+    background-size: cover;
+    height: 400px;
+    margin: 40px 0;
+    padding: 20px;
+
+
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 1s ease-out;
+}
+
+.scroll-top-button {
+    background-color: transparent !important;
+    /* Fondo transparente con !important */
+    display: flex !important;
+    /* Flexbox para centrar contenido */
+    align-items: center !important;
+    /* Alineación vertical */
+    justify-content: center !important;
+    /* Alineación horizontal */
+    width: 64px !important;
+    /* Tamaño del botón */
+    height: 64px !important;
+    /* Tamaño del botón */
+    background-color: #8AA86E !important;
+    /* Color de fondo con !important */
+    color: white !important;
+    /* Color del icono */
+    border: none !important;
+    /* Sin borde */
+    border-radius: 50% !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    /* Sombra con !important */
+    font-size: 24px !important;
+    /* Tamaño del icono */
+    cursor: pointer !important;
+    /* Cursor de mano al pasar sobre el botón */
+    transition: background-color 0.3s, box-shadow 0.3s opacity 0.3s visibility 0.3s ease-in-out, !important;
+
+}
+
+.scroll-top-button:hover {
+    background-color: #A1C77D !important;
+    /* Color de fondo al pasar el ratón con !important */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+    /* Sombra más pronunciada al pasar el ratón */
+}
