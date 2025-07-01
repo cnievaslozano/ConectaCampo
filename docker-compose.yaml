@@ -38,7 +38,7 @@ services:
     restart: always
     build: ./react
     ports:
-      - "80:80"
+      - "4000:80"
     depends_on:
       - springboot
 
