@@ -16,7 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
                     "http://94.143.138.55",
                     "http://94.143.138.55:8080",
                     "http://conectacampo.es",
-                    "http://conectacampo.es:8080"
+                    "http://conectacampo.es:8080",
+                    "http://campo.danipoal.com"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
